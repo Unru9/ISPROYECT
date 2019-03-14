@@ -29,5 +29,15 @@ public class Pelicula {
 		return this.movieId;
 	}
 	
+	public ArrayList<String> getTags(){
+		return this.tags;
+	}
+	
+	public boolean containsObject(String pObject){
+		if (this.tags.contains(pObject)){
+			return true;
+		}
+		return false;
+	}
 	
 }

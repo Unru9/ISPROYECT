@@ -35,6 +35,7 @@ public class VistaCargaDatos extends JFrame {
 	private JScrollPane scroll;
 	private JTextArea textArea;
 	private JTable table;
+	private static VistaCargaDatos frame;
 
 	/**
 	 * Launch the application.
@@ -43,7 +44,7 @@ public class VistaCargaDatos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VistaCargaDatos frame = new VistaCargaDatos();
+					frame = new VistaCargaDatos();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -105,16 +106,16 @@ public class VistaCargaDatos extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		/*textArea = new JTextArea (25,80);
+		textArea = new JTextArea (25,80);
 		scroll = new JScrollPane();
 		scroll.setViewportView(textArea);
-		panel_1.add(scroll, BorderLayout.CENTER);*/
+		panel_1.add(scroll, BorderLayout.CENTER);
 		
-		table = new JTable();
+		/*table = new JTable();
 		scroll = new JScrollPane();
-		scroll.getViewport().add(table);
-		panel_1.add(table, BorderLayout.CENTER);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		scroll.add(table);
+		//scroll.getViewport().add(table);
+		panel_1.add(scroll,BorderLayout.CENTER);*/
 		
 		/*JScrollPane scrollPane_1 = new JScrollPane();
 		panel_1.add(scrollPane_1, BorderLayout.CENTER);
