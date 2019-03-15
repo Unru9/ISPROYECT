@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class ColeccionUsuario {
@@ -60,10 +61,6 @@ public class ColeccionUsuario {
 				// Vuelvo a leer del fichero
 				linea = bufferLectura.readLine();
 			}
-			//System.out.println(this.lista.size());
-			System.out.println(this.lista.get(1).toString());
-			System.out.println(this.lista.keySet());
-			this.lista.get(1).visUsuario();
 			// CIerro el buffer de lectura
 			if (bufferLectura != null) {
 				bufferLectura.close();
@@ -71,5 +68,28 @@ public class ColeccionUsuario {
 		}catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+	
+	public String visRatingUsuario(int pID) {
+		
+			Collection<Usuario> aux = this.lista.values();
+			StringBuilder sb = new StringBuilder();
+			sb.append("Valoraciones de la pelicula  con ID: " + pID);
+			sb.append("\n");
+			for (Usuario usu : aux) {
+				if(usu.getValoracion(pID)!=null){
+					sb.append(usu.getValoracion(pID));
+					sb.append("\n");
+				}
+			}
+
+			return sb.toString();
+	}
+	
+	public boolean containsKey(int piD){
+		if(this.lista.containsKey(piD)){
+			return true;
+		}
+		return false;
 	}
 }

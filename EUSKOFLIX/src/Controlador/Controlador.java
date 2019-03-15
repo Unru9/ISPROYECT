@@ -25,7 +25,7 @@ public class Controlador {
 		cp.cargarPeliculas("movie-titles.csv");
 		cp.cargarTags("movie-tags.csv");
 		ColeccionUsuario cu= ColeccionUsuario.getColeccionUsuario();
-		//cu.cargarUsuarios("movie-ratings");
+		cu.cargarUsuarios("movie-ratings.csv");
 	}
 	
 	public void mostrarVentana() {
@@ -63,7 +63,13 @@ public class Controlador {
 	class Ratings implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			ColeccionUsuario cu= ColeccionUsuario.getColeccionUsuario();
+			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
+			if(!cu.containsKey(Integer.parseInt(movieID))){
+				JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+			}
+			String aux= cu.visRatingUsuario(Integer.parseInt(movieID));
+			miVista.setTextoGeneral(aux);
 		}
 	}
 	

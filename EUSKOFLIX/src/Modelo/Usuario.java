@@ -1,8 +1,7 @@
 package Modelo;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Usuario {
 	
@@ -20,11 +19,18 @@ public class Usuario {
 		this.ratings.put(pIdPelicula, pCalificacion);
 	}
 	
-	public void visUsuario(){
+	/*public void visRatingUsuario(){
 		Iterator<Integer> itr= ratings.keySet().iterator();
 		while(itr.hasNext()){
 			Integer key= itr.next();
 			System.out.println("Película : " + key + " --> Puntuación: "+ ratings.get(key));
 		}
+	}*/
+	
+	
+	public Double getValoracion(int pID) {
+
+		return this.ratings.get(pID);
 	}
 }
+
