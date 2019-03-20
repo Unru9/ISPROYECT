@@ -142,9 +142,9 @@ public class ColeccionPeliculas {
 	    return model;
 	}
 	
-	/*public HashMap<Integer, Pelicula> getHas(){
+	public HashMap<Integer, Pelicula> getHas(){
 		return this.lista;
-	}*/
+	}
 	
 	public boolean containsKey(int piD){
 		if(this.lista.containsKey(piD)){

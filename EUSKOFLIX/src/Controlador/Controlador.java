@@ -53,10 +53,11 @@ public class Controlador {
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if(!cp.containsKey(Integer.parseInt(movieID))){
 				JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+			}else{
+				String aux= cp.visTags(Integer.parseInt(movieID));
+				miVista.setTextoGeneral(aux);
 			}
-			String aux= cp.visTags(Integer.parseInt(movieID));
-			miVista.setTextoGeneral(aux);
-			
+						
 		}
 	}
 	
@@ -67,9 +68,11 @@ public class Controlador {
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if(!cu.containsKey(Integer.parseInt(movieID))){
 				JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+			}else{
+				String aux= cu.visRatingUsuario(Integer.parseInt(movieID));
+				miVista.setTextoGeneral(aux);
 			}
-			String aux= cu.visRatingUsuario(Integer.parseInt(movieID));
-			miVista.setTextoGeneral(aux);
+
 		}
 	}
 	
