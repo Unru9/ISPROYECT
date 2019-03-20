@@ -12,22 +12,23 @@ import Modelo.ColeccionUsuario;
 import Vista.VistaCargaDatos;
 
 public class Controlador {
-	//atributo
+
+	// atributos
 	private VistaCargaDatos miVista;
-	
-	public Controlador(){
-		miVista= new VistaCargaDatos();
-		//listeners
+
+	public Controlador() {
+		miVista = new VistaCargaDatos();
+		// listeners
 		this.miVista.setTitlesListener(new Titles());
 		this.miVista.setTagsListener(new Tags());
 		this.miVista.setRatingsListener(new Ratings());
-		ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
+		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("movie-titles.csv");
 		cp.cargarTags("movie-tags.csv");
-		ColeccionUsuario cu= ColeccionUsuario.getColeccionUsuario();
+		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("movie-ratings.csv");
 	}
-	
+
 	public void mostrarVentana() {
 		this.miVista.setVisible(true);
 	}
@@ -35,45 +36,44 @@ public class Controlador {
 	class Titles implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			String aux = cp.visPelis();
-			//System.out.println("=================" + aux);
 			miVista.setTextoGeneral(aux);
-			
-			/*ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
-			JTable aux=new JTable(cp.toTableModel(cp.getHas()));
-			miVista.setScroll(aux);*/
+
 		}
 	}
-	
+
 	class Tags implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
-			if(!cp.containsKey(Integer.parseInt(movieID))){
-				JOptionPane.showMessageDialog(miVista, "El movieID no existe");
-			}else{
-				String aux= cp.visTags(Integer.parseInt(movieID));
-				miVista.setTextoGeneral(aux);
+			if (movieID != null) {
+				if (!cp.containsKey(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+				} else {
+					String aux = cp.visTags(Integer.parseInt(movieID));
+					miVista.setTextoGeneral(aux);
+				}
 			}
-						
 		}
 	}
-	
+
 	class Ratings implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ColeccionUsuario cu= ColeccionUsuario.getColeccionUsuario();
+			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
-			if(!cu.containsKey(Integer.parseInt(movieID))){
-				JOptionPane.showMessageDialog(miVista, "El movieID no existe");
-			}else{
-				String aux= cu.visRatingUsuario(Integer.parseInt(movieID));
-				miVista.setTextoGeneral(aux);
+			if (movieID != null) {
+				if (!cu.containsKey(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+				} else {
+					String aux = cu.visRatingUsuario(Integer.parseInt(movieID));
+					miVista.setTextoGeneral(aux);
+				}
 			}
 
 		}
 	}
-	
+
 }

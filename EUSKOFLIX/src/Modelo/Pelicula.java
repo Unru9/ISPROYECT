@@ -3,41 +3,28 @@ package Modelo;
 import java.util.ArrayList;
 
 public class Pelicula {
-	//atributos
-	
-	private int movieId;
+	// atributos
+
 	private String title;
 	private ArrayList<String> tags;
-	
-	//Constructora
-	public Pelicula(int pMovieId, String pTitle){
-		this.movieId=pMovieId;
-		this.title=pTitle;
-		this.tags= new ArrayList<String>();
+
+	// Constructora
+	public Pelicula(String pTitle) {
+		this.title = pTitle;
+		this.tags = new ArrayList<String>();
 	}
-	
-	//metodo
-	public void addTag(String pTag){
+
+	// metodo
+	public void addTag(String pTag) {
 		this.tags.add(pTag);
 	}
-	
-	public String getTitle(){
+
+	public String obtTitle() {
 		return this.title;
 	}
-	
-	public int getMovieId(){
-		return this.movieId;
-	}
-	
-	public ArrayList<String> getTags(){
+
+	public ArrayList<String> obtTags() {
 		return this.tags;
 	}
-	
-	public boolean containsObject(String pObject){
-		if (this.tags.contains(pObject)){
-			return true;
-		}
-		return false;
-	}
-	
+
 }
