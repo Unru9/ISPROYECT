@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ColeccionUsuario {
 
@@ -65,15 +67,24 @@ public class ColeccionUsuario {
 		}
 	}
 
-	public String visRatingUsuario(int pID) {
+	public String visRatingUsuario(int pIdPelicula) {
 
-		Collection<Usuario> aux = this.lista.values();
 		StringBuilder sb = new StringBuilder();
-		sb.append("Valoraciones de la pelicula  con ID: " + pID);
+		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula);
 		sb.append("\n");
-		for (Usuario usu : aux) {
-			if (usu.obtValoracion(pID) != null) {
-				sb.append(usu.obtValoracion(pID));
+		sb.append("\n");
+		for (Entry<Integer, Usuario> e : this.lista.entrySet()) {
+			int IDUsuario = e.getKey();
+			Usuario UsuarioValorador = e.getValue();
+			sb.append("Valoración del Usuario: " + IDUsuario);
+			sb.append("\n");
+			if (UsuarioValorador.containsPelicula(pIdPelicula)) {
+				sb.append(UsuarioValorador.obtValoracion(pIdPelicula));
+				sb.append("\n");
+				sb.append("\n");
+			}else {
+				sb.append("El usuario todavia no ha valorado la pelicula " + pIdPelicula +".");
+				sb.append("\n");
 				sb.append("\n");
 			}
 		}

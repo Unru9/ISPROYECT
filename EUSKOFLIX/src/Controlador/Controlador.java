@@ -61,9 +61,10 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+			ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if (movieID != null) {
-				if (!cu.containsKey(Integer.parseInt(movieID))) {
+				if (!cp.containsKey(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
 				} else {
 					String aux = cu.visRatingUsuario(Integer.parseInt(movieID));

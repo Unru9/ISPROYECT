@@ -29,4 +29,11 @@ public class Usuario {
 
 		return this.ratings.get(pID);
 	}
+	
+	public boolean containsPelicula(int pIdPelicula) {
+		if (this.ratings.containsKey(pIdPelicula)) {
+			return true;
+		}
+		return false;
+	}
 }
