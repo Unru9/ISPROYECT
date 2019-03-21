@@ -9,9 +9,6 @@ public class Main {
 		// TODO Auto-generated method stub
 		Controlador c = new Controlador();
 		c.mostrarVentana();
-		/*ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
-		cp.cargarPeliculas("movie-titles.csv");
-		cp.visPelis();*/
 	}
 
 }

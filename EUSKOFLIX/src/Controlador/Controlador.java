@@ -21,10 +21,10 @@ public class Controlador {
 		this.miVista.setTagsListener(new Tags());
 		this.miVista.setRatingsListener(new Ratings());
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
-		cp.cargarPeliculas("movie-titles.csv");
-		cp.cargarTags("movie-tags.csv");
+		cp.cargarPeliculas("./resources/data/movie-titles.csv");
+		cp.cargarTags("./resources/data/movie-tags.csv");
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
-		cu.cargarUsuarios("movie-ratings.csv");
+		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
 	}
 
 	public void mostrarVentana() {
