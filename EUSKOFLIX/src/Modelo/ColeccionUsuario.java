@@ -70,7 +70,9 @@ public class ColeccionUsuario {
 	public String visRatingUsuario(int pIdPelicula) {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula);
+		sb.append("=====================================================\n");
+		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula +"\n");
+		sb.append("=====================================================\n");
 		sb.append("\n");
 		sb.append("\n");
 		for (Entry<Integer, Usuario> e : this.lista.entrySet()) {

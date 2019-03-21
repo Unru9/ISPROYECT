@@ -120,24 +120,24 @@ public class ColeccionPeliculas {
 		lista.clear();
 	}
 	
-	public boolean containsKey(int piD) {
-		if (this.lista.containsKey(piD)) {
+	public boolean containsKey(int pID) {
+		if (this.lista.containsKey(pID)) {
 			return true;
 		}
 		return false;
 	}
 	
-	public ArrayList<String> obtTagsPelicula(String pelicula){
-		Pelicula pel = buscarPelicula(pelicula);
+	public ArrayList<String> obtTagsPelicula(String pPelicula){
+		Pelicula pel = buscarPelicula(pPelicula);
 		if (!pel.equals(null)){
 			return pel.obtTags();
 		}
 		return null;
 	}
 
-	private Pelicula buscarPelicula(String pelicula) {
+	private Pelicula buscarPelicula(String pPelicula) {
 		for (Pelicula pel : lista.values()){
-			if (pel.obtTitle() == pelicula){
+			if (pel.obtTitle() == pPelicula){
 				return pel;
 			}
 		}
