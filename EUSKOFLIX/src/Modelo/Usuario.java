@@ -1,7 +1,6 @@
 package Modelo;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Usuario {
 

@@ -1,8 +1,6 @@
 package Principal;
 
 import Controlador.Controlador;
-import Modelo.ColeccionPeliculas;
-import Modelo.ColeccionUsuario;
 
 public class Main {
 

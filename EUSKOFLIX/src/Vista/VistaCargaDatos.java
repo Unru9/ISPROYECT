@@ -1,14 +1,12 @@
 package Vista;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableModel;
 
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -19,7 +17,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class VistaCargaDatos extends JFrame {
 
@@ -34,7 +31,7 @@ public class VistaCargaDatos extends JFrame {
 	private JPanel panel_1;
 	private JScrollPane scroll;
 	private JTextArea textArea;
-	private JTable table;
+	//private JTable table;
 	private static VistaCargaDatos frame;
 
 	/**

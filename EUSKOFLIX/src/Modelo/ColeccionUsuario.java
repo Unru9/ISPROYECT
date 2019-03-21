@@ -3,7 +3,6 @@ package Modelo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -80,6 +79,10 @@ public class ColeccionUsuario {
 		}
 
 		return sb.toString();
+	}
+	
+	public void borrarUsuarios(){
+		lista.clear();
 	}
 
 	public boolean containsKey(int piD) {

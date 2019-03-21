@@ -4,13 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class ColeccionPeliculas {
 	// atributos
@@ -121,11 +116,32 @@ public class ColeccionPeliculas {
 		return sb.toString();
 	}
 
+	public void borrarPeliculas(){
+		lista.clear();
+	}
+	
 	public boolean containsKey(int piD) {
 		if (this.lista.containsKey(piD)) {
 			return true;
 		}
 		return false;
+	}
+	
+	public ArrayList<String> obtTagsPelicula(String pelicula){
+		Pelicula pel = buscarPelicula(pelicula);
+		if (!pel.equals(null)){
+			return pel.obtTags();
+		}
+		return null;
+	}
+
+	private Pelicula buscarPelicula(String pelicula) {
+		for (Pelicula pel : lista.values()){
+			if (pel.obtTitle() == pelicula){
+				return pel;
+			}
+		}
+		return null;
 	}
 
 }
