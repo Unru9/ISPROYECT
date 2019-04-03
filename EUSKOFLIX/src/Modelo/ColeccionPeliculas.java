@@ -6,17 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class ColeccionPeliculas {
 	// atributos
 	private HashMap<Integer, Pelicula> lista;
 	private static ColeccionPeliculas miColeccionPeliculas;
-	private static HashMap<Integer,Pelicula> modeloProductos;
+	private static HashMap<Integer,HashMap<String,Double>> modeloProductos;
 
 	// constructora
 	private ColeccionPeliculas() {
 		this.lista = new HashMap<Integer, Pelicula>();
-		this.modeloProductos = new HashMap<Integer,Pelicula>();
+		this.modeloProductos = new HashMap<Integer,HashMap<String,Double>>();
 	}
 
 	// estático
@@ -175,17 +176,18 @@ public class ColeccionPeliculas {
 		
 	}
 	
-	/*public void crearModeloProducto(){
-		Pelicula pel;
-		double valorTFIDF=0.0;
-		for (HashMap.Entry<Integer, Pelicula> entry : lista.entrySet()) {
-			pel= entry.getValue();
-			HashMap<String,Integer> aux = pel.getTags();
-			for (HashMap.Entry<String, Integer> entry2 :aux.entrySet()) {
-				valorTFIDF= this.calcularTFIDF(, pTag)
+	public void crearModeloProducto(){
+		for(Entry<Integer, HashMap<String, Double>>   entrada : modeloProductos.entrySet()) {
+			int iDPelicula = entrada.getKey();
+			HashMap<String, Double> listaTagsPelicula = entrada.getValue();
+			for(Entry<String, Double> entrada2 : listaTagsPelicula.entrySet()) {
+				String tag = entrada2.getKey();
+				double tFIDF = calcularTFIDF(iDPelicula, tag);
+				entrada2.setValue(tFIDF);
 			}
+				 
 		}
-	}*/
+	}
 	
 	
 
