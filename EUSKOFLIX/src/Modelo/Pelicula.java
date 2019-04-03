@@ -1,30 +1,39 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Pelicula {
 	// atributos
 
 	private String title;
-	private ArrayList<String> tags;
+	private HashMap<String,Integer> tags;
 
 	// Constructora
 	public Pelicula(String pTitle) {
 		this.title = pTitle;
-		this.tags = new ArrayList<String>();
+		this.tags = new HashMap<String,Integer>();
 	}
 
 	// metodo
-	public void addTag(String pTag) {
-		this.tags.add(pTag);
-	}
 
 	public String obtTitle() {
 		return this.title;
 	}
 
-	public ArrayList<String> obtTags() {
-		return this.tags;
+	public boolean containsObject(Object pAux){
+		if(this.tags.containsKey(pAux)){
+			return true;
+		}
+	return false;
 	}
-
+	
+	public void sumAparicion(String pTag){
+		if(this.tags.containsKey(pTag)){
+			int valorActual = this.tags.get(pTag);
+			this.tags.put(pTag, valorActual + 1);
+		}else{
+			this.tags.put(pTag, 1);
+		}
+	}
 }

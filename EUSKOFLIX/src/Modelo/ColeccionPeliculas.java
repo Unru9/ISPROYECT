@@ -75,7 +75,8 @@ public class ColeccionPeliculas {
 				String part1 = campos[0];
 				String part2 = campos[1];
 				if (this.lista.containsKey(Integer.parseInt(part1))) {
-					this.lista.get(Integer.parseInt(part1)).addTag(part2);
+					Pelicula aux = this.lista.get(Integer.parseInt(part1));
+					aux.sumAparicion(part2);
 				}
 
 				// Vuelvo a leer del fichero
@@ -102,7 +103,7 @@ public class ColeccionPeliculas {
 		return sb.toString();
 	}
 
-	public String visTags(int pID) {
+	/*public String visTags(int pID) {
 
 		ArrayList<String> aux = this.lista.get(pID).obtTags();
 		System.out.println(aux);
@@ -114,7 +115,7 @@ public class ColeccionPeliculas {
 		}
 		System.out.println(aux);
 		return sb.toString();
-	}
+	}*/
 
 	public void borrarPeliculas(){
 		lista.clear();
@@ -127,13 +128,13 @@ public class ColeccionPeliculas {
 		return false;
 	}
 	
-	public ArrayList<String> obtTagsPelicula(String pPelicula){
+	/*public ArrayList<String> obtTagsPelicula(String pPelicula){
 		Pelicula pel = buscarPelicula(pPelicula);
 		if (!pel.equals(null)){
 			return pel.obtTags();
 		}
 		return null;
-	}
+	}*/
 
 	private Pelicula buscarPelicula(String pPelicula) {
 		for (Pelicula pel : lista.values()){
@@ -143,5 +144,6 @@ public class ColeccionPeliculas {
 		}
 		return null;
 	}
+	
 
 }
