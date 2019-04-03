@@ -39,12 +39,12 @@ public class ColeccionPeliculaTest {
 	@Test
 	public void testCargarTags(){
 		/* Caso 1: no hay tags añadidas. */
-		cp.cargarTags("movie-tags.csv");
+		cp.crearMatrizEtiquetaProductos("movie-tags.csv");
 		
 		//cp.obtTagsPelicula("");
 		
 		/* Caso 2: hay tags añadidas. */
-		cp.cargarTags("movie-tags.csv");
+		cp.crearMatrizEtiquetaProductos("movie-tags.csv");
 	}
 	
 	public void testBorrarPeliculas(){

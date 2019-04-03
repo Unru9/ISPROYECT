@@ -21,8 +21,8 @@ public class Pelicula {
 		return this.title;
 	}
 
-	public boolean containsObject(Object pAux){
-		if(this.tags.containsKey(pAux)){
+	public boolean containsTags(String pTag){
+		if(this.tags.containsKey(pTag)){
 			return true;
 		}
 	return false;
@@ -35,5 +35,17 @@ public class Pelicula {
 		}else{
 			this.tags.put(pTag, 1);
 		}
+	}
+	
+	public int obtAparecionTag(String pTag){
+		return this.tags.get(pTag);
+	}
+	
+	public ArrayList<String> obtStringTags(){
+		ArrayList<String> aux = new ArrayList<String>();
+		for (HashMap.Entry<String, Integer> entry : tags.entrySet()) {
+			aux.add(entry.getKey());
+		}
+		return aux;
 	}
 }

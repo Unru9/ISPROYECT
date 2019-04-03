@@ -22,7 +22,7 @@ public class Controlador {
 		this.miVista.setRatingsListener(new Ratings());
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
-		cp.cargarTags("./resources/data/movie-tags.csv");
+		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
 	}

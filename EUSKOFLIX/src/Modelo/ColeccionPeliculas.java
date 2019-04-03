@@ -59,7 +59,7 @@ public class ColeccionPeliculas {
 		}
 	}
 
-	public void cargarTags(String pPath) {
+	public void crearMatrizEtiquetaProductos(String pPath) {
 
 		try {
 
@@ -103,9 +103,9 @@ public class ColeccionPeliculas {
 		return sb.toString();
 	}
 
-	/*public String visTags(int pID) {
+	public String visTags(int pID) {
 
-		ArrayList<String> aux = this.lista.get(pID).obtTags();
+		ArrayList<String> aux = this.lista.get(pID).obtStringTags();
 		System.out.println(aux);
 		StringBuilder sb = new StringBuilder();
 
@@ -115,7 +115,7 @@ public class ColeccionPeliculas {
 		}
 		System.out.println(aux);
 		return sb.toString();
-	}*/
+	}
 
 	public void borrarPeliculas(){
 		lista.clear();
@@ -144,6 +144,31 @@ public class ColeccionPeliculas {
 		}
 		return null;
 	}
+	
+	public int numPeliculaConTag(String pTag){
+		int res=0;
+		Pelicula pel;
+		for (HashMap.Entry<Integer, Pelicula> entry : lista.entrySet()) {
+			pel= entry.getValue();
+			if(pel.containsTags(pTag)){
+				res=res+1;
+			}
+		}
+		return res;
+	}
+	
+	public double calcularTFIDF(int pIdPelicula, String pTag){
+		Pelicula pel= this.lista.get(pIdPelicula);
+		double res=0.0;
+		int tf= pel.obtAparecionTag(pTag);
+		int N= this.lista.size()+1;
+		int NT=this.numPeliculaConTag(pTag);
+		
+		res= tf *Math.log(N/NT);
+		return res;
+		
+	}
+	
 	
 
 }
