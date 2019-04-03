@@ -37,7 +37,7 @@ public class Pelicula {
 		}
 	}
 	
-	public int obtAparecionTag(String pTag){
+	public int obtAparicionTag(String pTag){
 		return this.tags.get(pTag);
 	}
 	
@@ -47,5 +47,10 @@ public class Pelicula {
 			aux.add(entry.getKey());
 		}
 		return aux;
+		
+	}
+	
+	public HashMap<String,Integer> getTags(){
+		return this.tags;
 	}
 }

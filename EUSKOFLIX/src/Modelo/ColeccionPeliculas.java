@@ -11,10 +11,12 @@ public class ColeccionPeliculas {
 	// atributos
 	private HashMap<Integer, Pelicula> lista;
 	private static ColeccionPeliculas miColeccionPeliculas;
+	private static HashMap<Integer,Pelicula> modeloProductos;
 
 	// constructora
 	private ColeccionPeliculas() {
 		this.lista = new HashMap<Integer, Pelicula>();
+		this.modeloProductos = new HashMap<Integer,Pelicula>();
 	}
 
 	// estático
@@ -74,9 +76,13 @@ public class ColeccionPeliculas {
 
 				String part1 = campos[0];
 				String part2 = campos[1];
-				if (this.lista.containsKey(Integer.parseInt(part1))) {
-					Pelicula aux = this.lista.get(Integer.parseInt(part1));
+				
+				int idPelicula = Integer.parseInt(part1);
+				if (this.lista.containsKey(idPelicula)) {
+					Pelicula aux = this.lista.get(idPelicula);
+					//
 					aux.sumAparicion(part2);
+					
 				}
 
 				// Vuelvo a leer del fichero
@@ -160,14 +166,26 @@ public class ColeccionPeliculas {
 	public double calcularTFIDF(int pIdPelicula, String pTag){
 		Pelicula pel= this.lista.get(pIdPelicula);
 		double res=0.0;
-		int tf= pel.obtAparecionTag(pTag);
-		int N= this.lista.size()+1;
+		int tf= pel.obtAparicionTag(pTag);
+		int N= this.lista.size();
 		int NT=this.numPeliculaConTag(pTag);
 		
 		res= tf *Math.log(N/NT);
 		return res;
 		
 	}
+	
+	/*public void crearModeloProducto(){
+		Pelicula pel;
+		double valorTFIDF=0.0;
+		for (HashMap.Entry<Integer, Pelicula> entry : lista.entrySet()) {
+			pel= entry.getValue();
+			HashMap<String,Integer> aux = pel.getTags();
+			for (HashMap.Entry<String, Integer> entry2 :aux.entrySet()) {
+				valorTFIDF= this.calcularTFIDF(, pTag)
+			}
+		}
+	}*/
 	
 	
 

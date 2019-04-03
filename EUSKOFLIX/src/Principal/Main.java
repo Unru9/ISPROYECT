@@ -9,6 +9,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		Controlador c = new Controlador();
 		c.mostrarVentana();
+		
 	}
 
 }
