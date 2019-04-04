@@ -10,6 +10,7 @@ public class Usuario {
 	// Contructora
 	public Usuario() {
 		this.ratings = new HashMap<Integer, Double>();
+		//añadir todas las peliculas con valor 0
 	}
 
 	// Metodos

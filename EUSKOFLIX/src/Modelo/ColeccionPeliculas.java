@@ -189,6 +189,14 @@ public class ColeccionPeliculas {
 		}
 	}
 	
+	public void visualizar(){
+		System.out.println(this.lista.get(114).getTags());
+	}
+	public void visualizarTFIDF(){
+		HashMap<String,Double> aux= modeloProductos.get(114);
+		System.out.println(aux.get("romance"));
+	}
+	
 	
 
 }

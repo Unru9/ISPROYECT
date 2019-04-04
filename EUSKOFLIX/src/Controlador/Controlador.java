@@ -25,6 +25,9 @@ public class Controlador {
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
+		cp.crearModeloProducto();
+		cp.visualizar();
+		cp.visualizarTFIDF();
 	}
 
 	public void mostrarVentana() {
