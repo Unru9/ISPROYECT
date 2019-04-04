@@ -12,12 +12,12 @@ public class ColeccionPeliculas {
 	// atributos
 	private HashMap<Integer, Pelicula> lista;
 	private static ColeccionPeliculas miColeccionPeliculas;
-	private HashMap<Integer,HashMap<String,Double>> modeloProductos;
+	private HashMap<Integer, HashMap<String, Double>> modeloProductos;
 
 	// constructora
 	private ColeccionPeliculas() {
 		this.lista = new HashMap<Integer, Pelicula>();
-		modeloProductos = new HashMap<Integer,HashMap<String,Double>>();
+		modeloProductos = new HashMap<Integer, HashMap<String, Double>>();
 	}
 
 	// estático
@@ -77,13 +77,13 @@ public class ColeccionPeliculas {
 
 				String part1 = campos[0];
 				String part2 = campos[1];
-				
+
 				int idPelicula = Integer.parseInt(part1);
 				if (this.lista.containsKey(idPelicula)) {
 					Pelicula aux = this.lista.get(idPelicula);
 					//
 					aux.sumAparicion(part2);
-					
+
 				}
 
 				// Vuelvo a leer del fichero
@@ -124,65 +124,63 @@ public class ColeccionPeliculas {
 		return sb.toString();
 	}
 
-	public void borrarPeliculas(){
+	public void borrarPeliculas() {
 		lista.clear();
 	}
-	
+
 	public boolean containsKey(int pID) {
 		if (this.lista.containsKey(pID)) {
 			return true;
 		}
 		return false;
 	}
-	
-	/*public ArrayList<String> obtTagsPelicula(String pPelicula){
-		Pelicula pel = buscarPelicula(pPelicula);
-		if (!pel.equals(null)){
-			return pel.obtTags();
-		}
-		return null;
-	}*/
+
+	/*
+	 * public ArrayList<String> obtTagsPelicula(String pPelicula){ Pelicula pel
+	 * = buscarPelicula(pPelicula); if (!pel.equals(null)){ return
+	 * pel.obtTags(); } return null; }
+	 */
 
 	private Pelicula buscarPelicula(String pPelicula) {
-		for (Pelicula pel : lista.values()){
-			if (pel.obtTitle() == pPelicula){
+		for (Pelicula pel : lista.values()) {
+			if (pel.obtTitle() == pPelicula) {
 				return pel;
 			}
 		}
 		return null;
 	}
-	
-	public int numPeliculaConTag(String pTag){
-		int res=0;
+
+	public int numPeliculaConTag(String pTag) {
+		int res = 0;
 		Pelicula pel;
 		for (HashMap.Entry<Integer, Pelicula> entry : lista.entrySet()) {
-			pel= entry.getValue();
-			if(pel.containsTags(pTag)){
-				res=res+1;
+			pel = entry.getValue();
+			if (pel.containsTags(pTag)) {
+				res = res + 1;
 			}
 		}
 		return res;
 	}
-	
-	public double calcularTFIDF(int pIdPelicula, String pTag){
-		Pelicula pel= this.lista.get(pIdPelicula);
-		double res=0.0;
-		int tf= pel.obtAparicionTag(pTag);
-		int N= this.lista.size();
-		int NT=this.numPeliculaConTag(pTag);
-		
-		res= tf *Math.log(N/NT);
+
+	public double calcularTFIDF(int pIdPelicula, String pTag) {
+		Pelicula pel = this.lista.get(pIdPelicula);
+		double res = 0.0;
+		int tf = pel.obtAparicionTag(pTag);
+		int N = this.lista.size();
+		int NT = this.numPeliculaConTag(pTag);
+
+		res = tf * Math.log(N / NT);
 		return res;
-		
+
 	}
-	
-	public void crearModeloProducto(){
-		for(Entry<Integer, Pelicula>   entrada : lista.entrySet()) {
+
+	public void crearModeloProducto() {
+		for (Entry<Integer, Pelicula> entrada : lista.entrySet()) {
 			int idPelicula = entrada.getKey();
 			Pelicula pelicula = lista.get(idPelicula);
 			HashMap<String, Integer> listaTagsPelicula = pelicula.getTags();
-			HashMap<String,Double> TFIDFTags = new HashMap<String, Double>();
-			for(Entry<String, Integer> entrada2 : listaTagsPelicula.entrySet()) {
+			HashMap<String, Double> TFIDFTags = new HashMap<String, Double>();
+			for (Entry<String, Integer> entrada2 : listaTagsPelicula.entrySet()) {
 				String tag = entrada2.getKey();
 				double tFIDF = calcularTFIDF(idPelicula, tag);
 				TFIDFTags.put(tag, tFIDF);
@@ -191,18 +189,21 @@ public class ColeccionPeliculas {
 			modeloProductos.put(idPelicula, TFIDFTags);
 		}
 	}
-	
-	public void visualizar(){
+
+	public void visualizar() {
 		System.out.println(this.lista.get(114).getTags());
 	}
-	public void visualizarTFIDF(){
+
+	public void visualizarTFIDF() {
 		this.crearModeloProducto();
-		HashMap<String,Double> aux= new HashMap<String, Double>();
+		HashMap<String, Double> aux = new HashMap<String, Double>();
 		aux = modeloProductos.get(114);
 		aux.get("romance");
 		System.out.println(aux.get("romance"));
 	}
 	
-	
+	public HashMap<Integer, HashMap<String, Double>> modeloProductos(){
+		return this.modeloProductos;
+	}
 
 }

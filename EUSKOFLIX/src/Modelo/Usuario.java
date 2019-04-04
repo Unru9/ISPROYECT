@@ -37,4 +37,8 @@ public class Usuario {
 		}
 		return false;
 	}
+	
+	public HashMap<Integer,Double> getRatings(){
+		return this.ratings;
+	}
 }
