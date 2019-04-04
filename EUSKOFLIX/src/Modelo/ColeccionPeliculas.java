@@ -17,7 +17,7 @@ public class ColeccionPeliculas {
 	// constructora
 	private ColeccionPeliculas() {
 		this.lista = new HashMap<Integer, Pelicula>();
-		this.modeloProductos = new HashMap<Integer,HashMap<String,Double>>();
+		modeloProductos = new HashMap<Integer,HashMap<String,Double>>();
 	}
 
 	// estático
@@ -181,16 +181,14 @@ public class ColeccionPeliculas {
 			int idPelicula = entrada.getKey();
 			Pelicula pelicula = lista.get(idPelicula);
 			HashMap<String, Integer> listaTagsPelicula = pelicula.getTags();
+			HashMap<String,Double> TFIDFTags = new HashMap<String, Double>();
 			for(Entry<String, Integer> entrada2 : listaTagsPelicula.entrySet()) {
 				String tag = entrada2.getKey();
 				double tFIDF = calcularTFIDF(idPelicula, tag);
-				HashMap<String,Double> hashTags = modeloProductos.get(idPelicula);
-				if (hashTags==null)
-					hashTags= new HashMap<String, Double>();
-				hashTags.put(tag, tFIDF);
-				System.out.println(hashTags.get(tag));
+				TFIDFTags.put(tag, tFIDF);
+				// System.out.println(TFIDFTags.get(tag));
 			}
-				 
+			modeloProductos.put(idPelicula, TFIDFTags);
 		}
 	}
 	
@@ -198,7 +196,10 @@ public class ColeccionPeliculas {
 		System.out.println(this.lista.get(114).getTags());
 	}
 	public void visualizarTFIDF(){
-		HashMap<String,Double> aux= modeloProductos.get(114);
+		this.crearModeloProducto();
+		HashMap<String,Double> aux= new HashMap<String, Double>();
+		aux = modeloProductos.get(114);
+		aux.get("romance");
 		System.out.println(aux.get("romance"));
 	}
 	
