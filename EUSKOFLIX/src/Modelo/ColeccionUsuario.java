@@ -5,10 +5,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 
 public class ColeccionUsuario {
 
@@ -73,7 +81,7 @@ public class ColeccionUsuario {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("=====================================================\n");
-		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula +"\n");
+		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula + "\n");
 		sb.append("=====================================================\n");
 		sb.append("\n");
 		sb.append("\n");
@@ -86,8 +94,8 @@ public class ColeccionUsuario {
 				sb.append(UsuarioValorador.obtValoracion(pIdPelicula));
 				sb.append("\n");
 				sb.append("\n");
-			}else {
-				sb.append("El usuario todavia no ha valorado la pelicula " + pIdPelicula +".");
+			} else {
+				sb.append("El usuario todavia no ha valorado la pelicula " + pIdPelicula + ".");
 				sb.append("\n");
 				sb.append("\n");
 			}
@@ -95,8 +103,8 @@ public class ColeccionUsuario {
 
 		return sb.toString();
 	}
-	
-	public void borrarUsuarios(){
+
+	public void borrarUsuarios() {
 		lista.clear();
 	}
 
@@ -106,74 +114,66 @@ public class ColeccionUsuario {
 		}
 		return false;
 	}
-	
-	/*public HashMap<Integer,HashMap<String,double>> crearModeloPersonas(){
-		
-		double resultadoFinal;
-		ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
-		HashMap<Integer, HashMap<String, Double>> aux= cp.modeloProductos();
-		
-		for (Entry<Integer, Usuario> entrada : lista.entrySet()) {
-			int idUsuario= entrada.getKey();
-			Usuario usuario = lista.get(idUsuario);
-			HashMap<Integer, Double> listaRatingsUsuario = usuario.getRatings();
-			ArrayList<Integer> LisValoraciones = new ArrayList<Integer>();
-			for (Entry<Integer, Double> entrada2 : listaRatingsUsuario.entrySet()) {
-				double valoracion= entrada2.getValue();
-				int idPelicula= entrada2.getKey();
-				if(valoracion >=3.5){
-					LisValoraciones.add(idPelicula);
-				}
-			}
-			for(int i=0;i<LisValoraciones.size();i++){
-				resultadoFinal=0.0;
-				HashMap<String, Double> hm= aux.get(i);
-				for (Entry<String, Double> entrada3 : hm.entrySet()) {
-					String tag= entrada3.getKey();
-					if(hm.containsKey(tag)){
-						double tfidf= hm.get(tag);
-					}
-					
-				}
-				
-			}
-		}*/
-	
-public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudes(){
-		
-		HashMap<Integer,ArrayList<Double>> vectores = crearVectoresPorIdPel();
-		
-		HashMap<Integer,HashMap<Integer,Double>> modeloP = new HashMap<Integer,HashMap<Integer,Double>>();
-		
+
+	/*
+	 * public HashMap<Integer,HashMap<String,double>> crearModeloPersonas(){
+	 * 
+	 * double resultadoFinal; ColeccionPeliculas cp=
+	 * ColeccionPeliculas.getColeccionPeliculas(); HashMap<Integer,
+	 * HashMap<String, Double>> aux= cp.modeloProductos();
+	 * 
+	 * for (Entry<Integer, Usuario> entrada : lista.entrySet()) { int idUsuario=
+	 * entrada.getKey(); Usuario usuario = lista.get(idUsuario);
+	 * HashMap<Integer, Double> listaRatingsUsuario = usuario.getRatings();
+	 * ArrayList<Integer> LisValoraciones = new ArrayList<Integer>(); for
+	 * (Entry<Integer, Double> entrada2 : listaRatingsUsuario.entrySet()) {
+	 * double valoracion= entrada2.getValue(); int idPelicula=
+	 * entrada2.getKey(); if(valoracion >=3.5){ LisValoraciones.add(idPelicula);
+	 * } } for(int i=0;i<LisValoraciones.size();i++){ resultadoFinal=0.0;
+	 * HashMap<String, Double> hm= aux.get(i); for (Entry<String, Double>
+	 * entrada3 : hm.entrySet()) { String tag= entrada3.getKey();
+	 * if(hm.containsKey(tag)){ double tfidf= hm.get(tag); }
+	 * 
+	 * }
+	 * 
+	 * } }
+	 */
+
+	public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudes() {
+
+		HashMap<Integer, ArrayList<Double>> vectores = crearVectoresPorIdPel();
+
+		HashMap<Integer, HashMap<Integer, Double>> modeloP = new HashMap<Integer, HashMap<Integer, Double>>();
+
 		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
 			Double[] v1 = (Double[]) entrada.getValue().toArray();
 			int idPel1 = entrada.getKey();
-			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()){
+			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()) {
 				Double[] v2 = (Double[]) entrada2.getValue().toArray();
 				int idPel2 = entrada2.getKey();
-				HashMap<Integer,Double> a = new HashMap<Integer,Double>();
-				
+				HashMap<Integer, Double> a = new HashMap<Integer, Double>();
+
 				a.put(idPel2, compararVectores(v1, v2));
 				modeloP.put(idPel1, a);
-				
+
 			}
 		}
-			
+
 		return modeloP;
 	}
-	
-	public HashMap<Integer,ArrayList<Double>> crearVectoresPorIdPel(){
-		
-		HashMap<Integer,ArrayList<Double>> vectores = new HashMap<Integer,ArrayList<Double>>();
-		
+
+	public HashMap<Integer, ArrayList<Double>> crearVectoresPorIdPel() {
+
+		HashMap<Integer, ArrayList<Double>> vectores = new HashMap<Integer, ArrayList<Double>>();
+
 		for (Entry<Integer, Usuario> entrada : lista.entrySet()) {
 			HashMap<Integer, Double> ratings = entrada.getValue().obtRatings();
-			for (Entry<Integer, Double> entrada2 : ratings.entrySet()){
-				
+			for (Entry<Integer, Double> entrada2 : ratings.entrySet()) {
+
 				int idPel = entrada2.getKey();
 				double valoracion = entrada2.getValue();
-				
-				if (vectores.containsKey(idPel)){
+
+				if (vectores.containsKey(idPel)) {
 					ArrayList<Double> val = vectores.get(idPel);
 					val.add(valoracion);
 					vectores.put(idPel, val);
@@ -186,20 +186,20 @@ public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudes(){
 		}
 		return vectores;
 	}
-	
-	public double compararVectores(Double[] v1, Double[] v2){
+
+	public double compararVectores(Double[] v1, Double[] v2) {
 		int diferencia = Math.abs(v1.length - v2.length);
-		
-		if (v1.length > v2.length){
+
+		if (v1.length > v2.length) {
 			v2 = rellenarArray(v2, diferencia);
 		}
-		
-		if (v2.length > v1.length){
+
+		if (v2.length > v1.length) {
 			v1 = rellenarArray(v1, diferencia);
 		}
-		
+
 		double coseno = cosenoVectores(v1, v2);
-		
+
 		return Math.abs(coseno);
 	}
 
@@ -231,4 +231,86 @@ public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudes(){
 	private Double[] rellenarArray(Double[] v2, int diferencia) {
 		return Arrays.copyOf(v2, diferencia);
 	}
+
+	/*public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudesTreeMapSorted() {
+
+		HashMap<Integer, ArrayList<Double>> vectores = crearVectoresPorIdPel();
+
+		HashMap<Integer, HashMap<Integer, Double>> modeloP = new HashMap<Integer, HashMap<Integer, Double>>();
+		
+		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
+			Double[] v1 = (Double[]) entrada.getValue().toArray();
+			int idPel1 = entrada.getKey();
+			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()) {
+				Double[] v2 = (Double[]) entrada2.getValue().toArray();
+				int idPel2 = entrada2.getKey();
+				HashMap<Integer, Double> a = new HashMap<Integer, Double>(); 
+				a.put(idPel2, compararVectores(v1, v2));
+				//sortHashMapByValues(a);
+				modeloP.put(idPel1, a);
+
+			}
+			
+		}
+
+		return modeloP;
+	}*/
+	
+	public void visualizar(HashMap<Integer, HashMap<Integer, Double>>a){
+		for (Entry<Integer, HashMap<Integer, Double>> entrada : a.entrySet()) {
+			int idPel1 = entrada.getKey();
+			HashMap<Integer, Double> sm= entrada.getValue();
+			for (Entry<Integer, Double> entrada2 : sm.entrySet()) {
+				double cos = entrada2.getValue();
+				System.out.println("cos de la pelicula : " + idPel1 +" es igual a: " + cos);
+			}
+			
+			
+		}
+		
+	}
+	
+	public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudesOrdenada(){
+		HashMap<Integer, HashMap<Integer, Double>> ms = MatrizSimilitudes();
+		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.entrySet()){
+			int idPel1 = entrada.getKey();
+			HashMap<Integer, Double> res = ms.get(idPel1);
+			HashMap<Integer, Double> sortedMapAsc = sortByComparator(res, false);
+			ms.put(idPel1, sortedMapAsc);
+	
+		}
+		this.visualizar(ms);
+		return ms;
+	}
+	
+    public HashMap<Integer, Double> sortByComparator(Map<Integer, Double> unsortMap, final boolean order)
+    {
+
+        List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        Collections.sort(list, new Comparator<Entry<Integer, Double>>()
+        {
+            public int compare(Entry<Integer, Double> o1,
+                    Entry<Integer, Double> o2)
+            {
+                if (order)
+                {
+                    return o1.getValue().compareTo(o2.getValue());
+                }
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+
+                }
+            }
+        });
+        HashMap<Integer, Double> sortedMap = new LinkedHashMap<Integer, Double>();
+        for (Entry<Integer, Double> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
 }

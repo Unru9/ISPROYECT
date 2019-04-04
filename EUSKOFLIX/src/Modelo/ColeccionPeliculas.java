@@ -195,7 +195,6 @@ public class ColeccionPeliculas {
 	}
 
 	public void visualizarTFIDF() {
-		this.crearModeloProducto();
 		HashMap<String, Double> aux = new HashMap<String, Double>();
 		aux = modeloProductos.get(114);
 		aux.get("romance");
