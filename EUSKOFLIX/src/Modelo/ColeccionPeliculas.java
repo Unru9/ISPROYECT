@@ -12,7 +12,7 @@ public class ColeccionPeliculas {
 	// atributos
 	private HashMap<Integer, Pelicula> lista;
 	private static ColeccionPeliculas miColeccionPeliculas;
-	private static HashMap<Integer,HashMap<String,Double>> modeloProductos;
+	private HashMap<Integer,HashMap<String,Double>> modeloProductos;
 
 	// constructora
 	private ColeccionPeliculas() {
@@ -177,13 +177,18 @@ public class ColeccionPeliculas {
 	}
 	
 	public void crearModeloProducto(){
-		for(Entry<Integer, HashMap<String, Double>>   entrada : modeloProductos.entrySet()) {
-			int iDPelicula = entrada.getKey();
-			HashMap<String, Double> listaTagsPelicula = entrada.getValue();
-			for(Entry<String, Double> entrada2 : listaTagsPelicula.entrySet()) {
+		for(Entry<Integer, Pelicula>   entrada : lista.entrySet()) {
+			int idPelicula = entrada.getKey();
+			Pelicula pelicula = lista.get(idPelicula);
+			HashMap<String, Integer> listaTagsPelicula = pelicula.getTags();
+			for(Entry<String, Integer> entrada2 : listaTagsPelicula.entrySet()) {
 				String tag = entrada2.getKey();
-				double tFIDF = calcularTFIDF(iDPelicula, tag);
-				entrada2.setValue(tFIDF);
+				double tFIDF = calcularTFIDF(idPelicula, tag);
+				HashMap<String,Double> hashTags = modeloProductos.get(idPelicula);
+				if (hashTags==null)
+					hashTags= new HashMap<String, Double>();
+				hashTags.put(tag, tFIDF);
+				System.out.println(hashTags.get(tag));
 			}
 				 
 		}
