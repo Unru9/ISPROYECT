@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,31 +107,6 @@ public class ColeccionUsuario {
 		return false;
 	}
 	
-	public ArrayList<Integer> obtPelisBienValoradas(){
-		
-		ArrayList<Integer> res= new ArrayList<Integer>();
-		
-		for (Entry<Integer, Usuario> entrada : lista.entrySet()) {
-			int idUsuario = entrada.getKey();
-			Usuario usuario = lista.get(idUsuario);
-			HashMap<Integer, Double> listaRatingsUsuario = usuario.getRatings();
-			//HashMap<String, Double> TFIDFTags = new HashMap<String, Double>();
-			for (Entry<Integer, Double> entrada2 : listaRatingsUsuario.entrySet()) {
-				//String tag = entrada2.getKey();
-				double valoracion = entrada2.getValue();
-				if(valoracion >=3.5){
-					res.add((entrada2.getKey()));
-				}
-				// System.out.println(TFIDFTags.get(tag));
-			}
-			
-		}
-		System.out.println(res);
-		System.out.println(res.size());
-		return res;
-		
-	}
-	
 	/*public HashMap<Integer,HashMap<String,double>> crearModeloPersonas(){
 		
 		double resultadoFinal;
@@ -162,4 +138,97 @@ public class ColeccionUsuario {
 				
 			}
 		}*/
+	
+public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudes(){
+		
+		HashMap<Integer,ArrayList<Double>> vectores = crearVectoresPorIdPel();
+		
+		HashMap<Integer,HashMap<Integer,Double>> modeloP = new HashMap<Integer,HashMap<Integer,Double>>();
+		
+		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
+			Double[] v1 = (Double[]) entrada.getValue().toArray();
+			int idPel1 = entrada.getKey();
+			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()){
+				Double[] v2 = (Double[]) entrada2.getValue().toArray();
+				int idPel2 = entrada2.getKey();
+				HashMap<Integer,Double> a = new HashMap<Integer,Double>();
+				
+				a.put(idPel2, compararVectores(v1, v2));
+				modeloP.put(idPel1, a);
+				
+			}
+		}
+			
+		return modeloP;
+	}
+	
+	public HashMap<Integer,ArrayList<Double>> crearVectoresPorIdPel(){
+		
+		HashMap<Integer,ArrayList<Double>> vectores = new HashMap<Integer,ArrayList<Double>>();
+		
+		for (Entry<Integer, Usuario> entrada : lista.entrySet()) {
+			HashMap<Integer, Double> ratings = entrada.getValue().obtRatings();
+			for (Entry<Integer, Double> entrada2 : ratings.entrySet()){
+				
+				int idPel = entrada2.getKey();
+				double valoracion = entrada2.getValue();
+				
+				if (vectores.containsKey(idPel)){
+					ArrayList<Double> val = vectores.get(idPel);
+					val.add(valoracion);
+					vectores.put(idPel, val);
+				} else {
+					ArrayList<Double> val = new ArrayList<Double>();
+					val.add(valoracion);
+					vectores.put(idPel, val);
+				}
+			}
+		}
+		return vectores;
+	}
+	
+	public double compararVectores(Double[] v1, Double[] v2){
+		int diferencia = Math.abs(v1.length - v2.length);
+		
+		if (v1.length > v2.length){
+			v2 = rellenarArray(v2, diferencia);
+		}
+		
+		if (v2.length > v1.length){
+			v1 = rellenarArray(v1, diferencia);
+		}
+		
+		double coseno = cosenoVectores(v1, v2);
+		
+		return Math.abs(coseno);
+	}
+
+	private double cosenoVectores(Double[] v1, Double[] v2) {
+		double numerador = multiplicarVectores(v1, v2);
+		double denominador = calcularNorma(v1) * calcularNorma(v2);
+		return numerador / denominador;
+	}
+
+	private double calcularNorma(Double[] v1) {
+		double result = 0;
+		for (int i = 0; i < v1.length; i++) {
+			double cuadrado = v1[i] * v1[i];
+			result = result + cuadrado;
+		}
+		result = Math.sqrt(result);
+		return result;
+	}
+
+	private double multiplicarVectores(Double[] v1, Double[] v2) {
+		double result = 0;
+		for (int i = 0; i < v2.length; i++) {
+			double multiplicacion = v1[i] * v2[i];
+			result = result + multiplicacion;
+		}
+		return result;
+	}
+
+	private Double[] rellenarArray(Double[] v2, int diferencia) {
+		return Arrays.copyOf(v2, diferencia);
+	}
 }

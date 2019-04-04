@@ -27,7 +27,6 @@ public class Controlador {
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
 		//cp.visualizar();
 		//cp.visualizarTFIDF();
-		cu.obtPelisBienValoradas();
 	}
 
 	public void mostrarVentana() {
