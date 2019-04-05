@@ -146,10 +146,10 @@ public class ColeccionUsuario {
 		HashMap<Integer, HashMap<Integer, Double>> modeloP = new HashMap<Integer, HashMap<Integer, Double>>();
 
 		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
-			Double[] v1 = (Double[]) entrada.getValue().toArray();
+			ArrayList<Double> v1 = entrada.getValue();
 			int idPel1 = entrada.getKey();
 			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()) {
-				Double[] v2 = (Double[]) entrada2.getValue().toArray();
+				ArrayList<Double> v2 = entrada2.getValue();
 				int idPel2 = entrada2.getKey();
 				HashMap<Integer, Double> a = new HashMap<Integer, Double>();
 
@@ -187,14 +187,14 @@ public class ColeccionUsuario {
 		return vectores;
 	}
 
-	public double compararVectores(Double[] v1, Double[] v2) {
-		int diferencia = Math.abs(v1.length - v2.length);
+	public double compararVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
+		int diferencia = Math.abs(v1.size() - v2.size());
 
-		if (v1.length > v2.length) {
+		if (v1.size() > v2.size()) {
 			v2 = rellenarArray(v2, diferencia);
 		}
 
-		if (v2.length > v1.length) {
+		if (v2.size() > v1.size()) {
 			v1 = rellenarArray(v1, diferencia);
 		}
 
@@ -203,66 +203,46 @@ public class ColeccionUsuario {
 		return Math.abs(coseno);
 	}
 
-	private double cosenoVectores(Double[] v1, Double[] v2) {
+	private double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		double numerador = multiplicarVectores(v1, v2);
 		double denominador = calcularNorma(v1) * calcularNorma(v2);
 		return numerador / denominador;
 	}
 
-	private double calcularNorma(Double[] v1) {
+	private double calcularNorma(ArrayList<Double> v1) {
 		double result = 0;
-		for (int i = 0; i < v1.length; i++) {
-			double cuadrado = v1[i] * v1[i];
+		for (int i = 0; i < v1.size(); i++) {
+			double cuadrado = v1.get(i) * v1.get(i);
 			result = result + cuadrado;
 		}
 		result = Math.sqrt(result);
 		return result;
 	}
 
-	private double multiplicarVectores(Double[] v1, Double[] v2) {
+	private double multiplicarVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		double result = 0;
-		for (int i = 0; i < v2.length; i++) {
-			double multiplicacion = v1[i] * v2[i];
+		for (int i = 0; i < v2.size(); i++) {
+			double multiplicacion = v1.get(i) * v2.get(i);
 			result = result + multiplicacion;
 		}
 		return result;
 	}
 
-	private Double[] rellenarArray(Double[] v2, int diferencia) {
-		return Arrays.copyOf(v2, diferencia);
-	}
-
-	/*public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudesTreeMapSorted() {
-
-		HashMap<Integer, ArrayList<Double>> vectores = crearVectoresPorIdPel();
-
-		HashMap<Integer, HashMap<Integer, Double>> modeloP = new HashMap<Integer, HashMap<Integer, Double>>();
-		
-		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
-			Double[] v1 = (Double[]) entrada.getValue().toArray();
-			int idPel1 = entrada.getKey();
-			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()) {
-				Double[] v2 = (Double[]) entrada2.getValue().toArray();
-				int idPel2 = entrada2.getKey();
-				HashMap<Integer, Double> a = new HashMap<Integer, Double>(); 
-				a.put(idPel2, compararVectores(v1, v2));
-				//sortHashMapByValues(a);
-				modeloP.put(idPel1, a);
-
-			}
-			
+	private ArrayList<Double> rellenarArray(ArrayList<Double> v2, int diferencia) {
+		for (int i = 0; i < diferencia; i++) {
+			v2.add(0.0);
 		}
-
-		return modeloP;
-	}*/
+		return v2;
+	}
 	
 	public void visualizar(HashMap<Integer, HashMap<Integer, Double>>a){
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : a.entrySet()) {
 			int idPel1 = entrada.getKey();
-			HashMap<Integer, Double> sm= entrada.getValue();
+			HashMap<Integer, Double> sm= a.get(idPel1);
 			for (Entry<Integer, Double> entrada2 : sm.entrySet()) {
+				int pel = entrada2.getKey();
 				double cos = entrada2.getValue();
-				System.out.println("cos de la pelicula : " + idPel1 +" es igual a: " + cos);
+				System.out.println("El producto " + idPel1 + " sobre la : " + pel +" tiene un coseno de " + cos);
 			}
 			
 			

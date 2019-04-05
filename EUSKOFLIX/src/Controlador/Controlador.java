@@ -26,7 +26,9 @@ public class Controlador {
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
 		cu.MatrizSimilitudesOrdenada();
+		cp.crearModeloProducto();
 		//cp.visualizarTFIDF();
+		//cp.visualizar();
 	}
 
 	public void mostrarVentana() {

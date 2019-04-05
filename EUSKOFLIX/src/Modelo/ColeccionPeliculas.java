@@ -81,7 +81,7 @@ public class ColeccionPeliculas {
 				int idPelicula = Integer.parseInt(part1);
 				if (this.lista.containsKey(idPelicula)) {
 					Pelicula aux = this.lista.get(idPelicula);
-					//
+					
 					aux.sumAparicion(part2);
 
 				}
@@ -195,10 +195,12 @@ public class ColeccionPeliculas {
 	}
 
 	public void visualizarTFIDF() {
-		HashMap<String, Double> aux = new HashMap<String, Double>();
-		aux = modeloProductos.get(114);
-		aux.get("romance");
-		System.out.println(aux.get("romance"));
+			HashMap<String,Double> tfidf = modeloProductos.get(114);
+			for (Entry<String, Double> entrada2 : tfidf.entrySet()) {
+				System.out.println("Tag es igual a " + entrada2.getKey() + " ---> " +entrada2.getValue());
+				
+			}
+			
 	}
 	
 	public HashMap<Integer, HashMap<String, Double>> modeloProductos(){
