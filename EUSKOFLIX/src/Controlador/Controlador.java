@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import Modelo.ColeccionPeliculas;
 import Modelo.ColeccionUsuario;
+import Modelo.MedidasSimilitud;
 import Vista.VistaCargaDatos;
 
 public class Controlador {
@@ -22,13 +23,14 @@ public class Controlador {
 		this.miVista.setRatingsListener(new Ratings());
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
+		MedidasSimilitud medidasSimilitud = MedidasSimilitud.getMedidasSimilitud();
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
-		cu.MatrizSimilitudesOrdenada();
-		cp.crearModeloProducto();
-		//cp.visualizarTFIDF();
-		//cp.visualizar();
+		medidasSimilitud.crearModeloProducto();
+		medidasSimilitud.visualizarModeloProducto();
+		medidasSimilitud.crearMatrizSimilitudes();
+		System.out.println("FIN");
 	}
 
 	public void mostrarVentana() {
@@ -51,7 +53,7 @@ public class Controlador {
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if (movieID != null) {
-				if (!cp.containsKey(Integer.parseInt(movieID))) {
+				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
 				} else {
 					String aux = cp.visTags(Integer.parseInt(movieID));
@@ -68,7 +70,7 @@ public class Controlador {
 			ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if (movieID != null) {
-				if (!cp.containsKey(Integer.parseInt(movieID))) {
+				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
 				} else {
 					String aux = cu.visRatingUsuario(Integer.parseInt(movieID));
