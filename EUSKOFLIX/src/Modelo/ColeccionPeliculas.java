@@ -6,18 +6,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class ColeccionPeliculas {
 	// atributos
-	private HashMap<Integer, Pelicula> lista;
+	private HashMap<Integer, Pelicula> listaPeliculas;
 	private static ColeccionPeliculas miColeccionPeliculas;
-	private HashMap<Integer, HashMap<String, Double>> modeloProductos;
 
 	// constructora
 	private ColeccionPeliculas() {
-		this.lista = new HashMap<Integer, Pelicula>();
-		modeloProductos = new HashMap<Integer, HashMap<String, Double>>();
+		this.listaPeliculas = new HashMap<Integer, Pelicula>();
 	}
 
 	// estático
@@ -29,6 +28,54 @@ public class ColeccionPeliculas {
 		return miColeccionPeliculas;
 	}
 
+	// Metodos para manejar la lista de peliculas
+		
+	private void anadirPelicula(int pIdPelicula, Pelicula pPelicula) {
+			this.listaPeliculas.put(pIdPelicula, pPelicula);
+	}
+	
+	private Pelicula buscarPelicula(String pPelicula) {
+		for (Pelicula pel : listaPeliculas.values()) {
+			if (pel.obtTitle() == pPelicula) {
+				return pel;
+			}
+		}
+		return null;
+	}
+
+	public Pelicula buscarPelicula(int pIdPelicula) {
+		return listaPeliculas.get(pIdPelicula);
+	}
+
+
+	public void borrarPeliculas() {
+		listaPeliculas.clear();
+	}
+
+	public boolean contieneIDPelicula(int pID) {
+		if (this.listaPeliculas.containsKey(pID)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public int numeroPeliculasConTag(String pTag) {
+		int res = 0;
+		Pelicula pel;
+		for (HashMap.Entry<Integer, Pelicula> entry : listaPeliculas.entrySet()) {
+			pel = entry.getValue();
+			if (pel.contieneTag(pTag)) {
+				res = res + 1;
+			}
+		}
+		return res;
+	}
+	
+	public int numeroPeliculas() {
+		return this.listaPeliculas.size();
+	}
+	
 	// Métodos
 
 	public void cargarPeliculas(String pPath) {
@@ -47,8 +94,9 @@ public class ColeccionPeliculas {
 				String part1 = campos[0];
 				String part2 = campos[1];
 				String title = part2.substring(1, part2.length() - 1);
-				Pelicula aux = new Pelicula(title);
-				this.lista.put(Integer.parseInt(part1), aux);
+				Pelicula pelicula = new Pelicula(title);
+				int idPelicula = Integer.parseInt(part1);
+				anadirPelicula(idPelicula, pelicula);
 
 				// Vuelvo a leer del fichero
 				linea = bufferLectura.readLine();
@@ -61,11 +109,15 @@ public class ColeccionPeliculas {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void cargarTagsDesdeArchivo(String pPath) {
+		crearMatrizEtiquetaProductos(pPath);
+	}
+	
 	public void crearMatrizEtiquetaProductos(String pPath) {
-
+		
 		try {
-
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			BufferedReader bufferLectura = new BufferedReader(new FileReader(pPath));
 
 			// Leo una línea del archivo
@@ -75,14 +127,13 @@ public class ColeccionPeliculas {
 				// Separa la línea leída con el separador definido previamente
 				String[] campos = linea.split(";");
 
-				String part1 = campos[0];
-				String part2 = campos[1];
+				String pelicula = campos[0];
+				String tag = campos[1];
 
-				int idPelicula = Integer.parseInt(part1);
-				if (this.lista.containsKey(idPelicula)) {
-					Pelicula aux = this.lista.get(idPelicula);
-					
-					aux.sumAparicion(part2);
+				int idPelicula = Integer.parseInt(pelicula);
+				if (cp.contieneIDPelicula(idPelicula)) {
+					Pelicula aux = cp.buscarPelicula(idPelicula);
+					aux.anadirAparicionTag(tag);
 
 				}
 
@@ -99,112 +150,30 @@ public class ColeccionPeliculas {
 		}
 	}
 
+	
+	//ITERADORES
+	private Iterator<Entry<Integer, Pelicula>> iterator() {
+		return listaPeliculas.entrySet().iterator();
+	}
+	
+	public Iterator<Entry<Integer, Pelicula>> getIterator() {
+		return iterator();
+	}
+	
+	
+	//METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y tags. UTILIZADO SOLO EN SPRINT 1
 	public String visPelis() {
-		Collection<Pelicula> aux = this.lista.values();
+		Collection<Pelicula> aux = this.listaPeliculas.values();
 		StringBuilder sb = new StringBuilder();
 		for (Pelicula pel : aux) {
 			sb.append(pel.obtTitle());
 			sb.append("\n");
 		}
-
-		return sb.toString();
+			return sb.toString();
 	}
 
 	public String visTags(int pID) {
-
-		ArrayList<String> aux = this.lista.get(pID).obtStringTags();
-		System.out.println(aux);
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < aux.size(); i++) {
-			sb.append(aux.get(i));
-			sb.append("\n");
-		}
-		System.out.println(aux);
-		return sb.toString();
+		Pelicula pelicula = buscarPelicula(pID);
+		return pelicula.visTags();		
 	}
-
-	public void borrarPeliculas() {
-		lista.clear();
-	}
-
-	public boolean containsKey(int pID) {
-		if (this.lista.containsKey(pID)) {
-			return true;
-		}
-		return false;
-	}
-
-	/*
-	 * public ArrayList<String> obtTagsPelicula(String pPelicula){ Pelicula pel
-	 * = buscarPelicula(pPelicula); if (!pel.equals(null)){ return
-	 * pel.obtTags(); } return null; }
-	 */
-
-	private Pelicula buscarPelicula(String pPelicula) {
-		for (Pelicula pel : lista.values()) {
-			if (pel.obtTitle() == pPelicula) {
-				return pel;
-			}
-		}
-		return null;
-	}
-
-	public int numPeliculaConTag(String pTag) {
-		int res = 0;
-		Pelicula pel;
-		for (HashMap.Entry<Integer, Pelicula> entry : lista.entrySet()) {
-			pel = entry.getValue();
-			if (pel.containsTags(pTag)) {
-				res = res + 1;
-			}
-		}
-		return res;
-	}
-
-	public double calcularTFIDF(int pIdPelicula, String pTag) {
-		Pelicula pel = this.lista.get(pIdPelicula);
-		double res = 0.0;
-		int tf = pel.obtAparicionTag(pTag);
-		int N = this.lista.size();
-		int NT = this.numPeliculaConTag(pTag);
-
-		res = tf * Math.log(N / NT);
-		return res;
-
-	}
-
-	public void crearModeloProducto() {
-		for (Entry<Integer, Pelicula> entrada : lista.entrySet()) {
-			int idPelicula = entrada.getKey();
-			Pelicula pelicula = lista.get(idPelicula);
-			HashMap<String, Integer> listaTagsPelicula = pelicula.getTags();
-			HashMap<String, Double> TFIDFTags = new HashMap<String, Double>();
-			for (Entry<String, Integer> entrada2 : listaTagsPelicula.entrySet()) {
-				String tag = entrada2.getKey();
-				double tFIDF = calcularTFIDF(idPelicula, tag);
-				TFIDFTags.put(tag, tFIDF);
-				// System.out.println(TFIDFTags.get(tag));
-			}
-			modeloProductos.put(idPelicula, TFIDFTags);
-		}
-	}
-
-	public void visualizar() {
-		System.out.println(this.lista.get(114).getTags());
-	}
-
-	public void visualizarTFIDF() {
-			HashMap<String,Double> tfidf = modeloProductos.get(114);
-			for (Entry<String, Double> entrada2 : tfidf.entrySet()) {
-				System.out.println("Tag es igual a " + entrada2.getKey() + " ---> " +entrada2.getValue());
-				
-			}
-			
-	}
-	
-	public HashMap<Integer, HashMap<String, Double>> modeloProductos(){
-		return this.modeloProductos;
-	}
-
 }

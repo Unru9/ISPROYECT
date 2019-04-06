@@ -1,33 +1,29 @@
 package Modelo;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Usuario {
 
-	// atributos
+	//ATRIBUTOS
 	private HashMap<Integer, Double> ratings;
 
 	// Contructora
 	public Usuario() {
 		this.ratings = new HashMap<Integer, Double>();
-		//añadir todas las peliculas con valor 0
 	}
 
 	// Metodos
 
-	public void addRatings(int pIdPelicula, double pCalificacion) {
+	public void anadirRating(int pIdPelicula, double pCalificacion) {
 		this.ratings.put(pIdPelicula, pCalificacion);
 	}
 
-	/*
-	 * public void visRatingUsuario(){ Iterator<Integer> itr=
-	 * ratings.keySet().iterator(); while(itr.hasNext()){ Integer key=
-	 * itr.next(); System.out.println("Película : " + key + " --> Puntuación: "+
-	 * ratings.get(key)); } }
-	 */
 
-	public Double obtValoracion(int pID) {
 
+	public Double obtValoracionPelicula(int pID) {
 		return this.ratings.get(pID);
 	}
 	
@@ -38,7 +34,20 @@ public class Usuario {
 		return false;
 	}
 	
-	public HashMap<Integer,Double> obtRatings(){
-		return this.ratings;
+	//METODOS PARA ITERAR
+	private Iterator<Entry<Integer, Double>> iterator() {
+		return ratings.entrySet().iterator();
 	}
+	
+	public Iterator<Entry<Integer, Double>> getIterador() {
+		return iterator();
+	}
+	
+	
+	/*
+	 * public void visRatingUsuario(){ Iterator<Integer> itr=
+	 * ratings.keySet().iterator(); while(itr.hasNext()){ Integer key=
+	 * itr.next(); System.out.println("Película : " + key + " --> Puntuación: "+
+	 * ratings.get(key)); } }
+	 */
 }

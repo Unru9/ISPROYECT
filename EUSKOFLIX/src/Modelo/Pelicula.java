@@ -2,55 +2,73 @@ package Modelo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Pelicula {
-	// atributos
-
+	
+	// ATRIBUTOS
 	private String title;
-	private HashMap<String,Integer> tags;
+	private HashMap<String,Integer> listaTags;
 
-	// Constructora
+	// CONSTRUCTORA
 	public Pelicula(String pTitle) {
 		this.title = pTitle;
-		this.tags = new HashMap<String,Integer>();
+		this.listaTags = new HashMap<String,Integer>();
 	}
 
-	// metodo
+	// METODOS 
 
 	public String obtTitle() {
 		return this.title;
 	}
 
-	public boolean containsTags(String pTag){
-		if(this.tags.containsKey(pTag)){
+	public boolean contieneTag(String pTag){
+		if(this.listaTags.containsKey(pTag)){
 			return true;
+		}else {
+			return false;
 		}
-	return false;
 	}
 	
-	public void sumAparicion(String pTag){
-		if(this.tags.containsKey(pTag)){
-			int valorActual = this.tags.get(pTag);
-			this.tags.put(pTag, valorActual + 1);
+	public void anadirAparicionTag(String pTag){
+		if(contieneTag(pTag)){
+			int valorActual = this.listaTags.get(pTag);
+			this.listaTags.put(pTag, valorActual + 1);
 		}else{
-			this.tags.put(pTag, 1);
+			this.listaTags.put(pTag, 1);
 		}
 	}
 	
 	public int obtAparicionTag(String pTag){
-		return this.tags.get(pTag);
+		return this.listaTags.get(pTag);
 	}
 	
-	public ArrayList<String> obtStringTags(){
-		ArrayList<String> aux = new ArrayList<String>();
-		for (HashMap.Entry<String, Integer> entry : tags.entrySet()) {
-			aux.add(entry.getKey());
+	public int cantidadTags() {
+		return listaTags.size();
+	}
+	
+
+	// ITERADOR
+	private Iterator<Entry<String, Integer>> iterator() {
+		return listaTags.entrySet().iterator();
+	}
+	
+	public Iterator<Entry<String, Integer>> getIterator() {
+		return iterator();
+	}
+	
+	
+	
+	//	//METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y tags. UTILIZADO SOLO EN SPRINT 1
+	public String visTags() {
+
+		StringBuilder sb = new StringBuilder();
+		for (Entry<String, Integer> entrada : listaTags.entrySet()) {
+			sb.append(entrada.getKey());
+			sb.append("\n");
 		}
-		return aux;
-		
+		return sb.toString();
 	}
 	
-	public HashMap<String,Integer> getTags(){
-		return this.tags;
-	}
 }
