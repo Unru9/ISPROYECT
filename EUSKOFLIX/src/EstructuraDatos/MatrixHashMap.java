@@ -17,7 +17,7 @@ public class MatrixHashMap  {
 	private String key2Actual;
 	
 	//CONSTRUCTORAS
-	public MatrixHashMap() {  //¿PELIGROSO?
+	public MatrixHashMap() { 
 		structure = new HashMap<Integer, HashMap<String,Double>>();
 	}
 
@@ -73,13 +73,13 @@ public class MatrixHashMap  {
 		return segundoHash.entrySet().iterator();
 	}
 	
-	public Iterator<Entry<Integer, HashMap<String, Double>>> getIterador() {
+	/*public Iterator<Entry<Integer, HashMap<String, Double>>> getIterador() {
 		return iterator();		
 	}
 	
 	public Iterator<Entry<String, Double>> getIteradorSegundaKey(int key1) {
 		return iteratorSegundaKey(key1);
-	}
+	}*/
 	
 	//METODOS PARA RECORRER DUPLA POR DUPLA
 	//reinicia iteradores, devuelve primer valor. Si no hay primer valor, devuelve null
