@@ -19,13 +19,13 @@ public class MedidasSimilitud {
 	private static MedidasSimilitud mMedidasSimilitud;
 	private  MatrixHashMap matrizModeloProductos;
 	private MatrixHashMap matrizModeloPersonas;
-	private HashMap<Integer, ArrayList<HashMap<Integer, Double>>> matrizSimilitudes;
+	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudes;
 	
 	//CONSTRUCTORA
 	private MedidasSimilitud() {
 		matrizModeloProductos = new MatrixHashMap(); 
 		matrizModeloPersonas = new MatrixHashMap();
-		matrizSimilitudes = new HashMap<Integer, ArrayList<HashMap<Integer, Double>>>();
+		matrizSimilitudes = new HashMap<Integer, HashMap<Integer, Double>>();
 	}
 	
 	public static MedidasSimilitud getMedidasSimilitud() {
@@ -108,10 +108,7 @@ public class MedidasSimilitud {
 		}
 	}
 	
-	
-	public HashMap<Integer, ArrayList<HashMap<Integer, Double>>> getMatrizSimilitudes() {
-		return matrizSimilitudes;
-	}
+
 
 	public void crearMatrizSimilitudes(){
 		
@@ -124,19 +121,17 @@ public class MedidasSimilitud {
 				ArrayList<Double> v2 = entrada2.getValue();
 				int idPel2 = entrada2.getKey();
 				
-				HashMap<Integer,Double> a = new HashMap<Integer,Double>();
-				a.put(idPel2, compararVectores(v1, v2));
-				
 				if (matrizSimilitudes.containsKey(idPel1)){
-					ArrayList<HashMap<Integer, Double>> AL = matrizSimilitudes.get(idPel1);
-					AL.add(a);
-					matrizSimilitudes.put(idPel1, AL);
+					HashMap<Integer, Double> HM = matrizSimilitudes.get(idPel1);
+					HM.put(idPel2, compararVectores(v1, v2));
+					matrizSimilitudes.put(idPel1, HM);
 				}else{
-					ArrayList<HashMap<Integer, Double>> AL = new ArrayList<HashMap<Integer, Double>>();
-					AL.add(a);
-					matrizSimilitudes.put(idPel1, AL);
+					HashMap<Integer, Double> HM = new HashMap<Integer, Double>();
+					HM.put(idPel2, compararVectores(v1, v2));
+					matrizSimilitudes.put(idPel1, HM);
 				}
 			}
+			
 		}
 		
 		/*StringBuilder sb = new StringBuilder();
