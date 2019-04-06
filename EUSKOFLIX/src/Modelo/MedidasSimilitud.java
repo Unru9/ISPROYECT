@@ -7,8 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import EstructuraDatos.MatrixHashMap;
@@ -117,25 +123,20 @@ public class MedidasSimilitud {
 		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
 			ArrayList<Double> v1 =  entrada.getValue();
 			int idPel1 = entrada.getKey();
+			
 			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()){
 				ArrayList<Double> v2 = entrada2.getValue();
 				int idPel2 = entrada2.getKey();
 				
-				if (matrizSimilitudes.containsKey(idPel1)){
-					HashMap<Integer, Double> HM = matrizSimilitudes.get(idPel1);
-					HM.put(idPel2, compararVectores(v1, v2));
-					matrizSimilitudes.put(idPel1, HM);
-				}else{
-					HashMap<Integer, Double> HM = new HashMap<Integer, Double>();
-					HM.put(idPel2, compararVectores(v1, v2));
-					matrizSimilitudes.put(idPel1, HM);
-				}
-			}
+				double similitud = compararVectores(v1, v2);
+				matrizSimilitudesAnadir(idPel1, idPel2, similitud);
 			
+			}
+			ordenarHashMap(matrizSimilitudes.get(idPel1));
 		}
 		
 		/*StringBuilder sb = new StringBuilder();
-		for (Entry<Integer, ArrayList<HashMap<Integer, Double>>> entrada : matrizSimilitudes.entrySet()) {
+		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudes.entrySet()) {
 			System.out.println(entrada);
 			sb.append(entrada.toString() + "\n");
 		}
@@ -151,6 +152,27 @@ public class MedidasSimilitud {
 		}*/
 		
 			
+	}
+
+	
+
+	private void ordenarHashMap(HashMap<Integer, Double> hashMap) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void matrizSimilitudesAnadir(int idPel1, int idPel2, double similitud) {
+		if (matrizSimilitudes.containsKey(idPel1)){
+			HashMap<Integer, Double> HM = matrizSimilitudes.get(idPel1);
+			HM.put(idPel2, similitud);
+			matrizSimilitudes.put(idPel1, HM);
+		}else{
+			HashMap<Integer, Double> HM = new HashMap<Integer, Double>();
+			HM.put(idPel2, similitud);
+			matrizSimilitudes.put(idPel1, HM);
+		}
+		
+		
 	}
 
 	private HashMap<Integer,ArrayList<Double>> crearVectoresPorIdPel(){
