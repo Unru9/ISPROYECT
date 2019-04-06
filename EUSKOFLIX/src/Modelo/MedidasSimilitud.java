@@ -1,7 +1,9 @@
 package Modelo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,13 +19,13 @@ public class MedidasSimilitud {
 	private static MedidasSimilitud mMedidasSimilitud;
 	private  MatrixHashMap matrizModeloProductos;
 	private MatrixHashMap matrizModeloPersonas;
-	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudes;
+	private HashMap<Integer, ArrayList<HashMap<Integer, Double>>> matrizSimilitudes;
 	
 	//CONSTRUCTORA
 	private MedidasSimilitud() {
 		matrizModeloProductos = new MatrixHashMap(); 
 		matrizModeloPersonas = new MatrixHashMap();
-		matrizSimilitudes = new HashMap<Integer, HashMap<Integer,Double>>();
+		matrizSimilitudes = new HashMap<Integer, ArrayList<HashMap<Integer, Double>>>();
 	}
 	
 	public static MedidasSimilitud getMedidasSimilitud() {
@@ -107,6 +109,10 @@ public class MedidasSimilitud {
 	}
 	
 	
+	public HashMap<Integer, ArrayList<HashMap<Integer, Double>>> getMatrizSimilitudes() {
+		return matrizSimilitudes;
+	}
+
 	public void crearMatrizSimilitudes(){
 		
 		HashMap<Integer,ArrayList<Double>> vectores = crearVectoresPorIdPel();
@@ -117,14 +123,38 @@ public class MedidasSimilitud {
 			for (Entry<Integer, ArrayList<Double>> entrada2 : vectores.entrySet()){
 				ArrayList<Double> v2 = entrada2.getValue();
 				int idPel2 = entrada2.getKey();
+				
 				HashMap<Integer,Double> a = new HashMap<Integer,Double>();
-				
 				a.put(idPel2, compararVectores(v1, v2));
-				matrizSimilitudes.put(idPel1, a);
 				
+				if (matrizSimilitudes.containsKey(idPel1)){
+					ArrayList<HashMap<Integer, Double>> AL = matrizSimilitudes.get(idPel1);
+					AL.add(a);
+					matrizSimilitudes.put(idPel1, AL);
+				}else{
+					ArrayList<HashMap<Integer, Double>> AL = new ArrayList<HashMap<Integer, Double>>();
+					AL.add(a);
+					matrizSimilitudes.put(idPel1, AL);
+				}
 			}
 		}
-		System.out.println(matrizSimilitudes);
+		
+		/*StringBuilder sb = new StringBuilder();
+		for (Entry<Integer, ArrayList<HashMap<Integer, Double>>> entrada : matrizSimilitudes.entrySet()) {
+			System.out.println(entrada);
+			sb.append(entrada.toString() + "\n");
+		}
+		
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter("C:/Users/ignac/Desktop/resultados.txt"));
+			bw.write(sb.toString());
+			bw.close();
+		} catch (IOException e) {
+			System.out.println("Error al escribir los resultados");
+			e.printStackTrace();
+		}*/
+		
 			
 	}
 
