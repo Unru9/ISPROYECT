@@ -34,6 +34,7 @@ public class VistaCargaDatos extends JFrame {
 	//private JTable table;
 	private static VistaCargaDatos frame;
 	private JButton btnMatrizSimilitudesOrdenada;
+	private JButton btnIdoineidad;
 
 	/**
 	 * Launch the application.
@@ -112,6 +113,17 @@ public class VistaCargaDatos extends JFrame {
 		gbc_btnNewButton_3.gridy = 7;
 		panel.add(btnMatrizSimilitudesOrdenada, gbc_btnNewButton_3);
 		
+		btnIdoineidad = new JButton("Idoneidad");
+		btnIdoineidad.setPreferredSize(new Dimension(100, 20));
+		btnIdoineidad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
+		gbc_btnNewButton_4.gridx = 0;
+		gbc_btnNewButton_4.gridy = 8;
+		panel.add(btnIdoineidad, gbc_btnNewButton_4);
+		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -159,6 +171,10 @@ public class VistaCargaDatos extends JFrame {
 		
 	}
 	
+	public void idoneidadListener(ActionListener listenIdoneidadBtn){
+		btnIdoineidad.addActionListener(listenIdoneidadBtn);
+		
+	}
 	public void setTextoGeneral(String pTexto){
 		this.textArea.setText(pTexto);
 	}

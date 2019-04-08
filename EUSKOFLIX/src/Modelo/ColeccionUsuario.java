@@ -40,7 +40,7 @@ public class ColeccionUsuario {
 		listaUsuarios.clear();
 	}
 	
-	public boolean contieneUsuario (int pIdUsuario) {
+	private boolean contieneUsuario (int pIdUsuario) {
 		if (this.listaUsuarios.containsKey(pIdUsuario)) {
 			return true;
 		}else {
@@ -57,7 +57,7 @@ public class ColeccionUsuario {
 		if (usuario!=null) {
 			return usuario.obtValoracionPelicula(pPeliculaID);
 		}
-		return -1.00;
+		return 0.00;
 	}
 	//METODOS PARA ITERAR
 	
@@ -136,6 +136,14 @@ public class ColeccionUsuario {
 
 		return sb.toString();
 	}
+	
+	public boolean contieneIdUsuario(int pIDusuario) {
+		if (this.listaUsuarios.containsKey(pIDusuario)) {
+			return true;
+		}
+		return false;
+	}
+	
 }
 	
 //**********************************************************************************************************//

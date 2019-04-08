@@ -73,14 +73,6 @@ public class MatrixHashMap  {
 		return segundoHash.entrySet().iterator();
 	}
 	
-	/*public Iterator<Entry<Integer, HashMap<String, Double>>> getIterador() {
-		return iterator();		
-	}
-	
-	public Iterator<Entry<String, Double>> getIteradorSegundaKey(int key1) {
-		return iteratorSegundaKey(key1);
-	}*/
-	
 	//METODOS PARA RECORRER DUPLA POR DUPLA
 	//reinicia iteradores, devuelve primer valor. Si no hay primer valor, devuelve null
 	public Double recorrerMatriz() {

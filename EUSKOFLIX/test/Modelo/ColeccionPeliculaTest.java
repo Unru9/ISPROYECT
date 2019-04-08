@@ -26,14 +26,14 @@ public class ColeccionPeliculaTest {
 		/* Caso 1: no hay peliculas añadidas. */
 		cp.cargarPeliculas("movie-titles.csv");
 		
-		assertEquals(true, cp.contieneIDPelicula(11));
-		assertEquals(false, cp.contieneIDPelicula(15));
+		assertEquals(true, cp.containsKey(11));
+		assertEquals(false, cp.containsKey(15));
 		
 		/* Caso 2: hay peliculas añadidas. */
 		cp.cargarPeliculas("movie-titles.csv");
 		
-		assertEquals(true, cp.contieneIDPelicula(11));
-		assertEquals(false, cp.contieneIDPelicula(15));
+		assertEquals(true, cp.containsKey(11));
+		assertEquals(false, cp.containsKey(15));
 	}
 	
 	@Test

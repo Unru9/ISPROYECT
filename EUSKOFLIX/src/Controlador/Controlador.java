@@ -22,6 +22,8 @@ public class Controlador {
 		this.miVista.setTagsListener(new Tags());
 		this.miVista.setRatingsListener(new Ratings());
 		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
+		this.miVista.idoneidadListener(new Idoneidad());
+		
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
 		
@@ -104,5 +106,26 @@ public class Controlador {
 			}
 		}
 	}
-
+	
+	class Idoneidad implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
+			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+			MedidasSimilitud ms = MedidasSimilitud.getMedidasSimilitud();
+			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
+			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
+			if (movieID != null && usuarioID !=null) {
+				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+				}else if (!cu.contieneIdUsuario(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
+				}else{
+					double res= ms.gradoIdoneidad(Integer.parseInt(movieID),Integer.parseInt(movieID),10);
+					String aux =Double.toString(res);
+					miVista.setTextoGeneral(aux);
+				}
+			}
+		}
+	}
 }

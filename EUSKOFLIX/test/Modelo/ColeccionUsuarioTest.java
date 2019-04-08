@@ -24,14 +24,14 @@ public class ColeccionUsuarioTest {
 		/* Caso 1: no hay usuarios añadidas. */
 		cu.cargarUsuarios("movie-ratings.csv");
 		
-		assertEquals(true, cu.contieneUsuario(1));
-		assertEquals(false, cu.contieneUsuario(5573));
+		assertEquals(true, cu.containsKey(1));
+		assertEquals(false, cu.containsKey(5573));
 		
 		/* Caso 2: hay peliculas añadidas. */
 		cu.cargarUsuarios("movie-ratings.csv");
 		
-		assertEquals(true, cu.contieneUsuario(1));
-		assertEquals(false, cu.contieneUsuario(5573));
+		assertEquals(true, cu.containsKey(1));
+		assertEquals(false, cu.containsKey(5573));
 	}
 	
 	public void testBorrarPeliculas(){
