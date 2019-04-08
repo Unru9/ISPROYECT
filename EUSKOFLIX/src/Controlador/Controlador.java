@@ -121,7 +121,7 @@ public class Controlador {
 				}else if (!cu.contieneIdUsuario(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				}else{
-					double res= ms.gradoIdoneidad(Integer.parseInt(movieID),Integer.parseInt(movieID),10);
+					double res= ms.gradoIdoneidad(Integer.parseInt(movieID),Integer.parseInt(usuarioID),10);
 					String aux =Double.toString(res);
 					miVista.setTextoGeneral(aux);
 				}
