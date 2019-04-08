@@ -52,6 +52,13 @@ public class ColeccionUsuario {
 		return listaUsuarios.get(pUsuarioID);
 	}
 	
+	public double obtValoracion(int pUsuarioID, int pPeliculaID) {
+		Usuario usuario = obtUsuario(pUsuarioID);
+		if (usuario!=null) {
+			return usuario.obtValoracionPelicula(pPeliculaID);
+		}
+		return -1.00;
+	}
 	//METODOS PARA ITERAR
 	
 	private Iterator<Entry<Integer, Usuario>> iterador() {
