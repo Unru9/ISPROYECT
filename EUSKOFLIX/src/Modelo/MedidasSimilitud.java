@@ -222,7 +222,7 @@ public class MedidasSimilitud {
 	public double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		double numerador = multiplicarVectores(v1, v2);
 		double denominador = calcularNorma(v1) * calcularNorma(v2);
-		return numerador / denominador;
+		return  Math.round((numerador / denominador) * 1000.0)/ 1000.0;
 	}
 
 	private double calcularNorma(ArrayList<Double> v1) {
