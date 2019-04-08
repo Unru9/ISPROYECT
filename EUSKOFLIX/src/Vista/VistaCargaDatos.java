@@ -101,8 +101,8 @@ public class VistaCargaDatos extends JFrame {
 		panel.add(btnRatings, gbc_btnNewButton_1);
 		
 		
-		btnMatrizSimilitudesOrdenada = new JButton("MatrizSimilitudes");
-		btnMatrizSimilitudesOrdenada.setPreferredSize(new Dimension(100, 20));
+		btnMatrizSimilitudesOrdenada = new JButton("ProductModel");
+		btnMatrizSimilitudesOrdenada.setPreferredSize(new Dimension(120, 20));
 		btnMatrizSimilitudesOrdenada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -119,7 +119,7 @@ public class VistaCargaDatos extends JFrame {
 		textArea = new JTextArea (25,80);
 		scroll = new JScrollPane();
 		scroll.setViewportView(textArea);
-		panel_1.add(scroll, BorderLayout.CENTER);
+		panel_1.add(scroll, BorderLayout.EAST);
 		
 		/*table = new JTable();
 		scroll = new JScrollPane();
