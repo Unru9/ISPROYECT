@@ -292,11 +292,66 @@ public class MedidasSimilitud {
 	}
 	
 	
+	public void visualizar(HashMap<Integer, HashMap<Integer, Double>>a){
+		for (Entry<Integer, HashMap<Integer, Double>> entrada : a.entrySet()) {
+			int idPel1 = entrada.getKey();
+			HashMap<Integer, Double> sm= a.get(idPel1);
+			for (Entry<Integer, Double> entrada2 : sm.entrySet()) {
+				int pel = entrada2.getKey();
+				double cos = entrada2.getValue();
+				System.out.println("El producto " + idPel1 + " sobre la : " + pel +" tiene un coseno de " + cos);
+			}
+			
+			
+		}
 		
+	}
 	
+	public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudesOrdenada(){
+		HashMap<Integer, HashMap<Integer, Double>> ms = matrizSimilitudes;
+		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.entrySet()){
+			int idPel1 = entrada.getKey();
+			HashMap<Integer, Double> res = ms.get(idPel1);
+			HashMap<Integer, Double> sortedMapAsc = sortByComparator(res, false);
+			ms.put(idPel1, sortedMapAsc);
 	
+		}
+		this.visualizar(ms);
+		return ms;
+	}
+	
+    public HashMap<Integer, Double> sortByComparator(Map<Integer, Double> unsortMap, final boolean order)
+    {
 
+        List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        Collections.sort(list, new Comparator<Entry<Integer, Double>>()
+        {
+            public int compare(Entry<Integer, Double> o1,
+                    Entry<Integer, Double> o2)
+            {
+                if (order)
+                {
+                    return o1.getValue().compareTo(o2.getValue());
+                }
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+
+                }
+            }
+        });
+        HashMap<Integer, Double> sortedMap = new LinkedHashMap<Integer, Double>();
+        for (Entry<Integer, Double> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
 }
+
 	
 	
 
