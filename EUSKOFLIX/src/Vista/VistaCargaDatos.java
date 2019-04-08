@@ -121,7 +121,7 @@ public class VistaCargaDatos extends JFrame {
 		});
 		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
 		gbc_btnNewButton_4.gridx = 0;
-		gbc_btnNewButton_4.gridy = 8;
+		gbc_btnNewButton_4.gridy = 9;
 		panel.add(btnIdoineidad, gbc_btnNewButton_4);
 		
 		panel_1 = new JPanel();
