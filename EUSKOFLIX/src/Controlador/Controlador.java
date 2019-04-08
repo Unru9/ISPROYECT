@@ -118,12 +118,17 @@ public class Controlador {
 			if (movieID != null && usuarioID !=null) {
 				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
-				}else if (!cu.contieneIdUsuario(Integer.parseInt(movieID))) {
+				}else if (!cu.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				}else{
-					double res= ms.gradoIdoneidad(Integer.parseInt(movieID),Integer.parseInt(usuarioID),10);
+					double res= ms.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),10);
 					String aux =Double.toString(res);
-					miVista.setTextoGeneral(aux);
+					StringBuilder sb = new StringBuilder();
+					sb.append("============================================================ \n");
+					sb.append("PREDICIÓ BASADA EN PRODUCTOS \n");
+					sb.append("============================================================ \n");
+					sb.append("La valoración predicha para el usuario "+ usuarioID + " para la película " + movieID + " ha sido de: "+ aux);
+					miVista.setTextoGeneral(sb.toString());
 				}
 			}
 		}

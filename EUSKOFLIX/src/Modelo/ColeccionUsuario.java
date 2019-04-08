@@ -54,10 +54,10 @@ public class ColeccionUsuario {
 	
 	public double obtValoracion(int pUsuarioID, int pPeliculaID) {
 		Usuario usuario = obtUsuario(pUsuarioID);
-		if (usuario!=null) {
-			return usuario.obtValoracionPelicula(pPeliculaID);
+		if (usuario==null) {
+			return -1.00;	
 		}
-		return 0.00;
+		return usuario.obtValoracionPelicula(pPeliculaID);
 	}
 	//METODOS PARA ITERAR
 	
