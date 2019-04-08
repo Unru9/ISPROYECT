@@ -50,7 +50,7 @@ public class MedidasSimilitud {
 	//METODOS
 	public void cargarTagsDesdeArchivo(String pPath) {
 		crearMatrizEtiquetaProductos(pPath);
-	
+	}
 	
 	public void crearMatrizEtiquetaProductos(String pPath) {
 		
