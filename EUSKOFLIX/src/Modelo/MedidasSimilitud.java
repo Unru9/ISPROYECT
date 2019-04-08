@@ -135,10 +135,11 @@ public class MedidasSimilitud {
 				ArrayList<Double> v2 = entrada2.getValue();
 				int idPel2 = entrada2.getKey();
 				
-				double similitud = Math.round(compararVectores(v1, v2) * 1000.0)/ 1000.0;
+				if (idPel1 != idPel2){
+					double similitud = Math.round(compararVectores(v1, v2) * 1000.0)/ 1000.0;
 				
-				matrizSimilitudesAnadir(idPel1, idPel2, similitud);
-			
+					matrizSimilitudesAnadir(idPel1, idPel2, similitud);
+				}
 			}
 			ordenarHashMap(matrizSimilitudes.get(idPel1));
 		}
