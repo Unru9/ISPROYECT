@@ -219,7 +219,7 @@ public class MedidasSimilitud {
 		return Math.abs(coseno);
 	}
 
-	private double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
+	public double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		double numerador = multiplicarVectores(v1, v2);
 		double denominador = calcularNorma(v1) * calcularNorma(v2);
 		return numerador / denominador;
@@ -244,14 +244,14 @@ public class MedidasSimilitud {
 		return result;
 	}
 
-	private ArrayList<Double> rellenarArray(ArrayList<Double> v2, int diferencia) {
+	public ArrayList<Double> rellenarArray(ArrayList<Double> v2, int diferencia) {
 		for (int i = 0; i < diferencia; i++) {
 			v2.add(0.0);
 		}
 		return v2;
 	}
 	
-	public ArrayList<Integer> crearListaPeliculasMasSimilaresA (int pIdPersona, int pIdPelicula, int pNumeroSimilitudes){
+	public ArrayList<Integer> crearListaPeliculasMasSimilaresA (int pIdPersona, int pIdPelicula, int pNumeroSimiu){
 		ArrayList<Integer> lista = new ArrayList<Integer>();
 		
 		// CREAR LISTA DE PELICULAS MAS SIMILARES A PELICULA SELECCIONADA 
@@ -287,7 +287,7 @@ public class MedidasSimilitud {
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.entrySet()){
 			int idPel1 = entrada.getKey();
 			HashMap<Integer, Double> res = ms.get(idPel1);
-			HashMap<Integer, Double> sortedMapAsc = sortHashMap(res, false);
+			HashMap<Integer, Double> sortedMapAsc = sortByComparator(res, false);
 			matrizSimilitudesOrdenada.put(idPel1, sortedMapAsc);
 	
 		}
@@ -318,7 +318,7 @@ public class MedidasSimilitud {
 		return sb.toString();
 	}
 	
-    public HashMap<Integer, Double> sortHashMap(Map<Integer, Double> unsortMap, final boolean order)
+    public HashMap<Integer, Double> sortByComparator(Map<Integer, Double> unsortMap, final boolean order)
     {
 
         List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsortMap.entrySet());
@@ -349,7 +349,7 @@ public class MedidasSimilitud {
         return sortedMap;
     }
     
-	/*private static void writeFile(String output, String pResultado) throws Exception {
+/*	private static void writeFile(String output, String pResultado) throws Exception {
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(output));
@@ -357,10 +357,11 @@ public class MedidasSimilitud {
 			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Error en la escritura d e datos");
+			System.out.println("Error en la escritura de datos");
 		}
-	}*/
-    
+	}
+	
+	*/
     public double gradoIdoneidad(int idUser, int idPel, int nProd){
     	HashMap<Integer, Double> similares = matrizSimilitudesOrdenada.get(idPel);
     	double numerador = 0;
