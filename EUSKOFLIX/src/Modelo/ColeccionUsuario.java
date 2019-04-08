@@ -40,7 +40,7 @@ public class ColeccionUsuario {
 		listaUsuarios.clear();
 	}
 	
-	private boolean contieneUsuario (int pIdUsuario) {
+	public boolean contieneUsuario (int pIdUsuario) {
 		if (this.listaUsuarios.containsKey(pIdUsuario)) {
 			return true;
 		}else {

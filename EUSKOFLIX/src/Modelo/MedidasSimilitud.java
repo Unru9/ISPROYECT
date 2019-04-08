@@ -219,7 +219,7 @@ public class MedidasSimilitud {
 		return Math.abs(coseno);
 	}
 
-	private double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
+	public double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		double numerador = multiplicarVectores(v1, v2);
 		double denominador = calcularNorma(v1) * calcularNorma(v2);
 		return numerador / denominador;
@@ -244,31 +244,18 @@ public class MedidasSimilitud {
 		return result;
 	}
 
-	private ArrayList<Double> rellenarArray(ArrayList<Double> v2, int diferencia) {
+	public ArrayList<Double> rellenarArray(ArrayList<Double> v2, int diferencia) {
 		for (int i = 0; i < diferencia; i++) {
 			v2.add(0.0);
 		}
 		return v2;
 	}
 	
-	public ArrayList<Integer> crearListaPeliculasMasSimilaresA (int pIdPersona, int pIdPelicula, int pNumeroSimilitudes){
-		ArrayList<Integer> lista = new ArrayList<Integer>();
-		
-		// CREAR LISTA DE PELICULAS MAS SIMILARES A PELICULA SELECCIONADA 
-		
-		//APLICAR FORMULA, PUNTO 2.2.2, Pag 6, Determinar el Grado de idoneidad, punto 2
-		
-		return lista;
-	}
 	
 	public Double similitudEntrePeliculas(int pPelicula1, int pPelicula2) {
 		return obtSimilitud(pPelicula1, pPelicula2);
 	}
 	
-	public Double valoracionEstimada (int pIdPersona, int pIdPelicula){
-
-		return null;
-	}
 
 //METODOS PARA VISUALIZAR RESULTADOS
 		
