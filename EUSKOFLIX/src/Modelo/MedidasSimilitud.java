@@ -128,14 +128,15 @@ public class MedidasSimilitud {
 				ArrayList<Double> v2 = entrada2.getValue();
 				int idPel2 = entrada2.getKey();
 				
-				double similitud = compararVectores(v1, v2);
+				double similitud = Math.round(compararVectores(v1, v2) * 1000.0)/ 1000.0;
+				
 				matrizSimilitudesAnadir(idPel1, idPel2, similitud);
 			
 			}
 			ordenarHashMap(matrizSimilitudes.get(idPel1));
 		}
 		
-		/*StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudes.entrySet()) {
 			System.out.println(entrada);
 			sb.append(entrada.toString() + "\n");
@@ -143,13 +144,13 @@ public class MedidasSimilitud {
 		
 		BufferedWriter bw;
 		try {
-			bw = new BufferedWriter(new FileWriter("C:/Users/ignac/Desktop/resultados.txt"));
+			bw = new BufferedWriter(new FileWriter("C:/Users/ignac/Desktop/matrizSimilitudes.txt"));
 			bw.write(sb.toString());
 			bw.close();
 		} catch (IOException e) {
 			System.out.println("Error al escribir los resultados");
 			e.printStackTrace();
-		}*/
+		}
 		
 			
 	}
