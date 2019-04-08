@@ -363,7 +363,7 @@ public class MedidasSimilitud {
 	
 	*/
     public double gradoIdoneidad(int idUser, int idPel, int nProd){
-    	HashMap<Integer, Double> similares = matrizSimilitudesOrdenada.get(idPel);
+    	HashMap<Integer, Double> similares = matrizSimilitudes.get(idPel);
     	double numerador = 0;
     	double denominador = 0;
     	ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
