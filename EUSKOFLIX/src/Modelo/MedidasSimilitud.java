@@ -305,7 +305,7 @@ public class MedidasSimilitud {
 	public String modeloSimilitudProductoPelicula( int movieID){
 		StringBuilder sb = new StringBuilder();
 		sb.append("============================================= \n");
-		sb.append("ID PELÍCULA                 COSENO \n");
+		sb.append("ID PELÍCULA                COSENO \n");
 		sb.append("============================================= \n");
 		HashMap<Integer, Double> aux = matrizSimilitudesOrdenada.get(movieID);
 		for (Entry<Integer, Double> entrada : aux.entrySet()){
