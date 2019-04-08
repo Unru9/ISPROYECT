@@ -33,6 +33,7 @@ public class VistaCargaDatos extends JFrame {
 	private JTextArea textArea;
 	//private JTable table;
 	private static VistaCargaDatos frame;
+	private JButton btnMatrizSimilitudesOrdenada;
 
 	/**
 	 * Launch the application.
@@ -65,9 +66,9 @@ public class VistaCargaDatos extends JFrame {
 		contentPane.add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		btnTitles = new JButton("Titles");
@@ -98,6 +99,18 @@ public class VistaCargaDatos extends JFrame {
 		gbc_btnNewButton_1.gridx = 0;
 		gbc_btnNewButton_1.gridy = 5;
 		panel.add(btnRatings, gbc_btnNewButton_1);
+		
+		
+		btnMatrizSimilitudesOrdenada = new JButton("MatrizSimilitudes");
+		btnMatrizSimilitudesOrdenada.setPreferredSize(new Dimension(100, 20));
+		btnMatrizSimilitudesOrdenada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
+		gbc_btnNewButton_3.gridx = 0;
+		gbc_btnNewButton_3.gridy = 7;
+		panel.add(btnMatrizSimilitudesOrdenada, gbc_btnNewButton_3);
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -138,6 +151,11 @@ public class VistaCargaDatos extends JFrame {
 	
 	public void setTagsListener(ActionListener listenTitlesBtn){
 		this.btnTags.addActionListener(listenTitlesBtn);
+		
+	}
+	
+	public void MatrizSimilitudesListener(ActionListener listenMatrizBtn){
+		btnMatrizSimilitudesOrdenada.addActionListener(listenMatrizBtn);
 		
 	}
 	

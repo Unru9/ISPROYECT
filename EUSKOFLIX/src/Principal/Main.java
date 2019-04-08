@@ -5,10 +5,10 @@ import Controlador.Controlador;
 public class Main {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Controlador c = new Controlador();
-		//c.mostrarVentana();
+		c.mostrarVentana();
 		
 	}
 

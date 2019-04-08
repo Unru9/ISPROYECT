@@ -2,8 +2,6 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
@@ -17,23 +15,28 @@ public class Controlador {
 	// atributos
 	private VistaCargaDatos miVista;
 
-	public Controlador() {
+	public Controlador() throws Exception {
 		miVista = new VistaCargaDatos();
 		// listeners
 		this.miVista.setTitlesListener(new Titles());
 		this.miVista.setTagsListener(new Tags());
 		this.miVista.setRatingsListener(new Ratings());
+		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
+		
 		MedidasSimilitud medidasSimilitud = MedidasSimilitud.getMedidasSimilitud();
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
+		
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
+		
 		medidasSimilitud.crearModeloProducto();
 		medidasSimilitud.visualizarModeloProducto();
 		medidasSimilitud.crearMatrizSimilitudes();
 		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
 		//System.out.println(a);
+		medidasSimilitud.MatrizSimilitudesOrdenada();
 		System.out.println("FIN");
 	}
 
@@ -82,6 +85,23 @@ public class Controlador {
 				}
 			}
 
+		}
+	}
+	
+	class MatrizSimilitudes implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
+			MedidasSimilitud ms = MedidasSimilitud.getMedidasSimilitud();
+			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
+			if (movieID != null) {
+				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+				} else {
+					String aux = ms.modeloSimilitudProductoPelicula(Integer.parseInt(movieID));
+					miVista.setTextoGeneral(aux);
+				}
+			}
 		}
 	}
 

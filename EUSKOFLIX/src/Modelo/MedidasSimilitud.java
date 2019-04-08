@@ -26,6 +26,7 @@ public class MedidasSimilitud {
 	private  MatrixHashMap matrizModeloProductos;
 	private MatrixHashMap matrizModeloPersonas;
 	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudes;
+	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudesOrdenada;
 	
 	//Atributos para la similitud
 	
@@ -34,6 +35,8 @@ public class MedidasSimilitud {
 		matrizModeloProductos = new MatrixHashMap(); 
 		matrizModeloPersonas = new MatrixHashMap();
 		matrizSimilitudes = new HashMap<Integer, HashMap<Integer, Double>>();
+		matrizSimilitudesOrdenada = new HashMap<Integer, HashMap<Integer, Double>>();
+
 	}
 	
 	public static MedidasSimilitud getMedidasSimilitud() {
@@ -123,7 +126,7 @@ public class MedidasSimilitud {
 	
 
 
-	public void crearMatrizSimilitudes(){
+	public void crearMatrizSimilitudes() {
 		
 		HashMap<Integer,ArrayList<Double>> vectores = crearVectoresPorIdPel();
 		
@@ -140,33 +143,18 @@ public class MedidasSimilitud {
 				matrizSimilitudesAnadir(idPel1, idPel2, similitud);
 			
 			}
-			ordenarHashMap(matrizSimilitudes.get(idPel1));
 		}
 		
-		StringBuilder sb = new StringBuilder();
+		/*StringBuilder sb = new StringBuilder();
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudes.entrySet()) {
 			System.out.println(entrada);
 			sb.append(entrada.toString() + "\n");
 		}
 		
-		BufferedWriter bw;
-		try {
-			bw = new BufferedWriter(new FileWriter("C:/Users/ignac/Desktop/matrizSimilitudes.txt"));
-			bw.write(sb.toString());
-			bw.close();
-		} catch (IOException e) {
-			System.out.println("Error al escribir los resultados");
-			e.printStackTrace();
-		}
+		String output ="C:/Users/ignac/Desktop/matrizSimilitudes.txt";
+		writeFile(output,sb.toString());*/
 		
 			
-	}
-
-	
-
-	private void ordenarHashMap(HashMap<Integer, Double> hashMap) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void matrizSimilitudesAnadir(int idPel1, int idPel2, double similitud) {
@@ -291,33 +279,41 @@ public class MedidasSimilitud {
 		}
 	}
 	
-	
-	public void visualizar(HashMap<Integer, HashMap<Integer, Double>>a){
-		for (Entry<Integer, HashMap<Integer, Double>> entrada : a.entrySet()) {
-			int idPel1 = entrada.getKey();
-			HashMap<Integer, Double> sm= a.get(idPel1);
-			for (Entry<Integer, Double> entrada2 : sm.entrySet()) {
-				int pel = entrada2.getKey();
-				double cos = entrada2.getValue();
-				System.out.println("El producto " + idPel1 + " sobre la : " + pel +" tiene un coseno de " + cos);
-			}
-			
-			
-		}
-		
-	}
-	
-	public HashMap<Integer, HashMap<Integer, Double>> MatrizSimilitudesOrdenada(){
+	public void MatrizSimilitudesOrdenada() throws Exception{
 		HashMap<Integer, HashMap<Integer, Double>> ms = matrizSimilitudes;
+		
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.entrySet()){
 			int idPel1 = entrada.getKey();
 			HashMap<Integer, Double> res = ms.get(idPel1);
 			HashMap<Integer, Double> sortedMapAsc = sortByComparator(res, false);
-			ms.put(idPel1, sortedMapAsc);
+			matrizSimilitudesOrdenada.put(idPel1, sortedMapAsc);
 	
 		}
-		this.visualizar(ms);
-		return ms;
+		
+		StringBuilder sb = new StringBuilder();
+		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudesOrdenada.entrySet()) {
+			System.out.println(entrada);
+			sb.append(entrada.toString() + "\n");
+		}
+		
+		String output ="C:/Users/Unai/Desktop/matrizSimilitudesOrdenada.txt";
+		writeFile(output,sb.toString());
+		
+	}
+	
+	public String modeloSimilitudProductoPelicula( int movieID){
+		StringBuilder sb = new StringBuilder();
+		sb.append("============================================= \n");
+		sb.append("ID PELÍCULA                COSENO \n");
+		sb.append("============================================= \n");
+		HashMap<Integer, Double> aux = matrizSimilitudesOrdenada.get(movieID);
+		for (Entry<Integer, Double> entrada : aux.entrySet()){
+			int idPel1 = entrada.getKey();
+			double cos = entrada.getValue();
+			sb.append(idPel1 + " --------------> " + cos + "\n");
+		}
+		
+		return sb.toString();
 	}
 	
     public HashMap<Integer, Double> sortByComparator(Map<Integer, Double> unsortMap, final boolean order)
@@ -350,6 +346,18 @@ public class MedidasSimilitud {
 
         return sortedMap;
     }
+    
+	private static void writeFile(String output, String pResultado) throws Exception {
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(output));
+			bw.write(pResultado);
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Error en la escritura de datos");
+		}
+	}
 }
 
 	
