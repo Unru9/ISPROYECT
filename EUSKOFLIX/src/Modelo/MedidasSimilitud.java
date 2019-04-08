@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import EstructuraDatos.MatrixHashMap;
 
@@ -359,6 +360,22 @@ public class MedidasSimilitud {
 			System.out.println("Error en la escritura de datos");
 		}
 	}
+    public double gradoIdoneidad(String idUser, String idPel, int nProd){
+    	HashMap<Integer, Double> similares = matrizSimilitudesOrdenada.get(idPel);
+    	double numerador = 0;
+    	double denominador = 0;
+    	Set<Entry<Integer, Double>> entradas = similares.entrySet();
+    	Iterator<Entry<Integer, Double>> iteratorSimilares = entradas.iterator();
+    	for (int j = 0; j < nProd; j++) {  // Suponemos que nProd < entradas.size()
+			Entry<Integer, Double> entrada =  iteratorSimilares.next();
+			double similitud = entrada.getValue();
+    		int idPel2 = entrada.getKey();
+    		numerador = numerador + (valoracion(idUser, idPel2) * similitud);
+    		denominador = denominador + similitud;
+    	}
+	
+    	return numerador / denominador;
+    }
 }
 
 	
