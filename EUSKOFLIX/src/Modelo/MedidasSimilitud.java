@@ -27,6 +27,8 @@ public class MedidasSimilitud {
 	private MatrixHashMap matrizModeloPersonas;
 	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudes;
 	
+	//Atributos para la similitud
+	
 	//CONSTRUCTORA
 	private MedidasSimilitud() {
 		matrizModeloProductos = new MatrixHashMap(); 
@@ -40,10 +42,15 @@ public class MedidasSimilitud {
 		return mMedidasSimilitud;
 	}
 	
+	//METODOS PARA MANEJAR LA MATRIZ SIMILITUD
+	private double obtSimilitud(int pId1, int pId2) {
+		HashMap<Integer, Double> similitudesConId1 = matrizSimilitudes.get(pId1);
+		return similitudesConId1.get(pId2);
+	}
 	//METODOS
 	public void cargarTagsDesdeArchivo(String pPath) {
 		crearMatrizEtiquetaProductos(pPath);
-	}
+	
 	
 	public void crearMatrizEtiquetaProductos(String pPath) {
 		
@@ -253,6 +260,25 @@ public class MedidasSimilitud {
 		}
 		return v2;
 	}
+	
+	public ArrayList<Integer> crearListaPeliculasMasSimilaresA (int pIdPersona, int pIdPelicula, int pNumeroSimilitudes){
+		ArrayList<Integer> lista = new ArrayList<Integer>();
+		
+		// CREAR LISTA DE PELICULAS MAS SIMILARES A PELICULA SELECCIONADA 
+		
+		//APLICAR FORMULA, PUNTO 2.2.2, Pag 6, Determinar el Grado de idoneidad, punto 2
+		
+		return lista;
+	}
+	
+	public Double similitudEntrePeliculas(int pPelicula1, int pPelicula2) {
+		return obtSimilitud(pPelicula1, pPelicula2);
+	}
+	
+	public Double valoracionEstimada (int pIdPersona, int pIdPelicula){
+
+		return null;
+	}
 
 //METODOS PARA VISUALIZAR RESULTADOS
 		
@@ -264,6 +290,8 @@ public class MedidasSimilitud {
 			System.out.println(matrizModeloProductos.getKey1Actual() + " " + matrizModeloProductos.getKey2Actual() + " " + valorActual);
 		}
 	}
+	
+	
 		
 	
 	
