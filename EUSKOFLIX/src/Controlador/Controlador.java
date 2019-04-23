@@ -7,7 +7,9 @@ import javax.swing.JOptionPane;
 
 import Modelo.ColeccionPeliculas;
 import Modelo.ColeccionUsuario;
+import Modelo.MatrizSimilitudesOrdenada;
 import Modelo.MedidasSimilitud;
+import Modelo.ModeloProductos;
 import Vista.VistaCargaDatos;
 
 public class Controlador {
@@ -27,18 +29,20 @@ public class Controlador {
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
 		
+		ModeloProductos modeloProductos = ModeloProductos.getModeloProductos();
 		MedidasSimilitud medidasSimilitud = MedidasSimilitud.getMedidasSimilitud();
+		MatrizSimilitudesOrdenada matrizSimilitudesOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
 		
 		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
 		
-		medidasSimilitud.crearModeloProducto();
+		modeloProductos.crearModeloProducto();
 		//medidasSimilitud.visualizarModeloProducto();
 		medidasSimilitud.crearMatrizSimilitudes();
 		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
 		//System.out.println(a);
-		medidasSimilitud.MatrizSimilitudesOrdenada();
+		matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
 		System.out.println("FIN");
 	}
 
@@ -94,13 +98,13 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
-			MedidasSimilitud ms = MedidasSimilitud.getMedidasSimilitud();
+			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if (movieID != null) {
 				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
 				} else {
-					String aux = ms.modeloSimilitudProductoPelicula(Integer.parseInt(movieID));
+					String aux = msOrdenada.modeloSimilitudProductoPelicula(Integer.parseInt(movieID));
 					miVista.setTextoGeneral(aux);
 				}
 			}
@@ -112,7 +116,7 @@ public class Controlador {
 		public void actionPerformed(ActionEvent e) {
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
-			MedidasSimilitud ms = MedidasSimilitud.getMedidasSimilitud();
+			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
 			if (movieID != null && usuarioID !=null) {
@@ -121,7 +125,7 @@ public class Controlador {
 				}else if (!cu.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				}else{
-					double res= ms.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),10);
+					double res= msOrdenada.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),10);
 					String aux =Double.toString(res);
 					StringBuilder sb = new StringBuilder();
 					sb.append("============================================================ \n");

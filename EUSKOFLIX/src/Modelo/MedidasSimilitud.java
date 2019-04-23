@@ -24,20 +24,13 @@ public class MedidasSimilitud {
 	
 	//Atributos
 	private static MedidasSimilitud mMedidasSimilitud;
-	private  MatrixHashMap matrizModeloProductos;
-	private MatrixHashMap matrizModeloPersonas;
 	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudes;
-	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudesOrdenada;
 	
 	//Atributos para la similitud
 	
 	//CONSTRUCTORA
 	private MedidasSimilitud() {
-		matrizModeloProductos = new MatrixHashMap(); 
-		matrizModeloPersonas = new MatrixHashMap();
 		matrizSimilitudes = new HashMap<Integer, HashMap<Integer, Double>>();
-		matrizSimilitudesOrdenada = new HashMap<Integer, HashMap<Integer, Double>>();
-
 	}
 	
 	public static MedidasSimilitud getMedidasSimilitud() {
@@ -51,81 +44,15 @@ public class MedidasSimilitud {
 		HashMap<Integer, Double> similitudesConId1 = matrizSimilitudes.get(pId1);
 		return similitudesConId1.get(pId2);
 	}
+	
+	public Set<Entry<Integer, HashMap<Integer, Double>>> getEntrySet() {
+		return matrizSimilitudes.entrySet();
+	}
+	
+	public HashMap<Integer, Double> obtSimilitudesPelicula(int pIdPel) {
+		return matrizSimilitudes.get(pIdPel);
+	}
 	//METODOS
-	public void cargarTagsDesdeArchivo(String pPath) {
-		crearMatrizEtiquetaProductos(pPath);
-	}
-	
-	public void crearMatrizEtiquetaProductos(String pPath) {
-		
-		try {
-			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
-			BufferedReader bufferLectura = new BufferedReader(new FileReader(pPath));
-
-			// Leo una línea del archivo
-			String linea = bufferLectura.readLine();
-
-			while (linea != null) {
-				// Separa la línea leída con el separador definido previamente
-				String[] campos = linea.split(";");
-
-				String pelicula = campos[0];
-				String tag = campos[1];
-
-				int idPelicula = Integer.parseInt(pelicula);
-				if (cp.contieneIDPelicula(idPelicula)) {
-					Pelicula aux = cp.buscarPelicula(idPelicula);
-					aux.anadirAparicionTag(tag);
-
-				}
-
-				// Vuelvo a leer del fichero
-				linea = bufferLectura.readLine();
-			}
-
-			// CIerro el buffer de lectura
-			if (bufferLectura != null) {
-				bufferLectura.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private double calcularTFIDF(int pIdPelicula, String pTag) {
-		ColeccionPeliculas coleccionPeliculas = ColeccionPeliculas.getColeccionPeliculas();
-		Pelicula pel = coleccionPeliculas.buscarPelicula(pIdPelicula);
-		double res = 0.0;
-		int tf = pel.obtAparicionTag(pTag);
-		int N = coleccionPeliculas.numeroPeliculas();
-		int NT = coleccionPeliculas.numeroPeliculasConTag(pTag);
-
-		res = tf * Math.log(N / NT);
-		return res;
-
-	}
-
-	public void crearModeloProducto() {
-		ColeccionPeliculas coleccionPeliculas = ColeccionPeliculas.getColeccionPeliculas();
-		
-		Iterator<Entry<Integer, Pelicula>> iteradorPeliculas = coleccionPeliculas.getIterator();
-		while (iteradorPeliculas.hasNext()) {
-			Entry<Integer, Pelicula> entradaPelicula = iteradorPeliculas.next();
-			int idPelicula = entradaPelicula.getKey();
-			Pelicula pelicula = entradaPelicula.getValue();
-			
-			Iterator<Entry<String, Integer>> iteradorTags = pelicula.getIterator(); 
-			while (iteradorTags.hasNext()) {
-				Entry<String, Integer> entradaTag = iteradorTags.next();
-				String tag = entradaTag.getKey();
-				double tFIDF = calcularTFIDF(idPelicula, tag);
-				
-				matrizModeloProductos.anadirDupla(idPelicula, tag, tFIDF);
-			}
-		}
-	}
-	
-
 
 	public void crearMatrizSimilitudes() {
 		
@@ -272,113 +199,9 @@ public class MedidasSimilitud {
 
 //METODOS PARA VISUALIZAR RESULTADOS
 		
-	public void visualizarModeloProducto() {
-		Double valorActual = matrizModeloProductos.recorrerMatriz();
-		System.out.println();
-		while (matrizModeloProductos.tieneSiguienteValor()) {
-			valorActual = matrizModeloProductos.siguienteValor();
-			System.out.println(matrizModeloProductos.getKey1Actual() + " " + matrizModeloProductos.getKey2Actual() + " " + valorActual);
-		}
-	}
 	
-	public void MatrizSimilitudesOrdenada() throws Exception{
-		HashMap<Integer, HashMap<Integer, Double>> ms = matrizSimilitudes;
-		
-		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.entrySet()){
-			int idPel1 = entrada.getKey();
-			HashMap<Integer, Double> res = ms.get(idPel1);
-			HashMap<Integer, Double> sortedMapAsc = sortByComparator(res, false);
-			matrizSimilitudesOrdenada.put(idPel1, sortedMapAsc);
 	
-		}
-		
-		/*StringBuilder sb = new StringBuilder();
-		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudesOrdenada.entrySet()) {
-			System.out.println(entrada);
-			sb.append(entrada.toString() + "\n");
-		}
-		
-		String output ="C:/Users/Unai/Desktop/matrizSimilitudesOrdenada.txt";
-		writeFile(output,sb.toString());*/
-		
-	}
 	
-	public String modeloSimilitudProductoPelicula( int movieID){
-		StringBuilder sb = new StringBuilder();
-		sb.append("============================================= \n");
-		sb.append("ID PELÍCULA                COSENO \n");
-		sb.append("============================================= \n");
-		HashMap<Integer, Double> aux = matrizSimilitudesOrdenada.get(movieID);
-		for (Entry<Integer, Double> entrada : aux.entrySet()){
-			int idPel1 = entrada.getKey();
-			double cos = entrada.getValue();
-			sb.append(idPel1 + " --------------> " + cos + "\n");
-		}
-		
-		return sb.toString();
-	}
-	
-    public HashMap<Integer, Double> sortByComparator(Map<Integer, Double> unsortMap, final boolean order)
-    {
-
-        List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsortMap.entrySet());
-
-        // Sorting the list based on values
-        Collections.sort(list, new Comparator<Entry<Integer, Double>>()
-        {
-            public int compare(Entry<Integer, Double> o1,
-                    Entry<Integer, Double> o2)
-            {
-                if (order)
-                {
-                    return o1.getValue().compareTo(o2.getValue());
-                }
-                else
-                {
-                    return o2.getValue().compareTo(o1.getValue());
-
-                }
-            }
-        });
-        HashMap<Integer, Double> sortedMap = new LinkedHashMap<Integer, Double>();
-        for (Entry<Integer, Double> entry : list)
-        {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-
-        return sortedMap;
-    }
-    
-/*	private static void writeFile(String output, String pResultado) throws Exception {
-		BufferedWriter bw;
-		try {
-			bw = new BufferedWriter(new FileWriter(output));
-			bw.write(pResultado);
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Error en la escritura de datos");
-		}
-	}
-	
-	*/
-    public double gradoIdoneidad(int idUser, int idPel, int nProd){
-    	HashMap<Integer, Double> similares = matrizSimilitudesOrdenada.get(idPel);
-    	double numerador = 0;
-    	double denominador = 0;
-    	ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
-    	Set<Entry<Integer, Double>> entradas = similares.entrySet();
-    	Iterator<Entry<Integer, Double>> iteratorSimilares = entradas.iterator();
-    	for (int j = 0; j < nProd; j++) {  // Suponemos que nProd < entradas.size()
-			Entry<Integer, Double> entrada =  iteratorSimilares.next();
-			double similitud = entrada.getValue();
-    		int idPel2 = entrada.getKey();
-    		numerador = numerador + (cu.obtValoracion(idUser, idPel2) * similitud);
-    		denominador = denominador + similitud;
-    	}
-	
-    	return numerador / denominador;
-    }
 }
 
 	
