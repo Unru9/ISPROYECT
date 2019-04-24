@@ -25,7 +25,7 @@ public class Usuario {
 
 	public Double obtValoracionPelicula(int pID) {
 		if(this.ratings.get(pID)==null) {
-			return 0.00;
+			return 0.0;
 		}
 		return this.ratings.get(pID);
 	}

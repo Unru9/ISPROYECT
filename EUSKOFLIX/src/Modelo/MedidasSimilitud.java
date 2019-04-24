@@ -56,8 +56,30 @@ public class MedidasSimilitud {
 
 	public void crearMatrizSimilitudes() {
 		
-		HashMap<Integer,ArrayList<Double>> vectores = crearVectoresPorIdPel();
+		// HashMap<Integer,ArrayList<Double>> vectores = crearVectoresPorIdPel();
 		
+		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
+		Iterator<Entry<Integer, Pelicula>> itrPel1 = cp.getIterator();
+		while (itrPel1.hasNext()) {
+			Entry<Integer, Pelicula> entradaPel1 = itrPel1.next();
+			int idPel1 = entradaPel1.getKey();
+			
+			Iterator<Entry<Integer, Pelicula>> itrPel2 = cp.getIterator();
+			while (itrPel2.hasNext()) {
+				Entry<Integer, Pelicula> entradaPel2 = itrPel2.next();
+				int idPel2 = entradaPel2.getKey();
+				
+				if (idPel1 != idPel2){
+					System.out.println("Comparando " + idPel1 + " " + idPel2);
+					double similitud = compararPelis(idPel1, idPel2);
+				
+					matrizSimilitudesAnadir(idPel1, idPel2, similitud);
+				}
+			}
+		}
+		
+		
+		/*
 		for (Entry<Integer, ArrayList<Double>> entrada : vectores.entrySet()) {
 			ArrayList<Double> v1 =  entrada.getValue();
 			int idPel1 = entrada.getKey();
@@ -72,18 +94,52 @@ public class MedidasSimilitud {
 					matrizSimilitudesAnadir(idPel1, idPel2, similitud);
 				}
 			}
-		}
+		}*/
 		
-		/*StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudes.entrySet()) {
 			System.out.println(entrada);
 			sb.append(entrada.toString() + "\n");
 		}
 		
-		String output ="C:/Users/ignac/Desktop/matrizSimilitudes.txt";
-		writeFile(output,sb.toString());*/
+		String output ="C:/Users/ignac/Desktop/matrizSimilitudes2.txt";
+		writeToFile(output,sb.toString());
 		
 			
+	}
+
+	private double compararPelis(int idPel1, int idPel2) {
+		ColeccionUsuario coleccionUsuarios = ColeccionUsuario.getColeccionUsuario();
+		Iterator<Entry<Integer, Usuario>> itrUsuarios = coleccionUsuarios.getIterador();
+		ArrayList<Double> v1 = new ArrayList<Double>();
+		ArrayList<Double> v2 = new ArrayList<Double>();
+		
+		while (itrUsuarios.hasNext()) {
+			Entry<Integer, Usuario> entradaUsuario = itrUsuarios.next();
+			Usuario usuario = entradaUsuario.getValue();
+			
+			Iterator<Entry<Integer, Double>> itrPeliculaValorada = usuario.getIterador();
+			while (itrPeliculaValorada.hasNext()){
+				Entry<Integer, Double> entradaValoracion = itrPeliculaValorada.next();
+				Integer idPeliculaValorada = entradaValoracion.getKey();
+				
+				if ((idPeliculaValorada == idPel1) && (usuario.obtValoracionPelicula(idPel2) == 0.0)){
+					v1.add(entradaValoracion.getValue());
+					v2.add(usuario.obtValoracionPelicula(idPel2));
+				}
+				
+				if (idPeliculaValorada == idPel2) {
+					v2.add(entradaValoracion.getValue());
+					v1.add(usuario.obtValoracionPelicula(idPel1));
+				}
+			}
+		}
+		double indice = Math.abs(cosenoVectores(v1, v2));
+		System.out.println(v1);
+		System.out.println(v2);
+		System.out.println("Valor: " + indice);
+ 				
+		return indice;
 	}
 
 	private void matrizSimilitudesAnadir(int idPel1, int idPel2, double similitud) {
@@ -100,7 +156,7 @@ public class MedidasSimilitud {
 		
 	}
 
-	private HashMap<Integer,ArrayList<Double>> crearVectoresPorIdPel(){
+	/*private HashMap<Integer,ArrayList<Double>> crearVectoresPorIdPel(){
 		
 		HashMap<Integer,ArrayList<Double>> vectores = new HashMap<Integer,ArrayList<Double>>();
 		ColeccionUsuario coleccionUsuarios = ColeccionUsuario.getColeccionUsuario();
@@ -128,7 +184,7 @@ public class MedidasSimilitud {
 		}
 		
 		return vectores;
-	}
+	}*/
 
 	public double compararVectores(ArrayList<Double> v1, ArrayList<Double> v2){
 		int diferencia = Math.abs(v1.size() - v2.size());
@@ -195,6 +251,18 @@ public class MedidasSimilitud {
 	public Double valoracionEstimada (int pIdPersona, int pIdPelicula){
 
 		return null;
+	}
+	
+	private static void writeToFile(String pPath, String pText) {
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(pPath));
+			bw.write(pText);
+			bw.close();
+		} catch (IOException e) {
+			System.out.println("Error al escribir los resultados en " + pPath);
+			e.printStackTrace();
+		}
 	}
 
 //METODOS PARA VISUALIZAR RESULTADOS
