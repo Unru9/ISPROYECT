@@ -53,4 +53,51 @@ public class Usuario {
 	 * itr.next(); System.out.println("Película : " + key + " --> Puntuación: "+
 	 * ratings.get(key)); } }
 	 */
+	
+	// METODOS NORMALIZACION
+	public double calcularMediaValoraciones(){
+		Iterator<Entry<Integer, Double>> itr = iterator();
+		int i = 0;
+		double total = 0;
+		while (itr.hasNext()){
+			i++;
+			Entry<Integer, Double> valoracion = itr.next();
+			Double valoracionValor = valoracion.getValue();
+			total = total + valoracionValor;
+		}
+		
+		return total/i;
+	}
+	
+	public double calcularDesviacionTipica(double media){
+		Iterator<Entry<Integer, Double>> itr = iterator();
+		double total = 0;
+		while (itr.hasNext()){
+			Entry<Integer, Double> valoracion = itr.next();
+			double valor = Math.abs(valoracion.getValue() - media);
+			total = total + valor*valor;
+		}
+		return total;
+	}
+	
+	public double calcularDesviacionTipica(){
+		Iterator<Entry<Integer, Double>> itr = iterator();
+		double total = 0;
+		while (itr.hasNext()){
+			Entry<Integer, Double> valoracion = itr.next();
+			double valor = Math.abs(valoracion.getValue() - calcularMediaValoraciones());
+			total = total + valor*valor;
+		}
+		return total;
+	}
+	
+	public double calcularZscore(double media, double desv, double valor){
+	
+		return (valor - media) / desv;
+	}
+	
+	public double calcularZscore(double valor){
+		
+		return (valor - calcularMediaValoraciones()) / calcularDesviacionTipica();
+	}
 }
