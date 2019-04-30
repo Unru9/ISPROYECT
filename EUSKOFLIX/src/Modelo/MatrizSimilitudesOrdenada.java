@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -108,6 +109,39 @@ public class MatrizSimilitudesOrdenada {
 	}
 	
 	*/
+    
+    public HashMap<String, Double> sortByComparator2(Map<String, Double> unsortMap, final boolean order)
+    {
+
+        List<Entry<String, Double>> list = new LinkedList<Entry<String, Double>>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        Collections.sort(list, new Comparator<Entry<String, Double>>()
+        {
+            public int compare(Entry<String, Double> o1,
+                    Entry<String, Double> o2)
+            {
+                if (order)
+                {
+                    return o1.getValue().compareTo(o2.getValue());
+                }
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+
+                }
+            }
+        });
+        HashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
+        for (Entry<String, Double> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
+    
+    
     public double gradoIdoneidad(int idUser, int idPel, int nProd){
     	HashMap<Integer, Double> similares = matrizSimilitudesOrdenada.get(idPel);
     	double numerador = 0;
@@ -125,4 +159,38 @@ public class MatrizSimilitudesOrdenada {
 	
     	return numerador / denominador;
     }
+    
+    public HashMap<String,Double> peliculasAfines(int idUser, int nProd){
+    	ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
+    	HashMap<String,Double> hm= new HashMap<String,Double>();
+    	double idoneidad=0.0;
+    	for (Entry<Integer, Pelicula> entrada : cp.getEntrySet()){
+    		Pelicula pel= entrada.getValue();
+    		int idPel= entrada.getKey();
+    		idoneidad = this.gradoIdoneidad(idUser, idPel, nProd);
+    		hm.put(pel.obtTitle(), idoneidad);
+    	}
+    	return (sortByComparator2(hm, false));
+    }
+    
+    public String visualizarPeliculasAfines(int idUser, int nProd) {
+    	StringBuilder res= new StringBuilder();
+    	int i=0;
+    	res.append("====================================================== \n");
+    	res.append("LAS PELÍCULAS MÁS AFINES AL USUARIO :" + idUser + "\n");
+    	res.append("====================================================== \n");
+    	HashMap<String,Double> afinpel= peliculasAfines(idUser,nProd);
+    	
+		System.out.println();
+		for (Entry<String, Double> entrada : afinpel.entrySet()){
+			if(i<10){
+				String pelTitle = entrada.getKey();
+				Double pelIdoneidad= entrada.getValue();
+				res.append(pelTitle + " --> "+ pelIdoneidad + "\n" );
+				
+			}
+			i=i+1;
+		}
+		return res.toString();
+	}
 }

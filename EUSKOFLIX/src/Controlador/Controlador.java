@@ -2,6 +2,7 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
@@ -25,6 +26,7 @@ public class Controlador {
 		this.miVista.setRatingsListener(new Ratings());
 		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
 		this.miVista.idoneidadListener(new Idoneidad());
+		this.miVista.afinesListener(new afinPel());
 		
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
@@ -125,14 +127,32 @@ public class Controlador {
 				}else if (!cu.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				}else{
-					double res= msOrdenada.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),10);
+					double res= msOrdenada.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),20);
 					String aux =Double.toString(res);
 					StringBuilder sb = new StringBuilder();
 					sb.append("============================================================ \n");
-					sb.append("PREDICIÓ BASADA EN PRODUCTOS \n");
+					sb.append("PREDICIÓN BASADA EN PRODUCTOS \n");
 					sb.append("============================================================ \n");
 					sb.append("La valoración predicha para el usuario "+ usuarioID + " para la película " + movieID + " ha sido de: "+ aux);
 					miVista.setTextoGeneral(sb.toString());
+				}
+			}
+		}
+	}
+	
+	class afinPel implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
+			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
+			if (usuarioID != null) {
+				if (!cu.contieneIdUsuario(Integer.parseInt(usuarioID))) {
+					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
+				} else {
+					HashMap<String,Double> aux = msOrdenada.peliculasAfines(Integer.parseInt(usuarioID), 20);
+					String res = msOrdenada.visualizarPeliculasAfines(Integer.parseInt(usuarioID), 20);
+					miVista.setTextoGeneral(res);
 				}
 			}
 		}

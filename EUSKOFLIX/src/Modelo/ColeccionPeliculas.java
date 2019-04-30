@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.Map.Entry;
 
 public class ColeccionPeliculas {
@@ -159,6 +160,11 @@ public class ColeccionPeliculas {
 	public Iterator<Entry<Integer, Pelicula>> getIterator() {
 		return iterator();
 	}
+	
+	public Set<Entry<Integer, Pelicula>> getEntrySet() {
+		return listaPeliculas.entrySet();
+	}
+	
 	
 	
 	//METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y tags. UTILIZADO SOLO EN SPRINT 1
