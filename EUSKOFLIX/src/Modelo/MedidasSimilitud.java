@@ -103,7 +103,7 @@ public class MedidasSimilitud {
 		}
 		
 		String output ="C:/Users/ignac/Desktop/matrizSimilitudes2.txt";
-		writeToFile(output,sb.toString());
+		//writeToFile(output,sb.toString());
 		
 			
 	}
