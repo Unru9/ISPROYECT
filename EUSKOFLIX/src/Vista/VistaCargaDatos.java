@@ -128,15 +128,6 @@ public class VistaCargaDatos extends JFrame {
 		gbc_btnNewButton_5.gridy = 11;
 		panel.add(btnAfinPel, gbc_btnNewButton_5);
 		
-		btnIdoineidadNorm = new JButton("Idoneidad Normalizado");
-		btnIdoineidadNorm.setPreferredSize(new Dimension(100, 20));
-		btnIdoineidadNorm.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {}});
-		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
-		gbc_btnNewButton_6.insets = new Insets(0, 0, 10, 0);
-		gbc_btnNewButton_6.gridx = 0;
-		gbc_btnNewButton_6.gridy = 13;
-		panel.add(btnIdoineidadNorm, gbc_btnNewButton_6);
-		
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);

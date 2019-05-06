@@ -7,8 +7,8 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import Modelo.ColeccionPeliculas;
-import Modelo.ColeccionUsuario;
 import Modelo.MatrizSimilitudesOrdenada;
+import Modelo.MatrizValoraciones;
 import Modelo.MedidasSimilitud;
 import Modelo.ModeloProductos;
 import Vista.VistaCargaDatos;
@@ -36,10 +36,11 @@ public class Controlador {
 		MatrizSimilitudesOrdenada matrizSimilitudesOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
 		
-		ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
-		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
+		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
+		mv.cargarUsuarios("./resources/data/movie-ratings.csv");
 		
 		modeloProductos.crearModeloProducto();
+		//medidasSimilitud.visualizarModeloProducto();
 		medidasSimilitud.crearMatrizSimilitudes();
 		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
 		//System.out.println(a);
@@ -80,14 +81,14 @@ public class Controlador {
 	class Ratings implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+			MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 			ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if (movieID != null) {
 				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
 				} else {
-					String aux = cu.visRatingUsuario(Integer.parseInt(movieID));
+					String aux = mv.visRatingUsuario(Integer.parseInt(movieID));
 					miVista.setTextoGeneral(aux);
 				}
 			}
@@ -116,14 +117,14 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
-			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+			MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
 			if (movieID != null && usuarioID !=null) {
 				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
-				}else if (!cu.contieneIdUsuario(Integer.parseInt(usuarioID))) {
+				}else if (!mv.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				}else{
 					double res= msOrdenada.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),20);
@@ -143,10 +144,10 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
-			ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+			MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
 			if (usuarioID != null) {
-				if (!cu.contieneIdUsuario(Integer.parseInt(usuarioID))) {
+				if (!mv.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				} else {
 					HashMap<String,Double> aux = msOrdenada.peliculasAfines(Integer.parseInt(usuarioID), 20);

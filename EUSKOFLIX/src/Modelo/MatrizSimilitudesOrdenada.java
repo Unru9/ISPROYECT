@@ -146,7 +146,7 @@ public class MatrizSimilitudesOrdenada {
     	HashMap<Integer, Double> similares = matrizSimilitudesOrdenada.get(idPel);
     	double numerador = 0;
     	double denominador = 0;
-    	ColeccionUsuario cu = ColeccionUsuario.getColeccionUsuario();
+    	MatrizValoraciones cu = MatrizValoraciones.getMatrizValoraciones();
     	Set<Entry<Integer, Double>> entradas = similares.entrySet();
     	Iterator<Entry<Integer, Double>> iteratorSimilares = entradas.iterator();
     	for (int j = 0; j < nProd; j++) {  // Suponemos que nProd < entradas.size()

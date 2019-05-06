@@ -109,28 +109,28 @@ public class MedidasSimilitud {
 	}
 
 	private double compararPelis(int idPel1, int idPel2) {
-		ColeccionUsuario coleccionUsuarios = ColeccionUsuario.getColeccionUsuario();
-		Iterator<Entry<Integer, Usuario>> itrUsuarios = coleccionUsuarios.getIterador();
+		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
+		Iterator<Entry<Integer, ValoracionUsuario>> itrUsuarios = mv.getIterador();
 		ArrayList<Double> v1 = new ArrayList<Double>();
 		ArrayList<Double> v2 = new ArrayList<Double>();
 		
 		while (itrUsuarios.hasNext()) {
-			Entry<Integer, Usuario> entradaUsuario = itrUsuarios.next();
-			Usuario usuario = entradaUsuario.getValue();
+			Entry<Integer, ValoracionUsuario> entradaUsuario = itrUsuarios.next();
+			ValoracionUsuario valoracionUsuario = entradaUsuario.getValue();
 			
-			Iterator<Entry<Integer, Double>> itrPeliculaValorada = usuario.getIterador();
+			Iterator<Entry<Integer, Double>> itrPeliculaValorada = valoracionUsuario.getIterador();
 			while (itrPeliculaValorada.hasNext()){
 				Entry<Integer, Double> entradaValoracion = itrPeliculaValorada.next();
 				Integer idPeliculaValorada = entradaValoracion.getKey();
 				
-				if ((idPeliculaValorada == idPel1) && (usuario.obtValoracionPelicula(idPel2) == 0.0)){
+				if ((idPeliculaValorada == idPel1) && (valoracionUsuario.obtValoracionPelicula(idPel2) == 0.0)){
 					v1.add(entradaValoracion.getValue());
-					v2.add(usuario.obtValoracionPelicula(idPel2));
+					v2.add(valoracionUsuario.obtValoracionPelicula(idPel2));
 				}
 				
 				if (idPeliculaValorada == idPel2) {
 					v2.add(entradaValoracion.getValue());
-					v1.add(usuario.obtValoracionPelicula(idPel1));
+					v1.add(valoracionUsuario.obtValoracionPelicula(idPel1));
 				}
 			}
 		}
