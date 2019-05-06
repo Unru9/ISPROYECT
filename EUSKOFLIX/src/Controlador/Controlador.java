@@ -26,7 +26,7 @@ public class Controlador {
 		this.miVista.setRatingsListener(new Ratings());
 		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
 		this.miVista.idoneidadListener(new Idoneidad());
-		this.miVista.afinesListener(new afinPel());
+		this.miVista.afinesListener(new afinPelProducto());
 		
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
@@ -40,10 +40,11 @@ public class Controlador {
 		mv.cargarUsuarios("./resources/data/movie-ratings.csv");
 		
 		modeloProductos.crearModeloProducto();
-		medidasSimilitud.crearMatrizSimilitudes();
+		//medidasSimilitud.crearMatrizSimilitudes();
 		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
 		//System.out.println(a);
-		matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
+		//matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
+		
 		System.out.println("FIN");
 	}
 
@@ -139,7 +140,7 @@ public class Controlador {
 		}
 	}
 	
-	class afinPel implements ActionListener {
+	class afinPelProducto implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();

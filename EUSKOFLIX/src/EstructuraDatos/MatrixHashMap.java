@@ -60,12 +60,17 @@ public class MatrixHashMap  {
 	
 	
 	//METODOS PARA RECORRER structure
-	private Iterator<Entry<Integer, HashMap<String, Double>>> iterator() {
+	public Iterator<Entry<Integer, HashMap<String, Double>>> iterator() {
 		return structure.entrySet().iterator();
 	}
 	
-	private Iterator<Entry<String, Double>> iteratorSegundaKey(int key1) {
+	public Iterator<Entry<String, Double>> iteratorSegundaKey(int key1) {
 		HashMap<String, Double> segundoHash = structure.get(key1);
 		return segundoHash.entrySet().iterator();
 	}
-}
+	
+	public void anadir(int idUsuario,HashMap<String,Double> hm){
+		this.structure.put(idUsuario, hm);
+	}
+		
+	}

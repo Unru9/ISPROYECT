@@ -48,7 +48,7 @@ public class MatrizValoraciones {
 		}
 	}
 	
-	private ValoracionUsuario obtUsuario (int pUsuarioID) {
+	public ValoracionUsuario obtUsuario (int pUsuarioID) {
 		return listaUsuarios.get(pUsuarioID);
 	}
 	
@@ -61,12 +61,8 @@ public class MatrizValoraciones {
 	}
 	//METODOS PARA ITERAR
 	
-	private Iterator<Entry<Integer, ValoracionUsuario>> iterador() {
-		return listaUsuarios.entrySet().iterator();
-	}
-	
 	public Iterator<Entry<Integer, ValoracionUsuario>> getIterador() {
-		return iterador();
+		return listaUsuarios.entrySet().iterator();
 	}
 	
 	

@@ -55,4 +55,9 @@ public class ModeloProductos {
 		}
 	}
 	
-}
+	public Iterator<Entry<Integer, HashMap<String, Double>>> getIterador() {
+		return matrizModeloProductos.iterator();
+	}
+		
+	}
+
