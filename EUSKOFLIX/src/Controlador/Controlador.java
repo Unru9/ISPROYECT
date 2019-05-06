@@ -40,7 +40,6 @@ public class Controlador {
 		cu.cargarUsuarios("./resources/data/movie-ratings.csv");
 		
 		modeloProductos.crearModeloProducto();
-		//medidasSimilitud.visualizarModeloProducto();
 		medidasSimilitud.crearMatrizSimilitudes();
 		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
 		//System.out.println(a);
