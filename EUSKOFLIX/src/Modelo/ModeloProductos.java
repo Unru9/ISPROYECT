@@ -55,13 +55,4 @@ public class ModeloProductos {
 		}
 	}
 	
-	
-	public void visualizarModeloProducto() {
-		Double valorActual = matrizModeloProductos.recorrerMatriz();
-		System.out.println();
-		while (matrizModeloProductos.tieneSiguienteValor()) {
-			valorActual = matrizModeloProductos.siguienteValor();
-			System.out.println(matrizModeloProductos.getKey1Actual() + " " + matrizModeloProductos.getKey2Actual() + " " + valorActual);
-		}
-	}
 }

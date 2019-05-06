@@ -11,10 +11,6 @@ import java.util.Set;
 public class MatrixHashMap  {
 	//ATRIBUTOS
 	private HashMap<Integer, HashMap<String, Double>> structure;
-	private Iterator<Entry<Integer, HashMap<String, Double>>> itr1;
-	private Iterator<Entry<String, Double>> itr2;
-	private Integer key1Actual;
-	private String key2Actual;
 	
 	//CONSTRUCTORAS
 	public MatrixHashMap() { 
@@ -71,67 +67,5 @@ public class MatrixHashMap  {
 	private Iterator<Entry<String, Double>> iteratorSegundaKey(int key1) {
 		HashMap<String, Double> segundoHash = structure.get(key1);
 		return segundoHash.entrySet().iterator();
-	}
-	
-	//METODOS PARA RECORRER DUPLA POR DUPLA
-	//reinicia iteradores, devuelve primer valor. Si no hay primer valor, devuelve null
-	public Double recorrerMatriz() {
-		 itr1 = iterator();
-		 Double primerValor = null; 
-		 Entry<Integer, HashMap<String, Double>> primerHash1 = null;
-		if (itr1.hasNext()) {
-		 	primerHash1 = itr1.next();
-		 	key1Actual=primerHash1.getKey();
-			int primeraKey = primerHash1.getKey();
-			itr2 = iteratorSegundaKey(primeraKey);
-		
-			Entry<String, Double> primerHash2;
-			if (itr2.hasNext()) {
-				primerHash2 = itr2.next();
-				key2Actual = primerHash2.getKey();
-				primerValor = primerHash2.getValue();
-			}
-		}
-		return primerValor;
-	}
-	
-	//devuelve siguiente valor.
-	public Double siguienteValor() {
-		Double valorSiguiente = null;
-		if (itr2.hasNext()) {
-			Entry<String, Double> hash2 = itr2.next();
-			valorSiguiente = hash2.getValue();
-			key2Actual = hash2.getKey();
-		}else if(itr1.hasNext()) {
-			Entry<Integer, HashMap<String, Double>> hash1 = itr1.next();
-		 	key1Actual=hash1.getKey();
-			int primeraKey = hash1.getKey();
-			itr2 = iteratorSegundaKey(primeraKey);
-		
-			Entry<Object, Object> primerHash2;
-			if (itr2.hasNext()) {
-				Entry<String, Double> hash2 = itr2.next();
-				valorSiguiente = hash2.getValue();
-				key2Actual = hash2.getKey();
-			}
-		}
-		return valorSiguiente;
-	}
-	
-	//Tiene siguiente valor. 
-	public boolean tieneSiguienteValor() {
-		return (itr1.hasNext()||itr2.hasNext());
-	}
-	
-	public boolean tieneSiguienteValorHash2() {
-		return itr2.hasNext();
-	}
-	
-	public int getKey1Actual() {
-		return key1Actual;
-	}
-	
-	public String getKey2Actual() {
-		return key2Actual;
 	}
 }
