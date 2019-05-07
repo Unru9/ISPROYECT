@@ -10,6 +10,7 @@ import Modelo.ColeccionPeliculas;
 import Modelo.MatrizSimilitudesOrdenada;
 import Modelo.MatrizValoraciones;
 import Modelo.MedidasSimilitud;
+import Modelo.ModeloPersonas;
 import Modelo.ModeloProductos;
 import Vista.VistaCargaDatos;
 
@@ -27,25 +28,34 @@ public class Controlador {
 		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
 		this.miVista.idoneidadListener(new Idoneidad());
 		this.miVista.afinesListener(new afinPelProducto());
+		this.miVista.afinesListener(new afinPelPersona());
 		
+		//CREACIÓN DE LA COLECCIÓN DE PELÍCULAS.
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
 		
-		ModeloProductos modeloProductos = ModeloProductos.getModeloProductos();
+		
 		MedidasSimilitud medidasSimilitud = MedidasSimilitud.getMedidasSimilitud();
 		MatrizSimilitudesOrdenada matrizSimilitudesOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
 		
+		//CREACIÓN DE LA MATRIZ DE VALORACIONES.
 		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 		mv.cargarUsuarios("./resources/data/movie-ratings.csv");
 		
+		//CREACIÓN DEL MODELO PRODUCTO
+		ModeloProductos modeloProductos = ModeloProductos.getModeloProductos();
 		modeloProductos.crearModeloProducto();
 		//medidasSimilitud.crearMatrizSimilitudes();
 		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
 		//System.out.println(a);
 		//matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
 		
-		System.out.println("FIN");
+		//CREACIÓN DEL MODELO PERSONA
+		ModeloPersonas mp = ModeloPersonas.getModeloPersonas();
+		mp.crearModeloPersonas();
+		
+		System.out.println("FIN DE LA EJECUCIÓN");
 	}
 
 	public void mostrarVentana() {
@@ -151,7 +161,24 @@ public class Controlador {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				} else {
 					HashMap<String,Double> aux = msOrdenada.peliculasAfines(Integer.parseInt(usuarioID), 20);
-					String res = msOrdenada.visualizarPeliculasAfines(Integer.parseInt(usuarioID), 20);
+					String res = msOrdenada.visualizarPeliculasAfinesProducto(Integer.parseInt(usuarioID), 20);
+					miVista.setTextoGeneral(res);
+				}
+			}
+		}
+	}
+	
+	
+	class afinPelPersona implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ModeloPersonas mp = ModeloPersonas.getModeloPersonas();
+			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
+			if (usuarioID != null) {
+				if (!mp.contieneIdUsuario(Integer.parseInt(usuarioID))) {
+					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
+				} else {
+					String res = mp.visualizarPeliculasAfinesPersona(Integer.parseInt(usuarioID), 20);
 					miVista.setTextoGeneral(res);
 				}
 			}

@@ -72,5 +72,9 @@ public class MatrixHashMap  {
 	public void anadir(int idUsuario,HashMap<String,Double> hm){
 		this.structure.put(idUsuario, hm);
 	}
+	
+	public HashMap<String, Double> obtHash(int idUsuario){
+		return this.structure.get(idUsuario);
+	}
 		
 	}

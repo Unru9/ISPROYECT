@@ -1,66 +1,60 @@
 package Modelo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class Pelicula {
-	
+
 	// ATRIBUTOS
 	private String title;
-	private HashMap<String,Integer> listaTags;
+	private HashMap<String, Integer> listaTags;
 
 	// CONSTRUCTORA
 	public Pelicula(String pTitle) {
 		this.title = pTitle;
-		this.listaTags = new HashMap<String,Integer>();
+		this.listaTags = new HashMap<String, Integer>();
 	}
 
-	// METODOS 
+	// METODOS
 
 	public String obtTitle() {
 		return this.title;
 	}
 
-	public boolean contieneTag(String pTag){
-		if(this.listaTags.containsKey(pTag)){
+	public boolean contieneTag(String pTag) {
+		if (this.listaTags.containsKey(pTag)) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
-	public void anadirAparicionTag(String pTag){
-		if(contieneTag(pTag)){
+
+	public void anadirAparicionTag(String pTag) {
+		if (contieneTag(pTag)) {
 			int valorActual = this.listaTags.get(pTag);
 			this.listaTags.put(pTag, valorActual + 1);
-		}else{
+		} else {
 			this.listaTags.put(pTag, 1);
 		}
 	}
-	
-	public int obtAparicionTag(String pTag){
+
+	public int obtAparicionTag(String pTag) {
 		return this.listaTags.get(pTag);
 	}
-	
+
 	public int cantidadTags() {
 		return listaTags.size();
 	}
-	
 
 	// ITERADOR
-	private Iterator<Entry<String, Integer>> iterator() {
+
+	public Iterator<Entry<String, Integer>> getIterator() {
 		return listaTags.entrySet().iterator();
 	}
-	
-	public Iterator<Entry<String, Integer>> getIterator() {
-		return iterator();
-	}
-	
-	
-	
-	//	//METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y tags. UTILIZADO SOLO EN SPRINT 1
+
+	// //METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y
+	// tags. UTILIZADO SOLO EN SPRINT 1
 	public String visTags() {
 
 		StringBuilder sb = new StringBuilder();
@@ -70,5 +64,5 @@ public class Pelicula {
 		}
 		return sb.toString();
 	}
-	
+
 }

@@ -3,12 +3,8 @@ package Modelo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 
 public class MatrizValoraciones {
@@ -31,41 +27,41 @@ public class MatrizValoraciones {
 		return miMatrizValoraciones;
 	}
 
-	//metodos manejo de la lista
-	private void anadirUsuario (int pIdUsuario, ValoracionUsuario pNuevoUsuario) {
+	// metodos manejo de la lista
+	private void anadirUsuario(int pIdUsuario, ValoracionUsuario pNuevoUsuario) {
 		listaUsuarios.put(pIdUsuario, pNuevoUsuario);
 	}
-	
-	public void borrarUsuarios(){
+
+	public void borrarUsuarios() {
 		listaUsuarios.clear();
 	}
-	
-	private boolean contieneUsuario (int pIdUsuario) {
+
+	private boolean contieneUsuario(int pIdUsuario) {
 		if (this.listaUsuarios.containsKey(pIdUsuario)) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
-	public ValoracionUsuario obtUsuario (int pUsuarioID) {
+
+	public ValoracionUsuario obtUsuario(int pUsuarioID) {
 		return listaUsuarios.get(pUsuarioID);
 	}
-	
+
 	public double obtValoracion(int pUsuarioID, int pPeliculaID) {
 		ValoracionUsuario valoracionUsuario1 = obtUsuario(pUsuarioID);
-		if (valoracionUsuario1==null) {
-			return -1.00;	
+		if (valoracionUsuario1 == null) {
+			return -1.00;
 		}
 		return valoracionUsuario1.obtValoracionPelicula(pPeliculaID);
 	}
-	//METODOS PARA ITERAR
-	
+
+	// METODOS PARA ITERAR
 	public Iterator<Entry<Integer, ValoracionUsuario>> getIterador() {
 		return listaUsuarios.entrySet().iterator();
+
 	}
-	
-	
+
 	// métodos
 
 	public void cargarUsuarios(String pPath) {
@@ -105,12 +101,11 @@ public class MatrizValoraciones {
 		}
 	}
 
-	
 	public String visRatingUsuario(int pIdPelicula) {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("=====================================================\n");
-		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula +"\n");
+		sb.append("Valoraciones de la pelicula  con ID: " + pIdPelicula + "\n");
 		sb.append("=====================================================\n");
 		sb.append("\n");
 		sb.append("\n");
@@ -123,8 +118,8 @@ public class MatrizValoraciones {
 				sb.append(UsuarioValorador.obtValoracionPelicula(pIdPelicula));
 				sb.append("\n");
 				sb.append("\n");
-			}else {
-				sb.append("El usuario todavia no ha valorado la pelicula " + pIdPelicula +".");
+			} else {
+				sb.append("El usuario todavia no ha valorado la pelicula " + pIdPelicula + ".");
 				sb.append("\n");
 				sb.append("\n");
 			}
@@ -132,15 +127,14 @@ public class MatrizValoraciones {
 
 		return sb.toString();
 	}
-	
+
 	public boolean contieneIdUsuario(int pIDusuario) {
 		if (this.listaUsuarios.containsKey(pIDusuario)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 }
-	
-//**********************************************************************************************************//
-	
+
+// **********************************************************************************************************//
