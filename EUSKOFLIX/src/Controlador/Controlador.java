@@ -27,34 +27,34 @@ public class Controlador {
 		this.miVista.setRatingsListener(new Ratings());
 		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
 		this.miVista.idoneidadListener(new Idoneidad());
-		this.miVista.afinesListener(new afinPelProducto());
-		this.miVista.afinesListener(new afinPelPersona());
-		
-		//CREACIÓN DE LA COLECCIÓN DE PELÍCULAS.
+		this.miVista.afinesListenerProducto(new afinPelProducto());
+		this.miVista.afinesListenerPersona(new afinPelPersona());
+
+		// CREACIÓN DE LA COLECCIÓN DE PELÍCULAS.
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		cp.cargarPeliculas("./resources/data/movie-titles.csv");
-		
-		
+
 		MedidasSimilitud medidasSimilitud = MedidasSimilitud.getMedidasSimilitud();
 		MatrizSimilitudesOrdenada matrizSimilitudesOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 		cp.crearMatrizEtiquetaProductos("./resources/data/movie-tags.csv");
-		
-		//CREACIÓN DE LA MATRIZ DE VALORACIONES.
+
+		// CREACIÓN DE LA MATRIZ DE VALORACIONES.
 		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 		mv.cargarUsuarios("./resources/data/movie-ratings.csv");
-		
-		//CREACIÓN DEL MODELO PRODUCTO
+
+		// CREACIÓN DEL MODELO PRODUCTO
 		ModeloProductos modeloProductos = ModeloProductos.getModeloProductos();
 		modeloProductos.crearModeloProducto();
-		//medidasSimilitud.crearMatrizSimilitudes();
-		//HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a = medidasSimilitud.getMatrizSimilitudes();
-		//System.out.println(a);
-		//matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
-		
-		//CREACIÓN DEL MODELO PERSONA
+		// medidasSimilitud.crearMatrizSimilitudes();
+		// HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a =
+		// medidasSimilitud.getMatrizSimilitudes();
+		// System.out.println(a);
+		// matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
+
+		// CREACIÓN DEL MODELO PERSONA
 		ModeloPersonas mp = ModeloPersonas.getModeloPersonas();
 		mp.crearModeloPersonas();
-		
+
 		System.out.println("FIN DE LA EJECUCIÓN");
 	}
 
@@ -92,7 +92,7 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
-			ColeccionPeliculas cp= ColeccionPeliculas.getColeccionPeliculas();
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			if (movieID != null) {
 				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
@@ -105,7 +105,7 @@ public class Controlador {
 
 		}
 	}
-	
+
 	class MatrizSimilitudes implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -122,7 +122,7 @@ public class Controlador {
 			}
 		}
 	}
-	
+
 	class Idoneidad implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -131,25 +131,26 @@ public class Controlador {
 			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
 			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
-			if (movieID != null && usuarioID !=null) {
+			if (movieID != null && usuarioID != null) {
 				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
 					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
-				}else if (!mv.contieneIdUsuario(Integer.parseInt(usuarioID))) {
+				} else if (!mv.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
-				}else{
-					double res= msOrdenada.gradoIdoneidad(Integer.parseInt(usuarioID),Integer.parseInt(movieID),20);
-					String aux =Double.toString(res);
+				} else {
+					double res = msOrdenada.gradoIdoneidad(Integer.parseInt(usuarioID), Integer.parseInt(movieID), 20);
+					String aux = Double.toString(res);
 					StringBuilder sb = new StringBuilder();
 					sb.append("============================================================ \n");
 					sb.append("PREDICIÓN BASADA EN PRODUCTOS \n");
 					sb.append("============================================================ \n");
-					sb.append("La valoración predicha para el usuario "+ usuarioID + " para la película " + movieID + " ha sido de: "+ aux);
+					sb.append("La valoración predicha para el usuario " + usuarioID + " para la película " + movieID
+							+ " ha sido de: " + aux);
 					miVista.setTextoGeneral(sb.toString());
 				}
 			}
 		}
 	}
-	
+
 	class afinPelProducto implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -160,26 +161,36 @@ public class Controlador {
 				if (!mv.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				} else {
-					HashMap<String,Double> aux = msOrdenada.peliculasAfines(Integer.parseInt(usuarioID), 20);
+					HashMap<String, Double> aux = msOrdenada.peliculasAfines(Integer.parseInt(usuarioID), 20);
 					String res = msOrdenada.visualizarPeliculasAfinesProducto(Integer.parseInt(usuarioID), 20);
 					miVista.setTextoGeneral(res);
 				}
 			}
 		}
 	}
-	
-	
+
 	class afinPelPersona implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			ModeloPersonas mp = ModeloPersonas.getModeloPersonas();
+			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
 			String usuarioID = JOptionPane.showInputDialog("Introduce un usuario");
-			if (usuarioID != null) {
-				if (!mp.contieneIdUsuario(Integer.parseInt(usuarioID))) {
+			if (movieID != null && usuarioID != null) {
+				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+				} else if (!mp.contieneIdUsuario(Integer.parseInt(usuarioID))) {
 					JOptionPane.showMessageDialog(miVista, "El usuarioID no existe");
 				} else {
-					String res = mp.visualizarPeliculasAfinesPersona(Integer.parseInt(usuarioID), 20);
-					miVista.setTextoGeneral(res);
+					double res = mp.gradoIdoneidad(Integer.parseInt(usuarioID), Integer.parseInt(movieID));
+					String aux = Double.toString(res);
+					StringBuilder sb = new StringBuilder();
+					sb.append("============================================================ \n");
+					sb.append("PREDICIÓN BASADA EN PERSONAS \n");
+					sb.append("============================================================ \n");
+					sb.append("La valoración predicha para el usuario " + usuarioID + " para la película " + movieID
+							+ " ha sido de: " + aux);
+					miVista.setTextoGeneral(sb.toString());
 				}
 			}
 		}

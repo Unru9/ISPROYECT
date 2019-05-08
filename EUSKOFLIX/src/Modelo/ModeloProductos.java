@@ -49,6 +49,7 @@ public class ModeloProductos {
 				Entry<String, Integer> entradaTag = iteradorTags.next();
 				String tag = entradaTag.getKey();
 				double tFIDF = calcularTFIDF(idPelicula, tag);
+				System.out.println(tFIDF);
 				
 				matrizModeloProductos.anadirDupla(idPelicula, tag, tFIDF);
 			}
@@ -63,5 +64,5 @@ public class ModeloProductos {
 		return matrizModeloProductos.contenido(pelicula);
 	}
 		
-	}
+}
 

@@ -65,7 +65,7 @@ public class ModeloPersonas {
 				}
 			}
 		}
-		System.out.println(res);
+		//System.out.println(res);
 		return res;
 	}
 
@@ -115,15 +115,26 @@ public class ModeloPersonas {
 	
 	public double gradoIdoneidad(int Usuario, int Pelicula){
 		HashMap<String, Double> vectorRawU = modeloPersonas.contenido(Usuario);
-		ArrayList<Double> vectorU = (ArrayList<Double>) vectorRawU.values();
+		ArrayList<Double> vectorU = transform(vectorRawU.values());
 		
 		ModeloProductos mp = ModeloProductos.getModeloProductos();
 		HashMap<String, Double> vectorRawP = mp.contenido(Pelicula);
-		ArrayList<Double> vectorP = (ArrayList<Double>) vectorRawP.values();
-		
+		ArrayList<Double> vectorP = transform(vectorRawP.values());
+		System.out.println(vectorU);
+		System.out.println("_-----------------");
+		System.out.println(vectorP);
 		return Math.abs(cosenoVectores(vectorU, vectorP));
 	}
 	
+	private ArrayList<Double> transform(Collection<Double> values) {
+		ArrayList<Double> a = new ArrayList<Double>();
+		Iterator<Double> itr = values.iterator();
+		while (itr.hasNext()){
+			a.add(itr.next());
+		}
+		return a;
+	}
+
 	public double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		double numerador = multiplicarVectores(v1, v2);
 		double denominador = calcularNorma(v1) * calcularNorma(v2);
