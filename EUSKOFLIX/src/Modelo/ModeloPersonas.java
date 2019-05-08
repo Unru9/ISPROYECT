@@ -1,9 +1,11 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import EstructuraDatos.MatrixHashMap;
 
@@ -110,4 +112,41 @@ public class ModeloPersonas {
 		}
 		return false;
 	}
+	
+	public double gradoIdoneidad(int Usuario, int Pelicula){
+		HashMap<String, Double> vectorRawU = modeloPersonas.contenido(Usuario);
+		ArrayList<Double> vectorU = (ArrayList<Double>) vectorRawU.values();
+		
+		ModeloProductos mp = ModeloProductos.getModeloProductos();
+		HashMap<String, Double> vectorRawP = mp.contenido(Pelicula);
+		ArrayList<Double> vectorP = (ArrayList<Double>) vectorRawP.values();
+		
+		return Math.abs(cosenoVectores(vectorU, vectorP));
+	}
+	
+	public double cosenoVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
+		double numerador = multiplicarVectores(v1, v2);
+		double denominador = calcularNorma(v1) * calcularNorma(v2);
+		return Math.round((numerador / denominador) * 1000.0) / 1000.0;
+	}
+
+	private double calcularNorma(ArrayList<Double> v1) {
+		double result = 0;
+		for (int i = 0; i < v1.size(); i++) {
+			double cuadrado = v1.get(i) * v1.get(i);
+			result = result + cuadrado;
+		}
+		result = Math.sqrt(result);
+		return result;
+	}
+
+	private double multiplicarVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
+		double result = 0;
+		for (int i = 0; i < v2.size(); i++) {
+			double multiplicacion = v1.get(i) * v2.get(i);
+			result = result + multiplicacion;
+		}
+		return result;
+	}
+
 }

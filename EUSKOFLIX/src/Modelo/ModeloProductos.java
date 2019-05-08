@@ -58,6 +58,10 @@ public class ModeloProductos {
 	public Iterator<Entry<Integer, HashMap<String, Double>>> getIterador() {
 		return matrizModeloProductos.iterator();
 	}
+
+	public HashMap<String, Double> contenido(int pelicula) {
+		return matrizModeloProductos.contenido(pelicula);
+	}
 		
 	}
 

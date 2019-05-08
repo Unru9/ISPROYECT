@@ -76,5 +76,9 @@ public class MatrixHashMap  {
 	public HashMap<String, Double> obtHash(int idUsuario){
 		return this.structure.get(idUsuario);
 	}
+
+	public HashMap<String, Double> contenido(int usuario) {
+		return structure.get(usuario);
+	}
 		
 	}
