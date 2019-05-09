@@ -9,16 +9,15 @@ import java.util.Map.Entry;
 
 public class MatrizValoraciones {
 
-	// atributos
+	// ATRIBUTOS
 	private static MatrizValoraciones miMatrizValoraciones;
 	private HashMap<Integer, ValoracionUsuario> listaUsuarios;
 
-	// Constructora
+	// CONSTRUCTORA
 	private MatrizValoraciones() {
 		this.listaUsuarios = new HashMap<Integer, ValoracionUsuario>();
 	}
 
-	// estático
 	public static MatrizValoraciones getMatrizValoraciones() {
 		if (miMatrizValoraciones == null) {
 			miMatrizValoraciones = new MatrizValoraciones();
@@ -27,7 +26,7 @@ public class MatrizValoraciones {
 		return miMatrizValoraciones;
 	}
 
-	// metodos manejo de la lista
+	// MÉTODOS
 	private void anadirUsuario(int pIdUsuario, ValoracionUsuario pNuevoUsuario) {
 		listaUsuarios.put(pIdUsuario, pNuevoUsuario);
 	}
@@ -61,8 +60,6 @@ public class MatrizValoraciones {
 		return listaUsuarios.entrySet().iterator();
 
 	}
-
-	// métodos
 
 	public void cargarUsuarios(String pPath) {
 		try {
@@ -136,5 +133,3 @@ public class MatrizValoraciones {
 	}
 
 }
-
-// **********************************************************************************************************//

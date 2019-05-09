@@ -16,7 +16,7 @@ public class MedidasSimilitudTest {
 		v1.add(1.0);
 		v1.add(3.0);
 		v1.add(2.5);
-		assertTrue(MedidasSimilitud.getMedidasSimilitud().compararVectores(v1,v1) == 1.0);
+		assertTrue(MedidasSimilitudProducto.getMedidasSimilitudProducto().compararVectores(v1,v1) == 1.0);
 		
 		ArrayList<Double> v3 = new ArrayList<Double>();
 		v3.add(2.0);
@@ -28,7 +28,7 @@ public class MedidasSimilitudTest {
 		v4.add(1.0);
 		v4.add(2.0);
 		
-		assertTrue(MedidasSimilitud.getMedidasSimilitud().compararVectores(v3,v4) == 0.109);
+		assertTrue(MedidasSimilitudProducto.getMedidasSimilitudProducto().compararVectores(v3,v4) == 0.109);
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class MedidasSimilitudTest {
 		v1.add(3.0);
 		v1.add(2.5);
 		
-		assertTrue(MedidasSimilitud.getMedidasSimilitud().cosenoVectores(v1,v1) == 1.0);
+		assertTrue(MedidasSimilitudProducto.getMedidasSimilitudProducto().cosenoVectores(v1,v1) == 1.0);
 		
 		ArrayList<Double> v3 = new ArrayList<Double>();
 		v3.add(2.0);
@@ -50,7 +50,7 @@ public class MedidasSimilitudTest {
 		v4.add(1.0);
 		v4.add(2.0);
 		
-		assertTrue(MedidasSimilitud.getMedidasSimilitud().cosenoVectores(v3,v4) == -0.109);
+		assertTrue(MedidasSimilitudProducto.getMedidasSimilitudProducto().cosenoVectores(v3,v4) == -0.109);
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class MedidasSimilitudTest {
 		v2.add(0.0);
 		v2.add(0.0);
 		
-		assertEquals(MedidasSimilitud.getMedidasSimilitud().rellenarArray(v1, 2), v2);
+		assertEquals(MedidasSimilitudProducto.getMedidasSimilitudProducto().rellenarArray(v1, 2), v2);
 	}
 
 

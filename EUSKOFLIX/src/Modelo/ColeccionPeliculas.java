@@ -3,7 +3,6 @@ package Modelo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,16 +10,15 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 public class ColeccionPeliculas {
-	// atributos
+	// ATRIBUTOS
 	private HashMap<Integer, Pelicula> listaPeliculas;
 	private static ColeccionPeliculas miColeccionPeliculas;
 
-	// constructora
+	// CONSTRUCTORA
 	private ColeccionPeliculas() {
 		this.listaPeliculas = new HashMap<Integer, Pelicula>();
 	}
 
-	// estático
 	public static ColeccionPeliculas getColeccionPeliculas() {
 		if (miColeccionPeliculas == null) {
 			miColeccionPeliculas = new ColeccionPeliculas();
@@ -29,12 +27,12 @@ public class ColeccionPeliculas {
 		return miColeccionPeliculas;
 	}
 
-	// Metodos para manejar la lista de peliculas
-		
+	// MÉTODOS
+
 	private void anadirPelicula(int pIdPelicula, Pelicula pPelicula) {
-			this.listaPeliculas.put(pIdPelicula, pPelicula);
+		this.listaPeliculas.put(pIdPelicula, pPelicula);
 	}
-	
+
 	private Pelicula buscarPelicula(String pPelicula) {
 		for (Pelicula pel : listaPeliculas.values()) {
 			if (pel.obtTitle() == pPelicula) {
@@ -48,7 +46,6 @@ public class ColeccionPeliculas {
 		return listaPeliculas.get(pIdPelicula);
 	}
 
-
 	public void borrarPeliculas() {
 		listaPeliculas.clear();
 	}
@@ -59,8 +56,7 @@ public class ColeccionPeliculas {
 		}
 		return false;
 	}
-	
-	
+
 	public int numeroPeliculasConTag(String pTag) {
 		int res = 0;
 		Pelicula pel;
@@ -72,12 +68,10 @@ public class ColeccionPeliculas {
 		}
 		return res;
 	}
-	
+
 	public int numeroPeliculas() {
 		return this.listaPeliculas.size();
 	}
-	
-	// Métodos
 
 	public void cargarPeliculas(String pPath) {
 		// pPath= "movie-titles.csv";
@@ -110,13 +104,13 @@ public class ColeccionPeliculas {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void cargarTagsDesdeArchivo(String pPath) {
 		crearMatrizEtiquetaProductos(pPath);
 	}
-	
+
 	public void crearMatrizEtiquetaProductos(String pPath) {
-		
+
 		try {
 			System.out.println("CREANDO MATRIZ ETIQUETA PRODUCTOS --------->");
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
@@ -152,23 +146,21 @@ public class ColeccionPeliculas {
 		}
 	}
 
-	
-	//ITERADORES
+	// ITERADORES
 	private Iterator<Entry<Integer, Pelicula>> iterator() {
 		return listaPeliculas.entrySet().iterator();
 	}
-	
+
 	public Iterator<Entry<Integer, Pelicula>> getIterator() {
 		return iterator();
 	}
-	
+
 	public Set<Entry<Integer, Pelicula>> getEntrySet() {
 		return listaPeliculas.entrySet();
 	}
-	
-	
-	
-	//METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y tags. UTILIZADO SOLO EN SPRINT 1
+
+	// METODOS Sirven para visualizar en pantalla TODOS los valores de pelis y
+	// tags. UTILIZADO SOLO EN SPRINT 1
 	public String visPelis() {
 		Collection<Pelicula> aux = this.listaPeliculas.values();
 		StringBuilder sb = new StringBuilder();
@@ -176,11 +168,11 @@ public class ColeccionPeliculas {
 			sb.append(pel.obtTitle());
 			sb.append("\n");
 		}
-			return sb.toString();
+		return sb.toString();
 	}
 
 	public String visTags(int pID) {
 		Pelicula pelicula = buscarPelicula(pID);
-		return pelicula.visTags();		
+		return pelicula.visTags();
 	}
 }

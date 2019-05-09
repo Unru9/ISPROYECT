@@ -11,24 +11,27 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-public class MatrizSimilitudesOrdenada {
+public class MatrizSimilitudesProductoOrdenada {
 
+	// ATRIBUTOS
 	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudesOrdenada;
-	private static MatrizSimilitudesOrdenada mMatrizSimilitudesOrdenada;
+	private static MatrizSimilitudesProductoOrdenada mMatrizSimilitudesOrdenada;
 
-	private MatrizSimilitudesOrdenada() {
+	// CONSTRUCTORA
+	private MatrizSimilitudesProductoOrdenada() {
 		matrizSimilitudesOrdenada = new HashMap<Integer, HashMap<Integer, Double>>();
 	}
 
-	public static MatrizSimilitudesOrdenada getMatrizSimilitudesOrdenada() {
+	public static MatrizSimilitudesProductoOrdenada getMatrizSimilitudesProductoOrdenada() {
 		if (mMatrizSimilitudesOrdenada == null)
-			mMatrizSimilitudesOrdenada = new MatrizSimilitudesOrdenada();
+			mMatrizSimilitudesOrdenada = new MatrizSimilitudesProductoOrdenada();
 		return mMatrizSimilitudesOrdenada;
 	}
 
+	// MÉTODOS
 	public void GenerarMatrizSimilitudesOrdenada() throws Exception {
 		System.out.println("CREANDO MATRIZ SIMILITUDES ORDENADA --------->");
-		MedidasSimilitud ms = MedidasSimilitud.getMedidasSimilitud();
+		MedidasSimilitudProducto ms = MedidasSimilitudProducto.getMedidasSimilitudProducto();
 
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.getEntrySet()) {
 			int idPel1 = entrada.getKey();
@@ -37,17 +40,6 @@ public class MatrizSimilitudesOrdenada {
 			matrizSimilitudesOrdenada.put(idPel1, sortedMapAsc);
 
 		}
-
-		/*
-		 * StringBuilder sb = new StringBuilder(); for (Entry<Integer,
-		 * HashMap<Integer, Double>> entrada :
-		 * matrizSimilitudesOrdenada.entrySet()) { System.out.println(entrada);
-		 * sb.append(entrada.toString() + "\n"); }
-		 * 
-		 * String output ="C:/Users/Unai/Desktop/matrizSimilitudesOrdenada.txt";
-		 * writeFile(output,sb.toString());
-		 */
-
 	}
 
 	public String modeloSimilitudProductoPelicula(int movieID) {
@@ -69,7 +61,7 @@ public class MatrizSimilitudesOrdenada {
 
 		List<Entry<Integer, Double>> list = new LinkedList<Entry<Integer, Double>>(unsortMap.entrySet());
 
-		// Sorting the list based on values
+		// ORDENAR SEGÚN VALOR
 		Collections.sort(list, new Comparator<Entry<Integer, Double>>() {
 			public int compare(Entry<Integer, Double> o1, Entry<Integer, Double> o2) {
 				if (order) {
@@ -92,7 +84,7 @@ public class MatrizSimilitudesOrdenada {
 
 		List<Entry<String, Double>> list = new LinkedList<Entry<String, Double>>(unsortMap.entrySet());
 
-		// Sorting the list based on values
+		// ORDENAR SEGÚN VALOR
 		Collections.sort(list, new Comparator<Entry<String, Double>>() {
 			public int compare(Entry<String, Double> o1, Entry<String, Double> o2) {
 				if (order) {
@@ -151,13 +143,15 @@ public class MatrizSimilitudesOrdenada {
 		res.append("====================================================== \n");
 		HashMap<String, Double> afinpel = peliculasAfines(idUser, nProd);
 
-		//System.out.println();
+		// System.out.println();
 		for (Entry<String, Double> entrada : afinpel.entrySet()) {
 			if (i < 10) {
 				String pelTitle = entrada.getKey();
 				Double pelIdoneidad = entrada.getValue();
 				res.append(pelTitle + " --> " + pelIdoneidad + "\n");
 
+			} else {
+				break;
 			}
 			i = i + 1;
 		}

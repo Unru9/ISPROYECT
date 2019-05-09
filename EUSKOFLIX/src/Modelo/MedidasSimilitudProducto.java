@@ -6,26 +6,24 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class MedidasSimilitud {
+public class MedidasSimilitudProducto {
 
-	// Atributos
-	private static MedidasSimilitud mMedidasSimilitud;
+	// ATRIBUTOS
+	private static MedidasSimilitudProducto mMedidasSimilitud;
 	private HashMap<Integer, HashMap<Integer, Double>> matrizSimilitudes;
 
-	// Atributos para la similitud
-
 	// CONSTRUCTORA
-	private MedidasSimilitud() {
+	private MedidasSimilitudProducto() {
 		matrizSimilitudes = new HashMap<Integer, HashMap<Integer, Double>>();
 	}
 
-	public static MedidasSimilitud getMedidasSimilitud() {
+	public static MedidasSimilitudProducto getMedidasSimilitudProducto() {
 		if (mMedidasSimilitud == null)
-			mMedidasSimilitud = new MedidasSimilitud();
+			mMedidasSimilitud = new MedidasSimilitudProducto();
 		return mMedidasSimilitud;
 	}
 
-	// METODOS PARA MANEJAR LA MATRIZ SIMILITUD
+	// MÉTODOS
 	private double obtSimilitud(int pId1, int pId2) {
 		HashMap<Integer, Double> similitudesConId1 = matrizSimilitudes.get(pId1);
 		return similitudesConId1.get(pId2);
@@ -55,7 +53,8 @@ public class MedidasSimilitud {
 				int idPel2 = entradaPel2.getKey();
 
 				if (idPel1 != idPel2) {
-					//System.out.println("Comparando " + idPel1 + " " + idPel2);
+					// System.out.println("Comparando " + idPel1 + " " +
+					// idPel2);
 					double similitud = compararPelis(idPel1, idPel2);
 
 					matrizSimilitudesAnadir(idPel1, idPel2, similitud);
@@ -65,7 +64,7 @@ public class MedidasSimilitud {
 
 		StringBuilder sb = new StringBuilder();
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudes.entrySet()) {
-			//System.out.println(entrada);
+			// System.out.println(entrada);
 			sb.append(entrada.toString() + "\n");
 		}
 
@@ -98,9 +97,9 @@ public class MedidasSimilitud {
 			}
 		}
 		double indice = Math.abs(cosenoVectores(v1, v2));
-		//System.out.println(v1);
-		//System.out.println(v2);
-		//System.out.println("Valor: " + indice);
+		// System.out.println(v1);
+		// System.out.println(v2);
+		// System.out.println("Valor: " + indice);
 
 		return indice;
 	}
@@ -117,32 +116,6 @@ public class MedidasSimilitud {
 		}
 
 	}
-
-	/*
-	 * private HashMap<Integer,ArrayList<Double>> crearVectoresPorIdPel(){
-	 * 
-	 * HashMap<Integer,ArrayList<Double>> vectores = new
-	 * HashMap<Integer,ArrayList<Double>>(); ColeccionUsuario coleccionUsuarios
-	 * = ColeccionUsuario.getColeccionUsuario();
-	 * 
-	 * Iterator<Entry<Integer, Usuario>> itrUsuarios =
-	 * coleccionUsuarios.getIterador(); while (itrUsuarios.hasNext()) {
-	 * Entry<Integer, Usuario> entradaUsuario = itrUsuarios.next(); Usuario
-	 * usuario = entradaUsuario.getValue();
-	 * 
-	 * Iterator<Entry<Integer, Double>> itrPeliculaValorada =
-	 * usuario.getIterador(); while (itrPeliculaValorada.hasNext()){
-	 * Entry<Integer, Double> entradaValoracion = itrPeliculaValorada.next();
-	 * Integer idPeliculaValorada = entradaValoracion.getKey(); double
-	 * valoracion = entradaValoracion.getValue(); if
-	 * (vectores.containsKey(idPeliculaValorada)){ ArrayList<Double> val =
-	 * vectores.get(idPeliculaValorada); val.add(valoracion);
-	 * vectores.put(idPeliculaValorada, val); } else { ArrayList<Double> val =
-	 * new ArrayList<Double>(); val.add(valoracion);
-	 * vectores.put(idPeliculaValorada, val); } } }
-	 * 
-	 * return vectores; }
-	 */
 
 	public double compararVectores(ArrayList<Double> v1, ArrayList<Double> v2) {
 		int diferencia = Math.abs(v1.size() - v2.size());
@@ -190,17 +163,6 @@ public class MedidasSimilitud {
 			v2.add(0.0);
 		}
 		return v2;
-	}
-
-	public ArrayList<Integer> crearListaPeliculasMasSimilaresA(int pIdPersona, int pIdPelicula, int pNumeroSimiu) {
-		ArrayList<Integer> lista = new ArrayList<Integer>();
-
-		// CREAR LISTA DE PELICULAS MAS SIMILARES A PELICULA SELECCIONADA
-
-		// APLICAR FORMULA, PUNTO 2.2.2, Pag 6, Determinar el Grado de
-		// idoneidad, punto 2
-
-		return lista;
 	}
 
 	public Double similitudEntrePeliculas(int pPelicula1, int pPelicula2) {

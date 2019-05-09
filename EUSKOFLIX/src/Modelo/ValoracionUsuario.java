@@ -9,12 +9,12 @@ public class ValoracionUsuario {
 	// ATRIBUTOS
 	private HashMap<Integer, Double> ratings;
 
-	// Contructora
+	// CONSTRUCTORA
 	public ValoracionUsuario() {
 		this.ratings = new HashMap<Integer, Double>();
 	}
 
-	// Metodos
+	// MÉTODOS
 
 	public void anadirRating(int pIdPelicula, double pCalificacion) {
 		this.ratings.put(pIdPelicula, pCalificacion);
@@ -38,11 +38,4 @@ public class ValoracionUsuario {
 	public Iterator<Entry<Integer, Double>> getIterador() {
 		return ratings.entrySet().iterator();
 	}
-
-	/*
-	 * public void visRatingUsuario(){ Iterator<Integer> itr=
-	 * ratings.keySet().iterator(); while(itr.hasNext()){ Integer key=
-	 * itr.next(); System.out.println("Película : " + key + " --> Puntuación: "+
-	 * ratings.get(key)); } }
-	 */
 }

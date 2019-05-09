@@ -5,15 +5,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import EstructuraDatos.MatrixHashMap;
 
 public class ModeloPersonas {
 
+	// ATRIBUTOS
 	private MatrixHashMap modeloPersonas;
 	private static ModeloPersonas mModeloPersonas;
 
+	// CONSTRUCTORA
 	private ModeloPersonas() {
 		modeloPersonas = new MatrixHashMap();
 	}
@@ -25,6 +26,7 @@ public class ModeloPersonas {
 		return mModeloPersonas;
 	}
 
+	// MÉTODOS
 	private ArrayList<Integer> pelBienValoradas(int idUsuario) {
 		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 		ArrayList<Integer> res = new ArrayList<Integer>();
@@ -44,7 +46,7 @@ public class ModeloPersonas {
 	public HashMap<String, Double> tfidfsMejorValoradas(ArrayList<Integer> aux) {
 		HashMap<String, Double> res = new HashMap<String, Double>();
 		ModeloProductos mp = ModeloProductos.getModeloProductos();
-		// recorrer matrix hashmap
+		// RECORRER MATRIX
 		Iterator<Entry<Integer, HashMap<String, Double>>> iterador1 = mp.getIterador();
 		while (iterador1.hasNext()) {
 			Entry<Integer, HashMap<String, Double>> a = iterador1.next();
@@ -65,7 +67,7 @@ public class ModeloPersonas {
 				}
 			}
 		}
-		System.out.println("tfidfs mejor valoradas: " + res);
+		// System.out.println("tfidfs mejor valoradas: " + res);
 		return res;
 	}
 
@@ -77,7 +79,7 @@ public class ModeloPersonas {
 			Entry<Integer, ValoracionUsuario> entradaUs = itrUs.next();
 			int idUsu = entradaUs.getKey();
 			ArrayList<Integer> a = pelBienValoradas(idUsu);
-			System.out.println("pelBienValoradas: " + a);
+			// System.out.println("pelBienValoradas: " + a);
 			modeloPersonas.anadir(idUsu, tfidfsMejorValoradas(a));
 		}
 	}
@@ -113,26 +115,26 @@ public class ModeloPersonas {
 		}
 		return false;
 	}
-	
-	public double gradoIdoneidad(int Usuario, int Pelicula){
+
+	public double gradoIdoneidad(int Usuario, int Pelicula) {
 		HashMap<String, Double> vectorRawU = modeloPersonas.contenido(Usuario);
 		ArrayList<Double> vectorU = transform(vectorRawU.values());
-		
+
 		ModeloProductos mp = ModeloProductos.getModeloProductos();
 		HashMap<String, Double> vectorRawP = mp.contenido(Pelicula);
 		ArrayList<Double> vectorP = transform(vectorRawP.values());
 		ArrayList<Double> vectorUu = unitario(vectorU);
 		ArrayList<Double> vectorPu = unitario(vectorP);
-		System.out.println(vectorUu);
-		System.out.println("-----------------");
-		System.out.println(vectorPu);
+		// System.out.println(vectorUu);
+		// System.out.println("-----------------");
+		// System.out.println(vectorPu);
 		return Math.abs(cosenoVectores(vectorUu, vectorPu));
 	}
-	
+
 	private ArrayList<Double> unitario(ArrayList<Double> vector) {
 		double modulo = modulo(vector);
 		for (int i = 0; i < vector.size(); i++) {
-			double nuevo = vector.get(i)/modulo;
+			double nuevo = vector.get(i) / modulo;
 			vector.set(i, nuevo);
 		}
 		return vector;
@@ -142,7 +144,7 @@ public class ModeloPersonas {
 		double sumatorio = 0.0;
 		for (int i = 0; i < vector.size(); i++) {
 			double valor = vector.get(i);
-			sumatorio = sumatorio + (valor*valor);
+			sumatorio = sumatorio + (valor * valor);
 		}
 		return Math.sqrt(sumatorio);
 	}
@@ -150,7 +152,7 @@ public class ModeloPersonas {
 	private ArrayList<Double> transform(Collection<Double> values) {
 		ArrayList<Double> a = new ArrayList<Double>();
 		Iterator<Double> itr = values.iterator();
-		while (itr.hasNext()){
+		while (itr.hasNext()) {
 			a.add(itr.next());
 		}
 		return a;
