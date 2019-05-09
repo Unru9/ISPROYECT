@@ -25,8 +25,8 @@ public class Controlador {
 		this.miVista.setTitlesListener(new Titles());
 		this.miVista.setTagsListener(new Tags());
 		this.miVista.setRatingsListener(new Ratings());
-		this.miVista.MatrizSimilitudesListener(new MatrizSimilitudes());
-		this.miVista.idoneidadListener(new Idoneidad());
+		this.miVista.idoneidadProductoListener(new IdoneidadProducto());
+		this.miVista.idoneidadPersonaListener(new IdoneidadPersona());
 		this.miVista.afinesListenerProducto(new afinPelProducto());
 		this.miVista.afinesListenerPersona(new afinPelPersona());
 
@@ -45,11 +45,11 @@ public class Controlador {
 		// CREACIÓN DEL MODELO PRODUCTO
 		ModeloProductos modeloProductos = ModeloProductos.getModeloProductos();
 		modeloProductos.crearModeloProducto();
-		//medidasSimilitud.crearMatrizSimilitudes();
+		medidasSimilitud.crearMatrizSimilitudes();
 		// HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a =
 		// medidasSimilitud.getMatrizSimilitudes();
 		// System.out.println(a);
-		//matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
+		matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
 
 		// CREACIÓN DEL MODELO PERSONA
 		ModeloPersonas mp = ModeloPersonas.getModeloPersonas();
@@ -106,24 +106,7 @@ public class Controlador {
 		}
 	}
 
-	class MatrizSimilitudes implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
-			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
-			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
-			if (movieID != null) {
-				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
-					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
-				} else {
-					String aux = msOrdenada.modeloSimilitudProductoPelicula(Integer.parseInt(movieID));
-					miVista.setTextoGeneral(aux);
-				}
-			}
-		}
-	}
-
-	class Idoneidad implements ActionListener {
+	class IdoneidadProducto implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
@@ -164,6 +147,23 @@ public class Controlador {
 					HashMap<String, Double> aux = msOrdenada.peliculasAfines(Integer.parseInt(usuarioID), 20);
 					String res = msOrdenada.visualizarPeliculasAfinesProducto(Integer.parseInt(usuarioID), 20);
 					miVista.setTextoGeneral(res);
+				}
+			}
+		}
+	}
+
+	class IdoneidadPersona implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
+			MatrizSimilitudesOrdenada msOrdenada = MatrizSimilitudesOrdenada.getMatrizSimilitudesOrdenada();
+			String movieID = JOptionPane.showInputDialog("Introduce un movieID");
+			if (movieID != null) {
+				if (!cp.contieneIDPelicula(Integer.parseInt(movieID))) {
+					JOptionPane.showMessageDialog(miVista, "El movieID no existe");
+				} else {
+					String aux = msOrdenada.modeloSimilitudProductoPelicula(Integer.parseInt(movieID));
+					miVista.setTextoGeneral(aux);
 				}
 			}
 		}
