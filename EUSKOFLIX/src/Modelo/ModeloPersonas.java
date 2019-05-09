@@ -65,19 +65,19 @@ public class ModeloPersonas {
 				}
 			}
 		}
-		//System.out.println(res);
+		System.out.println("tfidfs mejor valoradas: " + res);
 		return res;
 	}
 
 	public void crearModeloPersonas() {
 		System.out.println("CREANDO MODELO PERSONAS --------->");
 		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
-		;
 		Iterator<Entry<Integer, ValoracionUsuario>> itrUs = mv.getIterador();
 		while (itrUs.hasNext()) {
 			Entry<Integer, ValoracionUsuario> entradaUs = itrUs.next();
 			int idUsu = entradaUs.getKey();
 			ArrayList<Integer> a = pelBienValoradas(idUsu);
+			System.out.println("pelBienValoradas: " + a);
 			modeloPersonas.anadir(idUsu, tfidfsMejorValoradas(a));
 		}
 	}
@@ -121,10 +121,12 @@ public class ModeloPersonas {
 		ModeloProductos mp = ModeloProductos.getModeloProductos();
 		HashMap<String, Double> vectorRawP = mp.contenido(Pelicula);
 		ArrayList<Double> vectorP = transform(vectorRawP.values());
-		System.out.println(vectorU);
+		ArrayList<Double> vectorUu = unitario(vectorU);
+		ArrayList<Double> vectorPu = unitario(vectorP);
+		System.out.println(vectorUu);
 		System.out.println("-----------------");
-		System.out.println(vectorP);
-		return Math.abs(cosenoVectores(unitario(vectorU), unitario(vectorP)));
+		System.out.println(vectorPu);
+		return Math.abs(cosenoVectores(vectorUu, vectorPu));
 	}
 	
 	private ArrayList<Double> unitario(ArrayList<Double> vector) {
