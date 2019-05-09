@@ -118,6 +118,7 @@ public class ColeccionPeliculas {
 	public void crearMatrizEtiquetaProductos(String pPath) {
 		
 		try {
+			System.out.println("CREANDO MATRIZ ETIQUETA PRODUCTOS --------->");
 			ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 			BufferedReader bufferLectura = new BufferedReader(new FileReader(pPath));
 

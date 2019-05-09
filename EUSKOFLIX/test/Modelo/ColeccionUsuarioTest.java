@@ -7,40 +7,40 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ColeccionUsuarioTest {
-	ColeccionUsuario cu;
+	MatrizValoraciones mv;
 	
 	@Before
 	public void setUp() throws Exception {
-		cu = ColeccionUsuario.getColeccionUsuario();
+		mv = MatrizValoraciones.getMatrizValoraciones();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		cu = null;
+		mv = null;
 	}
 	
 	@Test
 	public void testCargarUsuarios(){
 		/* Caso 1: no hay usuarios añadidas. */
-		cu.cargarUsuarios("movie-ratings.csv");
+		mv.cargarUsuarios("movie-ratings.csv");
 		
-		assertEquals(true, cu.contieneIdUsuario(1));
-		assertEquals(false, cu.contieneIdUsuario(5573));
+		assertEquals(true, mv.contieneIdUsuario(1));
+		assertEquals(false, mv.contieneIdUsuario(5573));
 		
 		/* Caso 2: hay peliculas añadidas. */
-		cu.cargarUsuarios("movie-ratings.csv");
+		mv.cargarUsuarios("movie-ratings.csv");
 		
-		assertEquals(true, cu.contieneIdUsuario(1));
-		assertEquals(false, cu.contieneIdUsuario(5573));
+		assertEquals(true, mv.contieneIdUsuario(1));
+		assertEquals(false, mv.contieneIdUsuario(5573));
 	}
 	
 	public void testBorrarPeliculas(){
-		cu.cargarUsuarios("movie-ratings.csv");
-		cu.borrarUsuarios();
+		mv.cargarUsuarios("movie-ratings.csv");
+		mv.borrarUsuarios();
 		
 		String vacio = "Valoraciones de la pelicula  con ID: ";
-		assertEquals(vacio + "11", cu.visRatingUsuario(11));
-		assertEquals(vacio + "15", cu.visRatingUsuario(15));
+		assertEquals(vacio + "11", mv.visRatingUsuario(11));
+		assertEquals(vacio + "15", mv.visRatingUsuario(15));
 	}
 	
 }

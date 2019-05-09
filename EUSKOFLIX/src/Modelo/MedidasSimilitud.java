@@ -41,9 +41,7 @@ public class MedidasSimilitud {
 	// METODOS
 
 	public void crearMatrizSimilitudes() {
-
-		// HashMap<Integer,ArrayList<Double>> vectores =
-		// crearVectoresPorIdPel();
+		System.out.println("CREANDO MATRIZ SIMILITUDES --------->");
 
 		ColeccionPeliculas cp = ColeccionPeliculas.getColeccionPeliculas();
 		Iterator<Entry<Integer, Pelicula>> itrPel1 = cp.getIterator();
@@ -57,7 +55,7 @@ public class MedidasSimilitud {
 				int idPel2 = entradaPel2.getKey();
 
 				if (idPel1 != idPel2) {
-					System.out.println("Comparando " + idPel1 + " " + idPel2);
+					//System.out.println("Comparando " + idPel1 + " " + idPel2);
 					double similitud = compararPelis(idPel1, idPel2);
 
 					matrizSimilitudesAnadir(idPel1, idPel2, similitud);
@@ -67,7 +65,7 @@ public class MedidasSimilitud {
 
 		StringBuilder sb = new StringBuilder();
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : matrizSimilitudes.entrySet()) {
-			System.out.println(entrada);
+			//System.out.println(entrada);
 			sb.append(entrada.toString() + "\n");
 		}
 
@@ -100,9 +98,9 @@ public class MedidasSimilitud {
 			}
 		}
 		double indice = Math.abs(cosenoVectores(v1, v2));
-		System.out.println(v1);
-		System.out.println(v2);
-		System.out.println("Valor: " + indice);
+		//System.out.println(v1);
+		//System.out.println(v2);
+		//System.out.println("Valor: " + indice);
 
 		return indice;
 	}

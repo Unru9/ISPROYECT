@@ -45,11 +45,11 @@ public class Controlador {
 		// CREACIÓN DEL MODELO PRODUCTO
 		ModeloProductos modeloProductos = ModeloProductos.getModeloProductos();
 		modeloProductos.crearModeloProducto();
-		// medidasSimilitud.crearMatrizSimilitudes();
+		medidasSimilitud.crearMatrizSimilitudes();
 		// HashMap<Integer, ArrayList<HashMap<Integer, Double>>> a =
 		// medidasSimilitud.getMatrizSimilitudes();
 		// System.out.println(a);
-		// matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
+		matrizSimilitudesOrdenada.GenerarMatrizSimilitudesOrdenada();
 
 		// CREACIÓN DEL MODELO PERSONA
 		ModeloPersonas mp = ModeloPersonas.getModeloPersonas();

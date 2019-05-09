@@ -27,6 +27,7 @@ public class MatrizSimilitudesOrdenada {
 	}
 
 	public void GenerarMatrizSimilitudesOrdenada() throws Exception {
+		System.out.println("CREANDO MATRIZ SIMILITUDES ORDENADA --------->");
 		MedidasSimilitud ms = MedidasSimilitud.getMedidasSimilitud();
 
 		for (Entry<Integer, HashMap<Integer, Double>> entrada : ms.getEntrySet()) {
@@ -150,7 +151,7 @@ public class MatrizSimilitudesOrdenada {
 		res.append("====================================================== \n");
 		HashMap<String, Double> afinpel = peliculasAfines(idUser, nProd);
 
-		System.out.println();
+		//System.out.println();
 		for (Entry<String, Double> entrada : afinpel.entrySet()) {
 			if (i < 10) {
 				String pelTitle = entrada.getKey();

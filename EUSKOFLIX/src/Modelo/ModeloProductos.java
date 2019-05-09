@@ -36,6 +36,7 @@ public class ModeloProductos {
 	}
 
 	public void crearModeloProducto() {
+		System.out.println("CREANDO MODELO PRODUCTOS --------->");
 		ColeccionPeliculas coleccionPeliculas = ColeccionPeliculas.getColeccionPeliculas();
 		
 		Iterator<Entry<Integer, Pelicula>> iteradorPeliculas = coleccionPeliculas.getIterator();
@@ -49,7 +50,7 @@ public class ModeloProductos {
 				Entry<String, Integer> entradaTag = iteradorTags.next();
 				String tag = entradaTag.getKey();
 				double tFIDF = calcularTFIDF(idPelicula, tag);
-				System.out.println(tFIDF);
+				//System.out.println(tFIDF);
 				
 				matrizModeloProductos.anadirDupla(idPelicula, tag, tFIDF);
 			}

@@ -70,6 +70,7 @@ public class ModeloPersonas {
 	}
 
 	public void crearModeloPersonas() {
+		System.out.println("CREANDO MODELO PERSONAS --------->");
 		MatrizValoraciones mv = MatrizValoraciones.getMatrizValoraciones();
 		;
 		Iterator<Entry<Integer, ValoracionUsuario>> itrUs = mv.getIterador();

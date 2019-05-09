@@ -110,8 +110,8 @@ public class VistaCargaDatos extends JFrame {
 		gbc_btnNewButton_3.gridy = 7;
 		panel.add(btnMatrizSimilitudesOrdenada, gbc_btnNewButton_3);
 		
-		btnIdoineidad = new JButton("Idoneidad");
-		btnIdoineidad.setPreferredSize(new Dimension(100, 20));
+		btnIdoineidad = new JButton("IdoneidadProducto");
+		btnIdoineidad.setPreferredSize(new Dimension(150, 20));
 		btnIdoineidad.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {}});
 		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
 		gbc_btnNewButton_4.insets = new Insets(0, 0, 10, 0);
@@ -120,7 +120,7 @@ public class VistaCargaDatos extends JFrame {
 		panel.add(btnIdoineidad, gbc_btnNewButton_4);
 		
 		btnAfinPelProducto = new JButton("AfinesProducto");
-		btnAfinPelProducto.setPreferredSize(new Dimension(120, 20));
+		btnAfinPelProducto.setPreferredSize(new Dimension(150, 20));
 		btnAfinPelProducto.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {}});
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
 		gbc_btnNewButton_5.insets = new Insets(0, 0, 10, 0);
@@ -128,8 +128,8 @@ public class VistaCargaDatos extends JFrame {
 		gbc_btnNewButton_5.gridy = 11;
 		panel.add(btnAfinPelProducto, gbc_btnNewButton_5);
 		
-		btnAfinPelPersona = new JButton("AfinesPersona");
-		btnAfinPelPersona.setPreferredSize(new Dimension(120, 20));
+		btnAfinPelPersona = new JButton("IdoneidadPersona");
+		btnAfinPelPersona.setPreferredSize(new Dimension(150, 20));
 		btnAfinPelPersona.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {}});
 		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
 		gbc_btnNewButton_6.insets = new Insets(0, 0, 10, 0);
