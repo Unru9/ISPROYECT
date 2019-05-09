@@ -30,7 +30,7 @@ public class ModeloProductos {
 		int N = coleccionPeliculas.numeroPeliculas();
 		int NT = coleccionPeliculas.numeroPeliculasConTag(pTag);
 
-		res = tf * Math.log(N / NT);
+		res = tf * Math.log10(N / NT);
 		return res;
 
 	}
