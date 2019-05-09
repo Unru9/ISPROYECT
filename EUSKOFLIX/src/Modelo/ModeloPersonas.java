@@ -122,11 +122,29 @@ public class ModeloPersonas {
 		HashMap<String, Double> vectorRawP = mp.contenido(Pelicula);
 		ArrayList<Double> vectorP = transform(vectorRawP.values());
 		System.out.println(vectorU);
-		System.out.println("_-----------------");
+		System.out.println("-----------------");
 		System.out.println(vectorP);
-		return Math.abs(cosenoVectores(vectorU, vectorP));
+		return Math.abs(cosenoVectores(unitario(vectorU), unitario(vectorP)));
 	}
 	
+	private ArrayList<Double> unitario(ArrayList<Double> vector) {
+		double modulo = modulo(vector);
+		for (int i = 0; i < vector.size(); i++) {
+			double nuevo = vector.get(i)/modulo;
+			vector.set(i, nuevo);
+		}
+		return vector;
+	}
+
+	private double modulo(ArrayList<Double> vector) {
+		double sumatorio = 0.0;
+		for (int i = 0; i < vector.size(); i++) {
+			double valor = vector.get(i);
+			sumatorio = sumatorio + (valor*valor);
+		}
+		return Math.sqrt(sumatorio);
+	}
+
 	private ArrayList<Double> transform(Collection<Double> values) {
 		ArrayList<Double> a = new ArrayList<Double>();
 		Iterator<Double> itr = values.iterator();
