@@ -67,7 +67,11 @@ public class ModeloPersonas {
 				}
 			}
 		}
+<<<<<<< HEAD
 		// System.out.println("tfidfs mejor valoradas: " + res);
+=======
+		//System.out.println("tfidfs mejor valoradas: " + res);
+>>>>>>> branch 'master' of https://github.com/Unru9/ISPROYECT.git
 		return res;
 	}
 
@@ -79,7 +83,11 @@ public class ModeloPersonas {
 			Entry<Integer, ValoracionUsuario> entradaUs = itrUs.next();
 			int idUsu = entradaUs.getKey();
 			ArrayList<Integer> a = pelBienValoradas(idUsu);
+<<<<<<< HEAD
 			// System.out.println("pelBienValoradas: " + a);
+=======
+			//System.out.println("pelBienValoradas: " + a);
+>>>>>>> branch 'master' of https://github.com/Unru9/ISPROYECT.git
 			modeloPersonas.anadir(idUsu, tfidfsMejorValoradas(a));
 		}
 	}
