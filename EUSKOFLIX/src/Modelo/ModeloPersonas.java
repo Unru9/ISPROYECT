@@ -65,7 +65,7 @@ public class ModeloPersonas {
 				}
 			}
 		}
-		System.out.println("tfidfs mejor valoradas: " + res);
+		//System.out.println("tfidfs mejor valoradas: " + res);
 		return res;
 	}
 
@@ -77,7 +77,7 @@ public class ModeloPersonas {
 			Entry<Integer, ValoracionUsuario> entradaUs = itrUs.next();
 			int idUsu = entradaUs.getKey();
 			ArrayList<Integer> a = pelBienValoradas(idUsu);
-			System.out.println("pelBienValoradas: " + a);
+			//System.out.println("pelBienValoradas: " + a);
 			modeloPersonas.anadir(idUsu, tfidfsMejorValoradas(a));
 		}
 	}
